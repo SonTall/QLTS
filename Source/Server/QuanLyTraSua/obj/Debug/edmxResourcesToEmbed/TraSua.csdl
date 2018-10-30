@@ -7,7 +7,7 @@
     <Property Name="MaChuDe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenChuDe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="SanPhams" Relationship="Self.FK_SanPham_ChuDe" FromRole="ChuDe" ToRole="SanPham" />
+    <NavigationProperty Name="SanPhams" Relationship="QuanLyTraSuaModel.FK_SanPham_ChuDe" FromRole="ChuDe" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="HoaDon">
     <Key>
@@ -55,8 +55,8 @@
     <Property Name="MaSanPham" Type="Int32" />
     <Property Name="MaTopping" Type="Int32" />
     <NavigationProperty Name="HoaDonChiTiets" Relationship="Self.FK_HoaDonChiTiet_LuaChon" FromRole="LuaChon" ToRole="HoaDonChiTiet" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK_LuaChon_SanPham" FromRole="LuaChon" ToRole="SanPham" />
     <NavigationProperty Name="Topping" Relationship="Self.FK_LuaChon_Topping" FromRole="LuaChon" ToRole="Topping" />
+    <NavigationProperty Name="SanPham" Relationship="QuanLyTraSuaModel.FK_LuaChon_SanPham" FromRole="LuaChon" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="NhanVien">
     <Key>
@@ -73,19 +73,6 @@
     <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
     <NavigationProperty Name="HoaDons" Relationship="Self.FK_HoaDon_NhanVien" FromRole="NhanVien" ToRole="HoaDon" />
   </EntityType>
-  <EntityType Name="SanPham">
-    <Key>
-      <PropertyRef Name="MaSanPham" />
-    </Key>
-    <Property Name="MaSanPham" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenSanPham" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="KichCo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="MaChuDe" Type="Int32" />
-    <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="ChuDe" Relationship="Self.FK_SanPham_ChuDe" FromRole="SanPham" ToRole="ChuDe" />
-    <NavigationProperty Name="LuaChons" Relationship="Self.FK_LuaChon_SanPham" FromRole="SanPham" ToRole="LuaChon" />
-  </EntityType>
   <EntityType Name="Topping">
     <Key>
       <PropertyRef Name="MaTopping" />
@@ -96,20 +83,6 @@
     <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="LuaChons" Relationship="Self.FK_LuaChon_Topping" FromRole="Topping" ToRole="LuaChon" />
   </EntityType>
-  <Association Name="FK_SanPham_ChuDe">
-    <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ChuDe">
-        <PropertyRef Name="MaChuDe" />
-      </Principal>
-      <Dependent Role="SanPham">
-        <PropertyRef Name="MaChuDe" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_HoaDon_KhachHang">
     <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -166,20 +139,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_LuaChon_SanPham">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SanPham">
-        <PropertyRef Name="MaSanPham" />
-      </Principal>
-      <Dependent Role="LuaChon">
-        <PropertyRef Name="MaSanPham" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_LuaChon_Topping">
     <End Role="Topping" Type="Self.Topping" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -201,12 +160,7 @@
     <EntitySet Name="KhachHangs" EntityType="Self.KhachHang" />
     <EntitySet Name="LuaChons" EntityType="Self.LuaChon" />
     <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
-    <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
     <EntitySet Name="Toppings" EntityType="Self.Topping" />
-    <AssociationSet Name="FK_SanPham_ChuDe" Association="Self.FK_SanPham_ChuDe">
-      <End Role="ChuDe" EntitySet="ChuDes" />
-      <End Role="SanPham" EntitySet="SanPhams" />
-    </AssociationSet>
     <AssociationSet Name="FK_HoaDon_KhachHang" Association="Self.FK_HoaDon_KhachHang">
       <End Role="KhachHang" EntitySet="KhachHangs" />
       <End Role="HoaDon" EntitySet="HoaDons" />
@@ -223,13 +177,77 @@
       <End Role="LuaChon" EntitySet="LuaChons" />
       <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiets" />
     </AssociationSet>
-    <AssociationSet Name="FK_LuaChon_SanPham" Association="Self.FK_LuaChon_SanPham">
-      <End Role="SanPham" EntitySet="SanPhams" />
-      <End Role="LuaChon" EntitySet="LuaChons" />
-    </AssociationSet>
     <AssociationSet Name="FK_LuaChon_Topping" Association="Self.FK_LuaChon_Topping">
       <End Role="Topping" EntitySet="Toppings" />
       <End Role="LuaChon" EntitySet="LuaChons" />
     </AssociationSet>
+    <EntitySet Name="SanPhams" EntityType="QuanLyTraSuaModel.SanPham" />
+    <AssociationSet Name="FK_SanPham_ChuDe" Association="QuanLyTraSuaModel.FK_SanPham_ChuDe">
+      <End Role="ChuDe" EntitySet="ChuDes" />
+      <End Role="SanPham" EntitySet="SanPhams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LuaChon_SanPham" Association="QuanLyTraSuaModel.FK_LuaChon_SanPham">
+      <End Role="SanPham" EntitySet="SanPhams" />
+      <End Role="LuaChon" EntitySet="LuaChons" />
+    </AssociationSet>
+    <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
+    <FunctionImport Name="ThongKeSanPhamTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result)" />
+    <FunctionImport Name="ThongKeTienBanDuocTheoThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result)" />
   </EntityContainer>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="MaSanPham" />
+    </Key>
+    <Property Name="MaSanPham" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenSanPham" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="KichCo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MaChuDe" Type="Int32" />
+    <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="ChuDe" Relationship="QuanLyTraSuaModel.FK_SanPham_ChuDe" FromRole="SanPham" ToRole="ChuDe" />
+    <NavigationProperty Name="LuaChons" Relationship="QuanLyTraSuaModel.FK_LuaChon_SanPham" FromRole="SanPham" ToRole="LuaChon" />
+  </EntityType>
+  <Association Name="FK_SanPham_ChuDe">
+    <End Type="QuanLyTraSuaModel.ChuDe" Role="ChuDe" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="QuanLyTraSuaModel.SanPham" Role="SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChuDe">
+        <PropertyRef Name="MaChuDe" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="MaChuDe" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LuaChon_SanPham">
+    <End Type="QuanLyTraSuaModel.SanPham" Role="SanPham" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="QuanLyTraSuaModel.LuaChon" Role="LuaChon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="MaSanPham" />
+      </Principal>
+      <Dependent Role="LuaChon">
+        <PropertyRef Name="MaSanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="ThongKeHoaDonTheoCacThang_Result">
+    <Property Type="Int32" Name="nam" Nullable="true" />
+    <Property Type="Int32" Name="thang" Nullable="true" />
+    <Property Type="Int32" Name="soluonghoadon" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ThongKeSanPhamTheoCacThang_Result">
+    <Property Type="Int32" Name="nam" Nullable="true" />
+    <Property Type="Int32" Name="thang" Nullable="true" />
+    <Property Type="Int32" Name="soluong" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ThongKeTienBanDuocTheoThang_Result">
+    <Property Type="Int32" Name="nam" Nullable="true" />
+    <Property Type="Int32" Name="thang" Nullable="true" />
+    <Property Type="Int32" Name="tongtien" Nullable="true" />
+  </ComplexType>
 </Schema>

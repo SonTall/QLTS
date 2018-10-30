@@ -185,6 +185,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ThongKeHoaDonTheoCacThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="nam" Type="int" />
+                <Property Name="thang" Type="int" />
+                <Property Name="soluonghoadon" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="ThongKeSanPhamTheoCacThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="nam" Type="int" />
+                <Property Name="thang" Type="int" />
+                <Property Name="soluong" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="ThongKeTienBanDuocTheoThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="nam" Type="int" />
+                <Property Name="thang" Type="int" />
+                <Property Name="tongtien" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="QuanLyTraSuaModelStoreContainer">
           <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HoaDon" EntityType="Self.HoaDon" Schema="dbo" store:Type="Tables" />
@@ -417,6 +450,9 @@
             <End Role="SanPham" EntitySet="SanPhams" />
             <End Role="LuaChon" EntitySet="LuaChons" />
           </AssociationSet>
+          <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
+          <FunctionImport Name="ThongKeSanPhamTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result)" />
+          <FunctionImport Name="ThongKeTienBanDuocTheoThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result)" />
         </EntityContainer>
         <EntityType Name="SanPham">
           <Key>
@@ -459,6 +495,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="ThongKeHoaDonTheoCacThang_Result">
+          <Property Type="Int32" Name="nam" Nullable="true" />
+          <Property Type="Int32" Name="thang" Nullable="true" />
+          <Property Type="Int32" Name="soluonghoadon" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ThongKeSanPhamTheoCacThang_Result">
+          <Property Type="Int32" Name="nam" Nullable="true" />
+          <Property Type="Int32" Name="thang" Nullable="true" />
+          <Property Type="Int32" Name="soluong" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ThongKeTienBanDuocTheoThang_Result">
+          <Property Type="Int32" Name="nam" Nullable="true" />
+          <Property Type="Int32" Name="thang" Nullable="true" />
+          <Property Type="Int32" Name="tongtien" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -554,6 +605,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ThongKeHoaDonTheoCacThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeHoaDonTheoCacThang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result">
+                <ScalarProperty Name="nam" ColumnName="nam" />
+                <ScalarProperty Name="thang" ColumnName="thang" />
+                <ScalarProperty Name="soluonghoadon" ColumnName="soluonghoadon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ThongKeSanPhamTheoCacThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeSanPhamTheoCacThang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result">
+                <ScalarProperty Name="nam" ColumnName="nam" />
+                <ScalarProperty Name="thang" ColumnName="thang" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ThongKeTienBanDuocTheoThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeTienBanDuocTheoThang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result">
+                <ScalarProperty Name="nam" ColumnName="nam" />
+                <ScalarProperty Name="thang" ColumnName="thang" />
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

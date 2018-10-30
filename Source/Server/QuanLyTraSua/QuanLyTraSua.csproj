@@ -245,6 +245,7 @@
     <Compile Include="Controllers\LuaChonsController.cs" />
     <Compile Include="Controllers\NhanViensController.cs" />
     <Compile Include="Controllers\SanPhamsController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\ToppingsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -283,6 +284,15 @@
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ThongKeHoaDonTheoCacThang_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKeSanPhamTheoCacThang_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKeTienBanDuocTheoThang_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="Topping.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>

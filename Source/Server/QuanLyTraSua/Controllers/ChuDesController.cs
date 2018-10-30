@@ -17,7 +17,10 @@ namespace QuanLyTraSua.Controllers
         private QuanLyTraSuaEntities db = new QuanLyTraSuaEntities();
 
         // GET: api/ChuDes
-        public IHttpActionResult GetChuDes()
+        //[ResponseType(typeof(ChuDe))]
+        [HttpGet]
+        [Route("~/api/ChuDes")]
+        public IHttpActionResult GetChuDe()
         {
             var listChuDe = db.ChuDes.Select(v => new Models.ChuDeViewModel { MaChuDe = v.MaChuDe, TenChuDe = v.TenChuDe, MoTa = v.MoTa });
             return Ok(listChuDe);

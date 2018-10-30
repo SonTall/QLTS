@@ -12,6 +12,8 @@ namespace QuanLyTraSua
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class QuanLyTraSuaEntities : DbContext
     {
@@ -33,5 +35,23 @@ namespace QuanLyTraSua
         public virtual DbSet<NhanVien> NhanViens { get; set; }
         public virtual DbSet<Topping> Toppings { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+    
+        [DbFunction("QuanLyTraSuaEntities", "ThongKeHoaDonTheoCacThang")]
+        public virtual IQueryable<ThongKeHoaDonTheoCacThang_Result> ThongKeHoaDonTheoCacThang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ThongKeHoaDonTheoCacThang_Result>("[QuanLyTraSuaEntities].[ThongKeHoaDonTheoCacThang]()");
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "ThongKeSanPhamTheoCacThang")]
+        public virtual IQueryable<ThongKeSanPhamTheoCacThang_Result> ThongKeSanPhamTheoCacThang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ThongKeSanPhamTheoCacThang_Result>("[QuanLyTraSuaEntities].[ThongKeSanPhamTheoCacThang]()");
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "ThongKeTienBanDuocTheoThang")]
+        public virtual IQueryable<ThongKeTienBanDuocTheoThang_Result> ThongKeTienBanDuocTheoThang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ThongKeTienBanDuocTheoThang_Result>("[QuanLyTraSuaEntities].[ThongKeTienBanDuocTheoThang]()");
+        }
     }
 }
