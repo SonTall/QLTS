@@ -125,3 +125,4 @@ D:\Tuanse\SonCao\Project\QuanLyTraSua\QuanLyTraSua\obj\Debug\QuanLyTraSua.csproj
 D:\Tuanse\SonCao\Project\QuanLyTraSua\QuanLyTraSua\obj\Debug\QuanLyTraSua.csproj.CopyComplete
 D:\Tuanse\SonCao\Project\QuanLyTraSua\QuanLyTraSua\obj\Debug\QuanLyTraSua.dll
 D:\Tuanse\SonCao\Project\QuanLyTraSua\QuanLyTraSua\obj\Debug\QuanLyTraSua.pdb
+D:\Tuanse\SonCao\Project\QuanLyTraSua\QuanLyTraSua\obj\Debug\QuanLyTraSua.csprojAssemblyReference.cache

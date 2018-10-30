@@ -68,18 +68,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SanPhams">
-      <EntityTypeMapping TypeName="QuanLyTraSuaModel.SanPham">
-        <MappingFragment StoreEntitySet="SanPham">
-          <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
-          <ScalarProperty Name="TenSanPham" ColumnName="TenSanPham" />
-          <ScalarProperty Name="KichCo" ColumnName="KichCo" />
-          <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
-          <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
-          <ScalarProperty Name="DonGia" ColumnName="DonGia" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Toppings">
       <EntityTypeMapping TypeName="QuanLyTraSuaModel.Topping">
         <MappingFragment StoreEntitySet="Topping">
@@ -90,5 +78,44 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SanPhams">
+      <EntityTypeMapping TypeName="QuanLyTraSuaModel.SanPham">
+        <MappingFragment StoreEntitySet="SanPham">
+          <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+          <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+          <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
+          <ScalarProperty Name="KichCo" ColumnName="KichCo" />
+          <ScalarProperty Name="TenSanPham" ColumnName="TenSanPham" />
+          <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ThongKeHoaDonTheoCacThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeHoaDonTheoCacThang">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result">
+          <ScalarProperty Name="nam" ColumnName="nam" />
+          <ScalarProperty Name="thang" ColumnName="thang" />
+          <ScalarProperty Name="soluonghoadon" ColumnName="soluonghoadon" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ThongKeSanPhamTheoCacThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeSanPhamTheoCacThang">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result">
+          <ScalarProperty Name="nam" ColumnName="nam" />
+          <ScalarProperty Name="thang" ColumnName="thang" />
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ThongKeTienBanDuocTheoThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeTienBanDuocTheoThang">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result">
+          <ScalarProperty Name="nam" ColumnName="nam" />
+          <ScalarProperty Name="thang" ColumnName="thang" />
+          <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
