@@ -28,13 +28,14 @@ namespace QuanLyTraSua.Controllers
         [ResponseType(typeof(HoaDon))]
         public IHttpActionResult GetHoaDon(int id)
         {
-            HoaDon hoaDon = db.HoaDons.Find(id);
-            if (hoaDon == null)
+            var hoaDonList = db.HoaDons.Where(v => v.MaHoaDon == id).Select(v => new HoaDonViewModel { MaHoaDon = v.MaHoaDon, MaKhachHang = v.MaKhachHang, MaNhanVien = v.MaNhanVien, MoTa = v.MoTa, NgayTao = v.NgayTao });
+
+            if (hoaDonList == null)
             {
                 return NotFound();
             }
 
-            return Ok(hoaDon);
+            return Ok(hoaDonList.ToList());
         }
 
         // PUT: api/HoaDons/5

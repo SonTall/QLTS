@@ -20,21 +20,31 @@ namespace QuanLyTraSua.Controllers
         // GET: api/LuaChons
         public IHttpActionResult GetLuaChons()
         {
-            var luaChonList =  db.LuaChons.Select(v => new LuaChonViewModel { MaLuaChon = v.MaLuaChon, MaSanPham = v.MaSanPham, MaTopping = v.MaTopping});
-            return Ok(luaChonList);
+            var luaChonList = db.LuaChons.Select(v => new LuaChonViewModel { MaLuaChon = v.MaLuaChon, MaSanPham = v.MaSanPham, MaTopping = v.MaTopping });
+            if (luaChonList != null)
+            {
+
+                return Ok(luaChonList);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
         }
 
         // GET: api/LuaChons/5
         [ResponseType(typeof(LuaChon))]
         public IHttpActionResult GetLuaChon(int id)
         {
-            LuaChon luaChon = db.LuaChons.Find(id);
-            if (luaChon == null)
+            var luaChonList = db.LuaChons.Where(v => v.MaLuaChon == id).Select(v => new LuaChonViewModel { MaLuaChon = v.MaLuaChon, MaSanPham = v.MaSanPham, MaTopping = v.MaTopping });
+
+            if (luaChonList == null)
             {
                 return NotFound();
             }
 
-            return Ok(luaChon);
+            return Ok(luaChonList.ToList());
         }
 
         // PUT: api/LuaChons/5

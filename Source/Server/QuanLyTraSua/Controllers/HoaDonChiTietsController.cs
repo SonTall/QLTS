@@ -21,20 +21,29 @@ namespace QuanLyTraSua.Controllers
         public IHttpActionResult GetHoaDonChiTiets()
         {
             var hoaDonChiTietList = db.HoaDonChiTiets.Select(v => new HoaDonChiTietViewModel { MaHoaDon = v.MaHoaDon, MaLuaChon = v.MaLuaChon, SoLuong = v.SoLuong });
-            return Ok(hoaDonChiTietList);
+            if (hoaDonChiTietList != null)
+            {
+                return Ok(hoaDonChiTietList);
+
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // GET: api/HoaDonChiTiets/5
         [ResponseType(typeof(HoaDonChiTiet))]
         public IHttpActionResult GetHoaDonChiTiet(int id)
         {
-            HoaDonChiTiet hoaDonChiTiet = db.HoaDonChiTiets.Find(id);
+            var hoaDonChiTiet = db.HoaDonChiTiets.Where(v => v.MaHoaDon == id).Select(v => new HoaDonChiTietViewModel { MaHoaDon = v.MaHoaDon, MaLuaChon = v.MaLuaChon, SoLuong = v.SoLuong });
+
             if (hoaDonChiTiet == null)
             {
                 return NotFound();
             }
 
-            return Ok(hoaDonChiTiet);
+            return Ok(hoaDonChiTiet.ToList());
         }
 
         // PUT: api/HoaDonChiTiets/5

@@ -21,20 +21,24 @@ namespace QuanLyTraSua.Controllers
         public IHttpActionResult GetNhanViens()
         {
             var nhanVienList = db.NhanViens.Select(v => new NhanViewViewModel { MaNhanVien = v.MaNhanVien, TenNhanVien = v.TenNhanVien, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, NgayBatDau = v.NgayBatDau, HinhAnh = v.HinhAnh });
-            return Ok(nhanVienList);
+            if (nhanVienList != null)
+                return Ok(nhanVienList);
+            else
+                return BadRequest();
         }
 
         // GET: api/NhanViens/5
         [ResponseType(typeof(NhanVien))]
         public IHttpActionResult GetNhanVien(int id)
         {
-            NhanVien nhanVien = db.NhanViens.Find(id);
-            if (nhanVien == null)
+            var nhanVienList = db.NhanViens.Where(v => v.MaNhanVien == id).Select(v => new NhanViewViewModel { MaNhanVien = v.MaNhanVien, TenNhanVien = v.TenNhanVien, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, NgayBatDau = v.NgayBatDau, HinhAnh = v.HinhAnh });
+
+            if (nhanVienList == null)
             {
                 return NotFound();
             }
 
-            return Ok(nhanVien);
+            return Ok(nhanVienList.ToList());
         }
 
         // PUT: api/NhanViens/5

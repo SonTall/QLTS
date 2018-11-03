@@ -21,6 +21,7 @@
     <NavigationProperty Name="KhachHang" Relationship="Self.FK_HoaDon_KhachHang" FromRole="HoaDon" ToRole="KhachHang" />
     <NavigationProperty Name="NhanVien" Relationship="Self.FK_HoaDon_NhanVien" FromRole="HoaDon" ToRole="NhanVien" />
     <NavigationProperty Name="HoaDonChiTiets" Relationship="Self.FK_HoaDonChiTiet_HoaDon1" FromRole="HoaDon" ToRole="HoaDonChiTiet" />
+    <NavigationProperty Name="KhuyenMais" Relationship="QuanLyTraSuaModel.GiamGia" FromRole="HoaDon" ToRole="KhuyenMai" />
   </EntityType>
   <EntityType Name="HoaDonChiTiet">
     <Key>
@@ -193,6 +194,11 @@
     <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
     <FunctionImport Name="ThongKeSanPhamTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result)" />
     <FunctionImport Name="ThongKeTienBanDuocTheoThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result)" />
+    <EntitySet Name="KhuyenMais" EntityType="QuanLyTraSuaModel.KhuyenMai" />
+    <AssociationSet Name="GiamGia" Association="QuanLyTraSuaModel.GiamGia">
+      <End Role="HoaDon" EntitySet="HoaDons" />
+      <End Role="KhuyenMai" EntitySet="KhuyenMais" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="SanPham">
     <Key>
@@ -250,4 +256,20 @@
     <Property Type="Int32" Name="thang" Nullable="true" />
     <Property Type="Int32" Name="tongtien" Nullable="true" />
   </ComplexType>
+  <EntityType Name="KhuyenMai">
+    <Key>
+      <PropertyRef Name="MaKhuyenMai" />
+    </Key>
+    <Property Name="MaKhuyenMai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenKhuyenMai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="GiaTri" Type="Double" />
+    <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NgayBatDau" Type="DateTime" Precision="3" />
+    <Property Name="NgayKetThuc" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="HoaDons" Relationship="QuanLyTraSuaModel.GiamGia" FromRole="KhuyenMai" ToRole="HoaDon" />
+  </EntityType>
+  <Association Name="GiamGia">
+    <End Type="QuanLyTraSuaModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+    <End Type="QuanLyTraSuaModel.KhuyenMai" Role="KhuyenMai" Multiplicity="*" />
+  </Association>
 </Schema>

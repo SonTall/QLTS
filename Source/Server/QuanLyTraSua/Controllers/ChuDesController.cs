@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using QuanLyTraSua;
+using QuanLyTraSua.Models;
 
 namespace QuanLyTraSua.Controllers
 {
@@ -18,25 +19,32 @@ namespace QuanLyTraSua.Controllers
 
         // GET: api/ChuDes
         //[ResponseType(typeof(ChuDe))]
-        [HttpGet]
-        [Route("~/api/ChuDes")]
+        //[HttpGet]
+        //[Route("~/api/ChuDes")]
         public IHttpActionResult GetChuDe()
         {
             var listChuDe = db.ChuDes.Select(v => new Models.ChuDeViewModel { MaChuDe = v.MaChuDe, TenChuDe = v.TenChuDe, MoTa = v.MoTa });
-            return Ok(listChuDe);
+
+            if (listChuDe != null)
+                return Ok(listChuDe.ToList());
+            else
+                return BadRequest();
         }
 
         // GET: api/ChuDes/5
+        //[HttpGet]
+        //[Route("~/api/ChuDes")]
         [ResponseType(typeof(ChuDe))]
         public IHttpActionResult GetChuDe(int id)
         {
-            ChuDe chuDe = db.ChuDes.Find(id);
+            var chuDe = db.ChuDes.Where(v => v.MaChuDe == id).Select(v => new Models.ChuDeViewModel { MaChuDe = v.MaChuDe, TenChuDe = v.TenChuDe, MoTa = v.MoTa });
+
             if (chuDe == null)
             {
                 return NotFound();
             }
 
-            return Ok(chuDe);
+            return Ok(chuDe.ToList());
         }
 
         // PUT: api/ChuDes/5
