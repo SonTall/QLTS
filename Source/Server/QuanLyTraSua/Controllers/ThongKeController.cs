@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyTraSua.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,8 +17,9 @@ namespace QuanLyTraSua.Controllers
         /// Dem so luong san pham trong bang san pham
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IHttpActionResult CountSanPham()
+        //[HttpGet]
+        [ActionName("CountSanPham")]
+        public IHttpActionResult GetAllSanPham()
         {
             using (var db = new QuanLyTraSuaEntities())
             {
@@ -31,8 +33,9 @@ namespace QuanLyTraSua.Controllers
         /// Dem so luong topping trong bang topping
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IHttpActionResult CountTopping()
+    //    [HttpGet]
+        [ActionName("CountTopping")]
+        public IHttpActionResult GetAllTopping()
         {
             using (var db = new QuanLyTraSuaEntities())
             {
@@ -47,8 +50,9 @@ namespace QuanLyTraSua.Controllers
         /// </summary>
         /// <param name="thang"></param>
         /// <returns></returns>
-        [HttpGet]
-        public IHttpActionResult TongHoaDonTheoThang(int thang)
+      //  [HttpGet]
+        [ActionName("SumHoaDonByThang")]
+        public IHttpActionResult GetSumHoaDonTheoThang(int thang)
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
             {
@@ -71,8 +75,9 @@ namespace QuanLyTraSua.Controllers
         /// <summary>
         /// thong ke tong hoa don da ban theo cac' thang'
         /// </summary>
-        [HttpGet]
-        public IHttpActionResult TongHoaDonTheoThang()
+       // [HttpGet]
+        //[Route("~api/ThongKe/TongHoaDonTheoThang")]
+        public IHttpActionResult GetTongHoaDonTheoThang()
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
             {
@@ -93,7 +98,8 @@ namespace QuanLyTraSua.Controllers
         /// </summary>
         /// <param name="thang"></param>
         /// <returns></returns>
-        [HttpGet]
+      //  [HttpGet]
+        //[Route("~api/ThongKe/TongHoaDonTheoThang")]
         public IHttpActionResult TongSanPhamBanTheoThang(int thang)
         {
             using (var db = new QuanLyTraSuaEntities())
@@ -116,7 +122,8 @@ namespace QuanLyTraSua.Controllers
         /// thong ke san pham da ban duoc theo cac' thang'
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        //   [HttpGet]
+        //   [Route("~api/ThongKe/TongHoaDonTheoThang")]
         public IHttpActionResult TongSanPhamBanTheoThang()
         {
             using (var db = new QuanLyTraSuaEntities())
@@ -138,7 +145,8 @@ namespace QuanLyTraSua.Controllers
         /// </summary>
         /// <param name="thang"></param>
         /// <returns></returns>
-        [HttpGet]
+        //   [HttpGet]
+        //   [Route("~api/ThongKe/TongHoaDonTheoThang")]
         public IHttpActionResult TongTienBanDuocTheoThang(int nam, int thang)
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
@@ -159,7 +167,8 @@ namespace QuanLyTraSua.Controllers
         /// thong ke tong tien da ban duoc theo cac thang
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        // [HttpGet]
+        //   [Route("~api/ThongKe/TongTienBanDuocTheoThang")]
         public IHttpActionResult TongTienBanDuocTheoThang()
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
@@ -180,6 +189,34 @@ namespace QuanLyTraSua.Controllers
         #endregion
 
         #region LietKe
+        [Route("api/ThongKe/GetListHoaDonByThang")]
+        // [ActionName("GetListHoaDonByThang")]
+        public IHttpActionResult GetListHoaDonByThang(int nam, int thang)
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                var hoaDonList = db.HoaDons.Select(v => new HoaDonViewModel
+                {
+                    MaHoaDon = v.MaHoaDon,
+                    MaKhachHang = v.MaKhachHang,
+                    MaNhanVien = v.MaNhanVien,
+                    MoTa = v.MoTa,
+                    NgayTao = v.NgayTao
+                    //var hoaDonList = db.HoaDons.Select(v => new
+                    //{
+                    //     v.MaHoaDon,
+                    //     v.NgayTao
+                }).Where(v => v.NgayTao.Value.Month == thang && v.NgayTao.Value.Year == nam);
+
+
+                if (hoaDonList != null)
+                {
+                    return Ok(hoaDonList.ToList());
+                }
+                else
+                    return NotFound();
+            }
+        }
         #endregion
     }
 }

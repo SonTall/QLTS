@@ -13,6 +13,14 @@
           <Property Name="TenChuDe" Type="nvarchar" MaxLength="200" />
           <Property Name="MoTa" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="GiamGia">
+          <Key>
+            <PropertyRef Name="MaKhuyenMai" />
+            <PropertyRef Name="MaHoaDon" />
+          </Key>
+          <Property Name="MaKhuyenMai" Type="int" Nullable="false" />
+          <Property Name="MaHoaDon" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="HoaDon">
           <Key>
             <PropertyRef Name="MaHoaDon" />
@@ -44,6 +52,17 @@
           <Property Name="SDT" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="nvarchar" MaxLength="200" />
           <Property Name="HinhAnh" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="KhuyenMai">
+          <Key>
+            <PropertyRef Name="MaKhuyenMai" />
+          </Key>
+          <Property Name="MaKhuyenMai" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="200" />
+          <Property Name="GiaTri" Type="float" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="200" />
+          <Property Name="NgayBatDau" Type="datetime" />
+          <Property Name="NgayKetThuc" Type="datetime" />
         </EntityType>
         <EntityType Name="LuaChon">
           <Key>
@@ -87,6 +106,34 @@
           <Property Name="HinhAnh" Type="nvarchar" MaxLength="200" />
           <Property Name="DonGia" Type="money" />
         </EntityType>
+        <Association Name="FK_GiamGia_HoaDon">
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GiamGia" Type="Self.GiamGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HoaDon">
+              <PropertyRef Name="MaHoaDon" />
+            </Principal>
+            <Dependent Role="GiamGia">
+              <PropertyRef Name="MaHoaDon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GiamGia_KhuyenMai">
+          <End Role="KhuyenMai" Type="Self.KhuyenMai" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GiamGia" Type="Self.GiamGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhuyenMai">
+              <PropertyRef Name="MaKhuyenMai" />
+            </Principal>
+            <Dependent Role="GiamGia">
+              <PropertyRef Name="MaKhuyenMai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HoaDon_KhachHang">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -220,13 +267,23 @@
         </Function>
         <EntityContainer Name="QuanLyTraSuaModelStoreContainer">
           <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GiamGia" EntityType="Self.GiamGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HoaDon" EntityType="Self.HoaDon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HoaDonChiTiet" EntityType="Self.HoaDonChiTiet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LuaChon" EntityType="Self.LuaChon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topping" EntityType="Self.Topping" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GiamGia_HoaDon" Association="Self.FK_GiamGia_HoaDon">
+            <End Role="HoaDon" EntitySet="HoaDon" />
+            <End Role="GiamGia" EntitySet="GiamGia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GiamGia_KhuyenMai" Association="Self.FK_GiamGia_KhuyenMai">
+            <End Role="KhuyenMai" EntitySet="KhuyenMai" />
+            <End Role="GiamGia" EntitySet="GiamGia" />
+          </AssociationSet>
           <AssociationSet Name="FK_HoaDon_KhachHang" Association="Self.FK_HoaDon_KhachHang">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="HoaDon" EntitySet="HoaDon" />
@@ -281,6 +338,7 @@
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_HoaDon_KhachHang" FromRole="HoaDon" ToRole="KhachHang" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK_HoaDon_NhanVien" FromRole="HoaDon" ToRole="NhanVien" />
           <NavigationProperty Name="HoaDonChiTiets" Relationship="Self.FK_HoaDonChiTiet_HoaDon1" FromRole="HoaDon" ToRole="HoaDonChiTiet" />
+          <NavigationProperty Name="KhuyenMais" Relationship="QuanLyTraSuaModel.GiamGia" FromRole="HoaDon" ToRole="KhuyenMai" />
         </EntityType>
         <EntityType Name="HoaDonChiTiet">
           <Key>
@@ -453,6 +511,11 @@
           <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
           <FunctionImport Name="ThongKeSanPhamTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result)" />
           <FunctionImport Name="ThongKeTienBanDuocTheoThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result)" />
+          <EntitySet Name="KhuyenMais" EntityType="QuanLyTraSuaModel.KhuyenMai" />
+          <AssociationSet Name="GiamGia" Association="QuanLyTraSuaModel.GiamGia">
+            <End Role="HoaDon" EntitySet="HoaDons" />
+            <End Role="KhuyenMai" EntitySet="KhuyenMais" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="SanPham">
           <Key>
@@ -510,6 +573,22 @@
           <Property Type="Int32" Name="thang" Nullable="true" />
           <Property Type="Int32" Name="tongtien" Nullable="true" />
         </ComplexType>
+        <EntityType Name="KhuyenMai">
+          <Key>
+            <PropertyRef Name="MaKhuyenMai" />
+          </Key>
+          <Property Name="MaKhuyenMai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenKhuyenMai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GiaTri" Type="Double" />
+          <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NgayBatDau" Type="DateTime" Precision="3" />
+          <Property Name="NgayKetThuc" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HoaDons" Relationship="QuanLyTraSuaModel.GiamGia" FromRole="KhuyenMai" ToRole="HoaDon" />
+        </EntityType>
+        <Association Name="GiamGia">
+          <End Type="QuanLyTraSuaModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+          <End Type="QuanLyTraSuaModel.KhuyenMai" Role="KhuyenMai" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -632,6 +711,26 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="KhuyenMais">
+            <EntityTypeMapping TypeName="QuanLyTraSuaModel.KhuyenMai">
+              <MappingFragment StoreEntitySet="KhuyenMai">
+                <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
+                <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
+                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+                <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="GiamGia" TypeName="QuanLyTraSuaModel.GiamGia" StoreEntitySet="GiamGia">
+            <EndProperty Name="KhuyenMai">
+              <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+            </EndProperty>
+            <EndProperty Name="HoaDon">
+              <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

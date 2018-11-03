@@ -21,20 +21,24 @@ namespace QuanLyTraSua.Controllers
         public IHttpActionResult GetSanPhams()
         {
             var sanPhamList = db.SanPhams.Select(v => new SanPhamViewModel { MaSanPham = v.MaSanPham, TenSanPham = v.TenSanPham, KichCo = v.KichCo, DonGia = v.DonGia, HinhAnh = v.HinhAnh, MaChuDe = v.MaChuDe });
-            return Ok(sanPhamList);
+            if (sanPhamList != null)
+                return Ok(sanPhamList);
+            else
+                return BadRequest();
         }
 
         // GET: api/SanPhams/5
         [ResponseType(typeof(SanPham))]
-        public IHttpActionResult GetSanPham(int id)
+        public IHttpActionResult GetSanPhams(int id)
         {
-            SanPham sanPham = db.SanPhams.Find(id);
+            var sanPham = db.SanPhams.Where(v => v.MaSanPham == id).Select(v => new SanPhamViewModel { MaSanPham = v.MaSanPham, TenSanPham = v.TenSanPham, KichCo = v.KichCo, DonGia = v.DonGia, HinhAnh = v.HinhAnh, MaChuDe = v.MaChuDe });
+
             if (sanPham == null)
             {
                 return NotFound();
             }
 
-            return Ok(sanPham);
+            return Ok(sanPham.ToList());
         }
 
         // PUT: api/SanPhams/5

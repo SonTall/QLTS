@@ -238,10 +238,12 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChuDesController.cs" />
+    <Compile Include="Controllers\GiamGiasController.cs" />
     <Compile Include="Controllers\HoaDonChiTietsController.cs" />
     <Compile Include="Controllers\HoaDonsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhachHangsController.cs" />
+    <Compile Include="Controllers\KhuyenMaisController.cs" />
     <Compile Include="Controllers\LuaChonsController.cs" />
     <Compile Include="Controllers\NhanViensController.cs" />
     <Compile Include="Controllers\SanPhamsController.cs" />
@@ -260,6 +262,9 @@
     <Compile Include="KhachHang.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
+    <Compile Include="KhuyenMai.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="LuaChon.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
@@ -270,6 +275,7 @@
     <Compile Include="Models\HoaDonViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KhachHangViewModel.cs" />
+    <Compile Include="Models\KhuyenMaiViewModel.cs" />
     <Compile Include="Models\LuaChonViewModel.cs" />
     <Compile Include="Models\NhanViewViewModel.cs" />
     <Compile Include="Models\SanPhamViewModel.cs" />

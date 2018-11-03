@@ -35,6 +35,7 @@ namespace QuanLyTraSua
         public virtual DbSet<NhanVien> NhanViens { get; set; }
         public virtual DbSet<Topping> Toppings { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<KhuyenMai> KhuyenMais { get; set; }
     
         [DbFunction("QuanLyTraSuaEntities", "ThongKeHoaDonTheoCacThang")]
         public virtual IQueryable<ThongKeHoaDonTheoCacThang_Result> ThongKeHoaDonTheoCacThang()

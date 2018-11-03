@@ -12,26 +12,22 @@ namespace QuanLyTraSua
     using System;
     using System.Collections.Generic;
     
-    public partial class HoaDon
+    public partial class KhuyenMai
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HoaDon()
+        public KhuyenMai()
         {
-            this.HoaDonChiTiets = new HashSet<HoaDonChiTiet>();
-            this.KhuyenMais = new HashSet<KhuyenMai>();
+            this.HoaDons = new HashSet<HoaDon>();
         }
     
-        public int MaHoaDon { get; set; }
-        public Nullable<int> MaKhachHang { get; set; }
-        public Nullable<int> MaNhanVien { get; set; }
-        public Nullable<System.DateTime> NgayTao { get; set; }
+        public int MaKhuyenMai { get; set; }
+        public string TenKhuyenMai { get; set; }
+        public Nullable<double> GiaTri { get; set; }
         public string MoTa { get; set; }
+        public Nullable<System.DateTime> NgayBatDau { get; set; }
+        public Nullable<System.DateTime> NgayKetThuc { get; set; }
     
-        public virtual KhachHang KhachHang { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KhuyenMai> KhuyenMais { get; set; }
+        public virtual ICollection<HoaDon> HoaDons { get; set; }
     }
 }

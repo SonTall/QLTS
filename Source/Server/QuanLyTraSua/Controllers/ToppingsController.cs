@@ -20,20 +20,24 @@ namespace QuanLyTraSua.Controllers
         public IHttpActionResult GetToppings()
         {
             var toppingList = db.Toppings.Select(v => new ToppingViewModel { MaTopping = v.MaTopping, TenTopping = v.TenTopping, DonGia = v.DonGia, HinhAnh = v.HinhAnh });
-            return Ok(toppingList);
+            if (toppingList != null)
+                return Ok(toppingList);
+            else
+                return BadRequest();
         }
 
         // GET: api/Toppings/5
         [ResponseType(typeof(Topping))]
         public IHttpActionResult GetTopping(int id)
         {
-            Topping topping = db.Toppings.Find(id);
-            if (topping == null)
+            var toppingList = db.Toppings.Where(v => v.MaTopping == id).Select(v => new ToppingViewModel { MaTopping = v.MaTopping, TenTopping = v.TenTopping, DonGia = v.DonGia, HinhAnh = v.HinhAnh });
+
+            if (toppingList == null)
             {
                 return NotFound();
             }
 
-            return Ok(topping);
+            return Ok(toppingList.ToList());
         }
 
         // PUT: api/Toppings/5

@@ -20,21 +20,26 @@ namespace QuanLyTraSua.Controllers
         // GET: api/KhachHangs
         public IHttpActionResult GetKhachHangs()
         {
-            var khachHangList =  db.KhachHangs.Select(v => new KhachHangViewModel { MaKhachHang = v.MaKhachHang, TenKhachHang = v.TenKhachHang, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, HinhAnh = v.HinhAnh});
-            return Ok(khachHangList);
+            var khachHangList = db.KhachHangs.Select(v => new KhachHangViewModel { MaKhachHang = v.MaKhachHang, TenKhachHang = v.TenKhachHang, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, HinhAnh = v.HinhAnh });
+            if (khachHangList != null)
+                return Ok(khachHangList);
+            else
+                return BadRequest();
+
         }
 
         // GET: api/KhachHangs/5
         [ResponseType(typeof(KhachHang))]
         public IHttpActionResult GetKhachHang(int id)
         {
-            KhachHang khachHang = db.KhachHangs.Find(id);
-            if (khachHang == null)
+            var khachHangList = db.KhachHangs.Where(v => v.MaKhachHang == id).Select(v => new KhachHangViewModel { MaKhachHang = v.MaKhachHang, TenKhachHang = v.TenKhachHang, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, HinhAnh = v.HinhAnh });
+
+            if (khachHangList == null)
             {
                 return NotFound();
             }
 
-            return Ok(khachHang);
+            return Ok(khachHangList.ToList());
         }
 
         // PUT: api/KhachHangs/5
