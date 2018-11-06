@@ -17,8 +17,9 @@ namespace QuanLyTraSua.Controllers
         /// Dem so luong san pham trong bang san pham
         /// </summary>
         /// <returns></returns>
-        //[HttpGet]
-        [ActionName("CountSanPham")]
+        [HttpGet]
+        //[ActionName("CountSanPham")]
+        [Route("api/ThongKe/GetAllSanPham")]
         public IHttpActionResult GetAllSanPham()
         {
             using (var db = new QuanLyTraSuaEntities())
@@ -33,8 +34,9 @@ namespace QuanLyTraSua.Controllers
         /// Dem so luong topping trong bang topping
         /// </summary>
         /// <returns></returns>
-    //    [HttpGet]
-        [ActionName("CountTopping")]
+        [HttpGet]
+        [Route("api/ThongKe/GetAllTopping")]
+        //[ActionName("CountTopping")]
         public IHttpActionResult GetAllTopping()
         {
             using (var db = new QuanLyTraSuaEntities())
@@ -50,8 +52,8 @@ namespace QuanLyTraSua.Controllers
         /// </summary>
         /// <param name="thang"></param>
         /// <returns></returns>
-      //  [HttpGet]
-        [ActionName("SumHoaDonByThang")]
+        [HttpGet]
+        [Route("api/ThongKe/GetSumHoaDonTheoThang")]
         public IHttpActionResult GetSumHoaDonTheoThang(int thang)
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
@@ -75,8 +77,8 @@ namespace QuanLyTraSua.Controllers
         /// <summary>
         /// thong ke tong hoa don da ban theo cac' thang'
         /// </summary>
-       // [HttpGet]
-        //[Route("~api/ThongKe/TongHoaDonTheoThang")]
+        [HttpGet]
+        [Route("api/ThongKe/TongHoaDonTheoThang")]
         public IHttpActionResult GetTongHoaDonTheoThang()
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
@@ -98,9 +100,9 @@ namespace QuanLyTraSua.Controllers
         /// </summary>
         /// <param name="thang"></param>
         /// <returns></returns>
-      //  [HttpGet]
-        //[Route("~api/ThongKe/TongHoaDonTheoThang")]
-        public IHttpActionResult TongSanPhamBanTheoThang(int thang)
+        [HttpGet]
+        [Route("api/ThongKe/TongHoaDonTheoThang")]
+        public IHttpActionResult GetTongSanPhamBanTheoThang(int thang)
         {
             using (var db = new QuanLyTraSuaEntities())
             {
@@ -122,9 +124,9 @@ namespace QuanLyTraSua.Controllers
         /// thong ke san pham da ban duoc theo cac' thang'
         /// </summary>
         /// <returns></returns>
-        //   [HttpGet]
-        //   [Route("~api/ThongKe/TongHoaDonTheoThang")]
-        public IHttpActionResult TongSanPhamBanTheoThang()
+        [HttpGet]
+        [Route("api/ThongKe/TongHoaDonTheoThang")]
+        public IHttpActionResult GetTongSanPhamBanTheoThang()
         {
             using (var db = new QuanLyTraSuaEntities())
             {
@@ -145,9 +147,9 @@ namespace QuanLyTraSua.Controllers
         /// </summary>
         /// <param name="thang"></param>
         /// <returns></returns>
-        //   [HttpGet]
-        //   [Route("~api/ThongKe/TongHoaDonTheoThang")]
-        public IHttpActionResult TongTienBanDuocTheoThang(int nam, int thang)
+        [HttpGet]
+        [Route("api/ThongKe/TongHoaDonTheoThang")]
+        public IHttpActionResult GetTongTienBanDuocTheoThang(int nam, int thang)
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
             {
@@ -167,9 +169,9 @@ namespace QuanLyTraSua.Controllers
         /// thong ke tong tien da ban duoc theo cac thang
         /// </summary>
         /// <returns></returns>
-        // [HttpGet]
-        //   [Route("~api/ThongKe/TongTienBanDuocTheoThang")]
-        public IHttpActionResult TongTienBanDuocTheoThang()
+        [HttpGet]
+        [Route("api/ThongKe/TongTienBanDuocTheoThang")]
+        public IHttpActionResult GetTongTienBanDuocTheoThang()
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
             {
@@ -186,6 +188,48 @@ namespace QuanLyTraSua.Controllers
             }
         }
 
+        /// <summary>
+        /// tong so hoa don ban duoc theo ngay
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/TongHoaDonTheoNgay")]
+        public IHttpActionResult GetTongHoaDonTheoNgay()
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                DateTime dateTime = DateTime.Now;
+                var tongHoaDon = db.HoaDons.Where(v => v.NgayTao.Value.Year == dateTime.Year && v.NgayTao.Value.Month == dateTime.Month && v.NgayTao.Value.Day == dateTime.Day);
+                if(tongHoaDon != null)
+                {
+                    return Ok(tongHoaDon.Count());
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("api/ThongKe/TongKhuyenMaiApDungDangApDung")]
+        public IHttpActionResult GetTongKhuyenMaiApDungDangApDung()
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                DateTime dateTime = DateTime.Now;
+                var tongKhuyenMai = db.KhuyenMais.Where(v => v.NgayBatDau.Value <= dateTime && v.NgayKetThuc.Value > dateTime);
+
+                if (tongKhuyenMai != null)
+                {
+                    return Ok(tongKhuyenMai.Count());
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
         #endregion
 
         #region LietKe

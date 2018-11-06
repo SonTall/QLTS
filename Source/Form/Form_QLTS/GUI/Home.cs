@@ -12,6 +12,7 @@ namespace Form_QLTS.GUI
 {
     public partial class Home : Form
     {
+        RESTful requestData = new RESTful();
         public Home()
         {
             InitializeComponent();
@@ -30,7 +31,22 @@ namespace Form_QLTS.GUI
                 MessageBox.Show("haha");
                 form2.ShowDialog();
             }
-            
+
+        }
+
+        private void bunifuCustomLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+            lbNgay.Text = "Hóa đơn đã bán được ngày: " + DateTime.Now.ToString("dd/MM/yyyy");
+
+            lbSoHoaDon.Text = requestData.GetTongHoaDonTheoNgay().ToString();
+            lbSoSanPham.Text = requestData.GetTongSanPham().ToString();
+            lbSoTopping.Text = requestData.GetTongTopping().ToString();
+            lbSoKhuyenMai.Text = requestData.GetTongKhuyenMaiDangApDung().ToString();
         }
     }
 }
