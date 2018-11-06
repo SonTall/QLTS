@@ -40,5 +40,31 @@ namespace Form_QLTS
         {
             Application.Exit();
         }
+
+        private void btnTrangChu_Click(object sender, EventArgs e)
+        {
+            ClearRenderbody();
+            Home home = new Home();
+            home.TopLevel = false;
+            home.Width = pnlBody.Width;
+            home.Height = pnlBody.Height;
+            home.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            pnlBody.Controls.Add(home);
+            home.Show();
+        }
+
+        private void btnHoaDon_Click(object sender, EventArgs e)
+        {
+            ClearRenderbody();
+            HoaDon hoaDon = new HoaDon();
+            hoaDon.TopLevel = false;
+            hoaDon.Width = pnlBody.Width;
+            hoaDon.Height = pnlBody.Height;
+            hoaDon.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            pnlBody.Controls.Add(hoaDon);
+            hoaDon.Show();
+        }
+
+       
     }
 }
