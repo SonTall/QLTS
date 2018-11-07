@@ -43,36 +43,44 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/NhanViens/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutNhanVien(int id, NhanVien nhanVien)
+        public IHttpActionResult PutNhanVien(NhanVien nhanVien)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            if (id != nhanVien.MaNhanVien)
+            //if (id != nhanVien.MaNhanVien)
+            //{
+            //    return BadRequest();
+            //}
+            var nhanVienCurrent = db.NhanViens.SingleOrDefault(v => v.MaNhanVien == nhanVien.MaNhanVien);
+            if (nhanVienCurrent != null)
             {
-                return BadRequest();
-            }
 
-            db.Entry(nhanVien).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NhanVienExists(id))
+                db.Entry(nhanVien).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    //if (!NhanVienExists(id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                        throw;
+                    //}
                 }
             }
-
+            else
+            {
+                return NotFound();
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 

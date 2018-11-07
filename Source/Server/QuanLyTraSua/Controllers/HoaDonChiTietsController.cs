@@ -48,35 +48,47 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/HoaDonChiTiets/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutHoaDonChiTiet(int id, HoaDonChiTiet hoaDonChiTiet)
+        public IHttpActionResult PutHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != hoaDonChiTiet.MaHoaDon)
+            //if (id != hoaDonChiTiet.MaHoaDon)
+            //{
+            //    return BadRequest();
+            //}
+
+            var hoaDonCurrent = db.HoaDonChiTiets.SingleOrDefault(v => v.MaHoaDon == hoaDonChiTiet.MaHoaDon);
+
+            if (hoaDonCurrent != null)
             {
-                return BadRequest();
+
+
+                db.Entry(hoaDonChiTiet).State = EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                //    if (!HoaDonChiTietExists(id))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                        throw;
+                    //}
+                }
+            }
+            else
+            {
+                return NotFound();
             }
 
-            db.Entry(hoaDonChiTiet).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HoaDonChiTietExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }

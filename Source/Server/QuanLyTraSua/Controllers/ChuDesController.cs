@@ -49,34 +49,43 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/ChuDes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutChuDe(int id, ChuDe chuDe)
+        public IHttpActionResult PutChuDe(ChuDe chuDe)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != chuDe.MaChuDe)
-            {
-                return BadRequest();
-            }
+            //if (id != chuDe.MaChuDe)
+            //{
+            //    return BadRequest();
+            //}
+            var chuDeCurrent = db.ChuDes.SingleOrDefault(v => v.MaChuDe == chuDe.MaChuDe);
 
-            db.Entry(chuDe).State = EntityState.Modified;
+            if (chuDeCurrent != null)
+            {
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ChuDeExists(id))
+                db.Entry(chuDe).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
+                    //if (!ChuDeExists(id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
                     throw;
+                    //}
                 }
+            }
+            else
+            {
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);

@@ -49,36 +49,42 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/LuaChons/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutLuaChon(int id, LuaChon luaChon)
+        public IHttpActionResult PutLuaChon(LuaChon luaChon)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            if (id != luaChon.MaLuaChon)
+            //if (id != luaChon.MaLuaChon)
+            //{
+            //    return BadRequest();
+            //}
+            var luaChonCurrent = db.LuaChons.SingleOrDefault(v => v.MaLuaChon == luaChon.MaLuaChon);
+            if (luaChonCurrent != null)
             {
-                return BadRequest();
-            }
+                db.Entry(luaChon).State = EntityState.Modified;
 
-            db.Entry(luaChon).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LuaChonExists(id))
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    //if (!LuaChonExists(id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                        throw;
+                    //}
                 }
             }
-
+            else
+            {
+                return NotFound();
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 

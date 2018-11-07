@@ -44,34 +44,35 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/KhachHangs/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKhachHang(int id, KhachHang khachHang)
+        public IHttpActionResult PutKhachHang(KhachHang khachHang)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != khachHang.MaKhachHang)
-            {
-                return BadRequest();
-            }
 
-            db.Entry(khachHang).State = EntityState.Modified;
+            var khachHangCurrent = db.KhachHangs.SingleOrDefault(v => v.MaKhachHang == khachHang.MaKhachHang);
 
-            try
+            if (khachHangCurrent != null)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!KhachHangExists(id))
+                db.Entry(khachHang).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
+                    //if (!KhachHangExists(id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
                     throw;
+                    //}
                 }
+            }
+            else
+            {
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);

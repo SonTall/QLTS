@@ -45,34 +45,42 @@ namespace QuanLyTraSua.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutSanPham(int id, SanPham sanPham)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            if (id != sanPham.MaSanPham)
-            {
-                return BadRequest();
-            }
+            //if (id != sanPham.MaSanPham)
+            //{
+            //    return BadRequest();
+            //}
+            var sanPhamCurrent = db.SanPhams.SingleOrDefault(v => v.MaSanPham == sanPham.MaSanPham);
 
-            db.Entry(sanPham).State = EntityState.Modified;
+            if (sanPhamCurrent != null)
+            {
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SanPhamExists(id))
+                db.Entry(sanPham).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
+                    //if (!SanPhamExists(id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
                     throw;
+                    // }
                 }
             }
-
+            else
+            {
+                return NotFound();
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 
