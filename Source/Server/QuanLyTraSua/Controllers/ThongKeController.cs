@@ -200,7 +200,7 @@ namespace QuanLyTraSua.Controllers
             {
                 DateTime dateTime = DateTime.Now;
                 var tongHoaDon = db.HoaDons.Where(v => v.NgayTao.Value.Year == dateTime.Year && v.NgayTao.Value.Month == dateTime.Month && v.NgayTao.Value.Day == dateTime.Day);
-                if(tongHoaDon != null)
+                if (tongHoaDon != null)
                 {
                     return Ok(tongHoaDon.Count());
                 }
@@ -211,6 +211,11 @@ namespace QuanLyTraSua.Controllers
             }
         }
 
+
+        /// <summary>
+        /// dem tong so khuyen mai dang duoc ap dung
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/ThongKe/TongKhuyenMaiApDungDangApDung")]
         public IHttpActionResult GetTongKhuyenMaiApDungDangApDung()
@@ -230,9 +235,12 @@ namespace QuanLyTraSua.Controllers
                 }
             }
         }
+
+
         #endregion
 
         #region LietKe
+        [HttpGet]
         [Route("api/ThongKe/GetListHoaDonByThang")]
         // [ActionName("GetListHoaDonByThang")]
         public IHttpActionResult GetListHoaDonByThang(int nam, int thang)
@@ -261,6 +269,99 @@ namespace QuanLyTraSua.Controllers
                     return NotFound();
             }
         }
+
+        /// <summary>
+        /// liet ke danh sach khuyen mai dang duoc ap dung
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListKhuyenMaiDangDuocApDung")]
+        public IHttpActionResult GetListKhuyenMaiDangDuocApDung()
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                DateTime dateTime = DateTime.Now;
+                var tongKhuyenMai = db.KhuyenMais.Where(v => v.NgayBatDau.Value <= dateTime && v.NgayKetThuc.Value > dateTime).Select(n => new KhuyenMaiViewModel
+                {
+                    MaKhuyenMai = n.MaKhuyenMai,
+                    TenKhuyenMai = n.TenKhuyenMai,
+                    GiaTri = n.GiaTri,
+                    MoTa = n.MoTa,
+                    NgayBatDau = n.NgayBatDau,
+                    NgayKetThuc = n.NgayKetThuc,
+                });
+
+
+                if (tongKhuyenMai != null)
+                {
+                    return Ok(tongKhuyenMai.ToList());
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        /// <summary>
+        /// liet ke danh sach san pham? loc. theo ma~ chu? de`
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListSanPhamByMaChuDe")]
+        public IHttpActionResult GetListSanPhamByMaChuDe(int maChuDe)
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                var sanPhamList = db.SanPhams.Where(v => v.MaChuDe == maChuDe).Select(n => new SanPhamViewModel
+                {
+                    MaSanPham = n.MaSanPham,
+                    TenSanPham = n.TenSanPham,
+                    KichCo = n.KichCo,
+                    DonGia = n.DonGia,
+                    HinhAnh = n.HinhAnh,
+                    MaChuDe = n.MaChuDe
+                });
+
+                if (sanPhamList != null)
+                {
+                    return Ok(sanPhamList.ToList());
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        /// <summary>
+        /// liet ke danh sach cac chu de`
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListChuDe")]
+        public IHttpActionResult GetListChuDe()
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                var chuDeList = db.ChuDes.OrderBy(v => v.TenChuDe).Select(n => new ChuDeViewModel
+                {
+                    MaChuDe = n.MaChuDe,
+                    TenChuDe = n.TenChuDe,
+                    MoTa = n.MoTa
+                });
+
+                if (chuDeList != null)
+                {
+                    return Ok(chuDeList.ToList());
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
         #endregion
     }
 }

@@ -81,9 +81,20 @@
     <Compile Include="GUI\ThemHoaDon.Designer.cs">
       <DependentUpon>ThemHoaDon.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ThemSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\ThemSanPham.Designer.cs">
+      <DependentUpon>ThemSanPham.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RESTful.cs" />
+    <Compile Include="CallAPI.cs" />
+    <Compile Include="ViewModel\ChuDeViewModel.cs" />
+    <Compile Include="ViewModel\GioHang.cs" />
+    <Compile Include="ViewModel\KhuyenMaiViewModel.cs" />
+    <Compile Include="ViewModel\SanPhamViewModel.cs" />
+    <Compile Include="ViewModel\ToppingViewModel.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -95,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ThemHoaDon.resx">
       <DependentUpon>ThemHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThemSanPham.resx">
+      <DependentUpon>ThemSanPham.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -119,8 +133,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
