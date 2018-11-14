@@ -12,7 +12,7 @@ namespace Form_QLTS.GUI
 {
     public partial class Home : Form
     {
-        RESTful requestData = new RESTful();
+        CallAPI requestData = new CallAPI();
         public Home()
         {
             InitializeComponent();
@@ -43,10 +43,20 @@ namespace Form_QLTS.GUI
         {
             lbNgay.Text = "Hóa đơn đã bán được ngày: " + DateTime.Now.ToString("dd/MM/yyyy");
 
+            #region ThongKe
+
+            // 4 o ben tren
             lbSoHoaDon.Text = requestData.GetTongHoaDonTheoNgay().ToString();
             lbSoSanPham.Text = requestData.GetTongSanPham().ToString();
             lbSoTopping.Text = requestData.GetTongTopping().ToString();
             lbSoKhuyenMai.Text = requestData.GetTongKhuyenMaiDangApDung().ToString();
+
+            // bang khuyen mai dang duoc ap dung
+            //dgvKhuyenMai.DataSource = requestData.GetListKhuyenMaiDangDuocApDung();
+            var temp = requestData.GetListKhuyenMaiDangDuocApDung();
+            dgvKhuyenMai.DataSource = temp;
+            
+            #endregion
         }
     }
 }

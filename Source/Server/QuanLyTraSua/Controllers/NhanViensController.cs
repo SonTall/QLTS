@@ -22,7 +22,7 @@ namespace QuanLyTraSua.Controllers
         {
             var nhanVienList = db.NhanViens.Select(v => new NhanViewViewModel { MaNhanVien = v.MaNhanVien, TenNhanVien = v.TenNhanVien, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, NgayBatDau = v.NgayBatDau, HinhAnh = v.HinhAnh });
             if (nhanVienList != null)
-                return Ok(nhanVienList);
+                return Ok(nhanVienList.ToList());
             else
                 return BadRequest();
         }
