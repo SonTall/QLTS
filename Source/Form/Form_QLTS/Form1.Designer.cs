@@ -125,6 +125,7 @@
             this.btnThongTin.Name = "btnThongTin";
             this.btnThongTin.Size = new System.Drawing.Size(91, 87);
             this.btnThongTin.TabIndex = 2;
+            this.btnThongTin.Click += new System.EventHandler(this.btnThongTin_Click);
             // 
             // bunifuTileButton3
             // 

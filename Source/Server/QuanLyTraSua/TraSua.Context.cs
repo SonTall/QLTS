@@ -36,6 +36,8 @@ namespace QuanLyTraSua
         public virtual DbSet<Topping> Toppings { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
         public virtual DbSet<KhuyenMai> KhuyenMais { get; set; }
+        public virtual DbSet<Quyen> Quyens { get; set; }
+        public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
     
         [DbFunction("QuanLyTraSuaEntities", "ThongKeHoaDonTheoCacThang")]
         public virtual IQueryable<ThongKeHoaDonTheoCacThang_Result> ThongKeHoaDonTheoCacThang()
@@ -53,6 +55,101 @@ namespace QuanLyTraSua
         public virtual IQueryable<ThongKeTienBanDuocTheoThang_Result> ThongKeTienBanDuocTheoThang()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ThongKeTienBanDuocTheoThang_Result>("[QuanLyTraSuaEntities].[ThongKeTienBanDuocTheoThang]()");
+        }
+    
+        public virtual int DeletePhanQuyen(Nullable<int> maTaiKhoan, Nullable<int> maQuyen)
+        {
+            var maTaiKhoanParameter = maTaiKhoan.HasValue ?
+                new ObjectParameter("maTaiKhoan", maTaiKhoan) :
+                new ObjectParameter("maTaiKhoan", typeof(int));
+    
+            var maQuyenParameter = maQuyen.HasValue ?
+                new ObjectParameter("maQuyen", maQuyen) :
+                new ObjectParameter("maQuyen", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhanQuyen", maTaiKhoanParameter, maQuyenParameter);
+        }
+    
+        public virtual int DeletePhanQuyenByMaQuyen(Nullable<int> maQuyen)
+        {
+            var maQuyenParameter = maQuyen.HasValue ?
+                new ObjectParameter("maQuyen", maQuyen) :
+                new ObjectParameter("maQuyen", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhanQuyenByMaQuyen", maQuyenParameter);
+        }
+    
+        public virtual int DeletePhanQuyenByMaTaiKhoan(Nullable<int> maTaiKhoan)
+        {
+            var maTaiKhoanParameter = maTaiKhoan.HasValue ?
+                new ObjectParameter("maTaiKhoan", maTaiKhoan) :
+                new ObjectParameter("maTaiKhoan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhanQuyenByMaTaiKhoan", maTaiKhoanParameter);
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "GetAllGiamGia")]
+        public virtual IQueryable<GetAllGiamGia_Result> GetAllGiamGia()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetAllGiamGia_Result>("[QuanLyTraSuaEntities].[GetAllGiamGia]()");
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "GetAllGiamGiaByTenKhuyenMai")]
+        public virtual IQueryable<GetAllGiamGiaByTenKhuyenMai_Result> GetAllGiamGiaByTenKhuyenMai()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetAllGiamGiaByTenKhuyenMai_Result>("[QuanLyTraSuaEntities].[GetAllGiamGiaByTenKhuyenMai]()");
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "GetAllPhanQuyen")]
+        public virtual IQueryable<GetAllPhanQuyen_Result> GetAllPhanQuyen()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetAllPhanQuyen_Result>("[QuanLyTraSuaEntities].[GetAllPhanQuyen]()");
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "GetGiamGiaByMaHoaDon")]
+        public virtual IQueryable<GetGiamGiaByMaHoaDon_Result> GetGiamGiaByMaHoaDon(Nullable<int> maHoaDon)
+        {
+            var maHoaDonParameter = maHoaDon.HasValue ?
+                new ObjectParameter("maHoaDon", maHoaDon) :
+                new ObjectParameter("maHoaDon", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetGiamGiaByMaHoaDon_Result>("[QuanLyTraSuaEntities].[GetGiamGiaByMaHoaDon](@maHoaDon)", maHoaDonParameter);
+        }
+    
+        public virtual int PostGiamGia(Nullable<int> maKhuyenMai, Nullable<int> maHoaDon)
+        {
+            var maKhuyenMaiParameter = maKhuyenMai.HasValue ?
+                new ObjectParameter("maKhuyenMai", maKhuyenMai) :
+                new ObjectParameter("maKhuyenMai", typeof(int));
+    
+            var maHoaDonParameter = maHoaDon.HasValue ?
+                new ObjectParameter("maHoaDon", maHoaDon) :
+                new ObjectParameter("maHoaDon", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PostGiamGia", maKhuyenMaiParameter, maHoaDonParameter);
+        }
+    
+        public virtual int PostPhanQuyen(Nullable<int> maTaiKhoan, Nullable<int> maQuyen)
+        {
+            var maTaiKhoanParameter = maTaiKhoan.HasValue ?
+                new ObjectParameter("maTaiKhoan", maTaiKhoan) :
+                new ObjectParameter("maTaiKhoan", typeof(int));
+    
+            var maQuyenParameter = maQuyen.HasValue ?
+                new ObjectParameter("maQuyen", maQuyen) :
+                new ObjectParameter("maQuyen", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PostPhanQuyen", maTaiKhoanParameter, maQuyenParameter);
+        }
+    
+        [DbFunction("QuanLyTraSuaEntities", "GetPhanQuyenByMaTaiKhoan")]
+        public virtual IQueryable<GetPhanQuyenByMaTaiKhoan_Result> GetPhanQuyenByMaTaiKhoan(Nullable<int> maTaiKhoan)
+        {
+            var maTaiKhoanParameter = maTaiKhoan.HasValue ?
+                new ObjectParameter("maTaiKhoan", maTaiKhoan) :
+                new ObjectParameter("maTaiKhoan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetPhanQuyenByMaTaiKhoan_Result>("[QuanLyTraSuaEntities].[GetPhanQuyenByMaTaiKhoan](@maTaiKhoan)", maTaiKhoanParameter);
         }
     }
 }

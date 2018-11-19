@@ -47,6 +47,7 @@
     <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="HoaDons" Relationship="Self.FK_HoaDon_KhachHang" FromRole="KhachHang" ToRole="HoaDon" />
+    <NavigationProperty Name="TaiKhoans" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_KhachHang" FromRole="KhachHang" ToRole="TaiKhoan" />
   </EntityType>
   <EntityType Name="LuaChon">
     <Key>
@@ -73,6 +74,7 @@
     <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
     <NavigationProperty Name="HoaDons" Relationship="Self.FK_HoaDon_NhanVien" FromRole="NhanVien" ToRole="HoaDon" />
+    <NavigationProperty Name="TaiKhoans" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_NhanVien" FromRole="NhanVien" ToRole="TaiKhoan" />
   </EntityType>
   <EntityType Name="Topping">
     <Key>
@@ -199,6 +201,47 @@
       <End Role="HoaDon" EntitySet="HoaDons" />
       <End Role="KhuyenMai" EntitySet="KhuyenMais" />
     </AssociationSet>
+    <EntitySet Name="Quyens" EntityType="QuanLyTraSuaModel.Quyen" />
+    <EntitySet Name="TaiKhoans" EntityType="QuanLyTraSuaModel.TaiKhoan" />
+    <AssociationSet Name="FK_TaiKhoan_KhachHang" Association="QuanLyTraSuaModel.FK_TaiKhoan_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHangs" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_NhanVien" Association="QuanLyTraSuaModel.FK_TaiKhoan_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanViens" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+    </AssociationSet>
+    <AssociationSet Name="PhanQuyen" Association="QuanLyTraSuaModel.PhanQuyen">
+      <End Role="Quyen" EntitySet="Quyens" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+    </AssociationSet>
+    <FunctionImport Name="DeletePhanQuyen">
+      <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+      <Parameter Name="maQuyen" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeletePhanQuyenByMaQuyen">
+      <Parameter Name="maQuyen" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeletePhanQuyenByMaTaiKhoan">
+      <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetAllGiamGia" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGia_Result)" />
+    <FunctionImport Name="GetAllGiamGiaByTenKhuyenMai" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result)" />
+    <FunctionImport Name="GetAllPhanQuyen" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllPhanQuyen_Result)" />
+    <FunctionImport Name="GetGiamGiaByMaHoaDon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result)">
+      <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PostGiamGia">
+      <Parameter Name="maKhuyenMai" Mode="In" Type="Int32" />
+      <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PostPhanQuyen">
+      <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+      <Parameter Name="maQuyen" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetPhanQuyenByMaTaiKhoan" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result)">
+      <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="SanPham">
     <Key>
@@ -272,4 +315,78 @@
     <End Type="QuanLyTraSuaModel.HoaDon" Role="HoaDon" Multiplicity="*" />
     <End Type="QuanLyTraSuaModel.KhuyenMai" Role="KhuyenMai" Multiplicity="*" />
   </Association>
+  <EntityType Name="Quyen">
+    <Key>
+      <PropertyRef Name="MaQuyen" />
+    </Key>
+    <Property Name="MaQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenQuyen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaiKhoans" Relationship="QuanLyTraSuaModel.PhanQuyen" FromRole="Quyen" ToRole="TaiKhoan" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="MaTaiKhoan" />
+    </Key>
+    <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenTaiKhoan" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="MaNhanVien" Type="Int32" />
+    <Property Name="MaKhachHang" Type="Int32" />
+    <NavigationProperty Name="KhachHang" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_KhachHang" FromRole="TaiKhoan" ToRole="KhachHang" />
+    <NavigationProperty Name="NhanVien" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_NhanVien" FromRole="TaiKhoan" ToRole="NhanVien" />
+    <NavigationProperty Name="Quyens" Relationship="QuanLyTraSuaModel.PhanQuyen" FromRole="TaiKhoan" ToRole="Quyen" />
+  </EntityType>
+  <Association Name="FK_TaiKhoan_KhachHang">
+    <End Type="QuanLyTraSuaModel.KhachHang" Role="KhachHang" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="QuanLyTraSuaModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKhachHang" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaiKhoan_NhanVien">
+    <End Type="QuanLyTraSuaModel.NhanVien" Role="NhanVien" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="QuanLyTraSuaModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MaNhanVien" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="MaNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PhanQuyen">
+    <End Type="QuanLyTraSuaModel.Quyen" Role="Quyen" Multiplicity="*" />
+    <End Type="QuanLyTraSuaModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="GetAllGiamGia_Result">
+    <Property Type="Int32" Name="MaKhuyenMai" Nullable="true" />
+    <Property Type="Int32" Name="MaHoaDon" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetAllGiamGiaByTenKhuyenMai_Result">
+    <Property Type="Int32" Name="MaHoaDon" Nullable="true" />
+    <Property Type="String" Name="TenKhuyenMai" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="GetAllPhanQuyen_Result">
+    <Property Type="Int32" Name="MaTaiKhoan" Nullable="true" />
+    <Property Type="Int32" Name="MaQuyen" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetGiamGiaByMaHoaDon_Result">
+    <Property Type="Int32" Name="MaHoaDon" Nullable="true" />
+    <Property Type="String" Name="TenKhuyenMai" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="GetPhanQuyenByMaTaiKhoan_Result">
+    <Property Type="Int32" Name="MaTaiKhoan" Nullable="true" />
+    <Property Type="Int32" Name="MaQuyen" Nullable="true" />
+  </ComplexType>
 </Schema>

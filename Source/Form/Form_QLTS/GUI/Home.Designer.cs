@@ -287,11 +287,11 @@
             // 
             this.bunifuCustomLabel2.AutoSize = true;
             this.bunifuCustomLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Century", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bunifuCustomLabel2.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel2.Location = new System.Drawing.Point(34, 238);
             this.bunifuCustomLabel2.Name = "bunifuCustomLabel2";
-            this.bunifuCustomLabel2.Size = new System.Drawing.Size(227, 18);
+            this.bunifuCustomLabel2.Size = new System.Drawing.Size(214, 18);
             this.bunifuCustomLabel2.TabIndex = 20;
             this.bunifuCustomLabel2.Text = "Khuyến mãi đang được áp dụng";
             this.bunifuCustomLabel2.Click += new System.EventHandler(this.bunifuCustomLabel2_Click);
@@ -300,11 +300,11 @@
             // 
             this.lbNgay.AutoSize = true;
             this.lbNgay.BackColor = System.Drawing.Color.Transparent;
-            this.lbNgay.Font = new System.Drawing.Font("Century", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNgay.ForeColor = System.Drawing.Color.Black;
             this.lbNgay.Location = new System.Drawing.Point(540, 238);
             this.lbNgay.Name = "lbNgay";
-            this.lbNgay.Size = new System.Drawing.Size(200, 18);
+            this.lbNgay.Size = new System.Drawing.Size(193, 18);
             this.lbNgay.TabIndex = 20;
             this.lbNgay.Text = "Hóa đơn đã bán được ngày: ";
             this.lbNgay.Click += new System.EventHandler(this.bunifuCustomLabel2_Click);

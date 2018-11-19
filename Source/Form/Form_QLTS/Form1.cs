@@ -13,9 +13,11 @@ namespace Form_QLTS
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        string token;
+        public Form1(string _token)
         {
             InitializeComponent();
+            token = _token;
         }
 
         private void ClearRenderbody()
@@ -65,6 +67,16 @@ namespace Form_QLTS
             hoaDon.Show();
         }
 
-       
+        private void btnThongTin_Click(object sender, EventArgs e)
+        {
+            ClearRenderbody();
+            ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
+            thongTinTaiKhoan.TopLevel = false;
+            thongTinTaiKhoan.Width = pnlBody.Width;
+            thongTinTaiKhoan.Height = pnlBody.Height;
+            thongTinTaiKhoan.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            pnlBody.Controls.Add(thongTinTaiKhoan);
+            thongTinTaiKhoan.Show();
+        }
     }
 }

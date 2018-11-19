@@ -18,6 +18,7 @@ namespace QuanLyTraSua
         public NhanVien()
         {
             this.HoaDons = new HashSet<HoaDon>();
+            this.TaiKhoans = new HashSet<TaiKhoan>();
         }
     
         public int MaNhanVien { get; set; }
@@ -32,5 +33,7 @@ namespace QuanLyTraSua
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaiKhoan> TaiKhoans { get; set; }
     }
 }

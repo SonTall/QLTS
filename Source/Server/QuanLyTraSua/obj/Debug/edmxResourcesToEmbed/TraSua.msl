@@ -137,5 +137,78 @@
         <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Quyens">
+      <EntityTypeMapping TypeName="QuanLyTraSuaModel.Quyen">
+        <MappingFragment StoreEntitySet="Quyen">
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="TenQuyen" ColumnName="TenQuyen" />
+          <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaiKhoans">
+      <EntityTypeMapping TypeName="QuanLyTraSuaModel.TaiKhoan">
+        <MappingFragment StoreEntitySet="TaiKhoan">
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+          <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="TenTaiKhoan" ColumnName="TenTaiKhoan" />
+          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PhanQuyen" TypeName="QuanLyTraSuaModel.PhanQuyen" StoreEntitySet="PhanQuyen">
+      <EndProperty Name="TaiKhoan">
+        <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+      </EndProperty>
+      <EndProperty Name="Quyen">
+        <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="DeletePhanQuyen" FunctionName="QuanLyTraSuaModel.Store.DeletePhanQuyen" />
+    <FunctionImportMapping FunctionImportName="DeletePhanQuyenByMaQuyen" FunctionName="QuanLyTraSuaModel.Store.DeletePhanQuyenByMaQuyen" />
+    <FunctionImportMapping FunctionImportName="DeletePhanQuyenByMaTaiKhoan" FunctionName="QuanLyTraSuaModel.Store.DeletePhanQuyenByMaTaiKhoan" />
+    <FunctionImportMapping FunctionImportName="GetAllGiamGia" FunctionName="QuanLyTraSuaModel.Store.GetAllGiamGia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllGiamGia_Result">
+          <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+          <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllGiamGiaByTenKhuyenMai" FunctionName="QuanLyTraSuaModel.Store.GetAllGiamGiaByTenKhuyenMai">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result">
+          <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+          <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllPhanQuyen" FunctionName="QuanLyTraSuaModel.Store.GetAllPhanQuyen">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllPhanQuyen_Result">
+          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+          <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetGiamGiaByMaHoaDon" FunctionName="QuanLyTraSuaModel.Store.GetGiamGiaByMaHoaDon">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result">
+          <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+          <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PostGiamGia" FunctionName="QuanLyTraSuaModel.Store.PostGiamGia" />
+    <FunctionImportMapping FunctionImportName="PostPhanQuyen" FunctionName="QuanLyTraSuaModel.Store.PostPhanQuyen" />
+    <FunctionImportMapping FunctionImportName="GetPhanQuyenByMaTaiKhoan" FunctionName="QuanLyTraSuaModel.Store.GetPhanQuyenByMaTaiKhoan">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result">
+          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+          <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

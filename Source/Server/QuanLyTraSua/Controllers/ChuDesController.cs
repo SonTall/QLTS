@@ -51,6 +51,8 @@ namespace QuanLyTraSua.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutChuDe(ChuDe chuDe)
         {
+            var chuDeCurrent = db.ChuDes.Where(v => v.MaChuDe == chuDe.MaChuDe).Select(v => new Models.ChuDeViewModel { MaChuDe = v.MaChuDe, TenChuDe = v.TenChuDe, MoTa = v.MoTa });
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -60,7 +62,6 @@ namespace QuanLyTraSua.Controllers
             //{
             //    return BadRequest();
             //}
-            var chuDeCurrent = db.ChuDes.SingleOrDefault(v => v.MaChuDe == chuDe.MaChuDe);
 
             if (chuDeCurrent != null)
             {
