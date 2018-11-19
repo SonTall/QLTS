@@ -81,6 +81,22 @@
     <Property Name="HinhAnh" Type="nvarchar" MaxLength="200" />
     <Property Name="NgayBatDau" Type="date" />
   </EntityType>
+  <EntityType Name="PhanQuyen">
+    <Key>
+      <PropertyRef Name="MaQuyen" />
+      <PropertyRef Name="MaTaiKhoan" />
+    </Key>
+    <Property Name="MaQuyen" Type="int" Nullable="false" />
+    <Property Name="MaTaiKhoan" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Quyen">
+    <Key>
+      <PropertyRef Name="MaQuyen" />
+    </Key>
+    <Property Name="MaQuyen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenQuyen" Type="nvarchar" MaxLength="200" />
+    <Property Name="MoTa" Type="nvarchar" MaxLength="200" />
+  </EntityType>
   <EntityType Name="SanPham">
     <Key>
       <PropertyRef Name="MaSanPham" />
@@ -91,6 +107,16 @@
     <Property Name="MaChuDe" Type="int" />
     <Property Name="HinhAnh" Type="nvarchar" MaxLength="200" />
     <Property Name="DonGia" Type="money" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="MaTaiKhoan" />
+    </Key>
+    <Property Name="MaTaiKhoan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenTaiKhoan" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MatKhau" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="MaNhanVien" Type="int" />
+    <Property Name="MaKhachHang" Type="int" />
   </EntityType>
   <EntityType Name="Topping">
     <Key>
@@ -213,6 +239,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PhanQuyen_Quyen">
+    <End Role="Quyen" Type="Self.Quyen" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quyen">
+        <PropertyRef Name="MaQuyen" />
+      </Principal>
+      <Dependent Role="PhanQuyen">
+        <PropertyRef Name="MaQuyen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhanQuyen_TaiKhoan">
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoan">
+        <PropertyRef Name="MaTaiKhoan" />
+      </Principal>
+      <Dependent Role="PhanQuyen">
+        <PropertyRef Name="MaTaiKhoan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SanPham_ChuDe">
     <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -227,6 +281,105 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TaiKhoan_KhachHang">
+    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKhachHang" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaiKhoan_NhanVien">
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MaNhanVien" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="MaNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DeletePhanQuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
+    <Parameter Name="maQuyen" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeletePhanQuyenByMaQuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maQuyen" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeletePhanQuyenByMaTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="GetAllGiamGia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaKhuyenMai" Type="int" />
+          <Property Name="MaHoaDon" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetAllGiamGiaByTenKhuyenMai" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaHoaDon" Type="int" />
+          <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="200" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetAllPhanQuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaTaiKhoan" Type="int" />
+          <Property Name="MaQuyen" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetGiamGiaByMaHoaDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maHoaDon" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaHoaDon" Type="int" />
+          <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="200" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetPhanQuyenByMaTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaTaiKhoan" Type="int" />
+          <Property Name="MaQuyen" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="PostGiamGia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maKhuyenMai" Type="int" Mode="In" />
+    <Parameter Name="maHoaDon" Type="int" Mode="In" />
+  </Function>
+  <Function Name="PostPhanQuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
+    <Parameter Name="maQuyen" Type="int" Mode="In" />
+  </Function>
   <Function Name="ThongKeHoaDonTheoCacThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <ReturnType>
       <CollectionType>
@@ -269,7 +422,10 @@
     <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LuaChon" EntityType="Self.LuaChon" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Topping" EntityType="Self.Topping" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_GiamGia_HoaDon" Association="Self.FK_GiamGia_HoaDon">
       <End Role="HoaDon" EntitySet="HoaDon" />
@@ -303,9 +459,25 @@
       <End Role="Topping" EntitySet="Topping" />
       <End Role="LuaChon" EntitySet="LuaChon" />
     </AssociationSet>
+    <AssociationSet Name="FK_PhanQuyen_Quyen" Association="Self.FK_PhanQuyen_Quyen">
+      <End Role="Quyen" EntitySet="Quyen" />
+      <End Role="PhanQuyen" EntitySet="PhanQuyen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhanQuyen_TaiKhoan" Association="Self.FK_PhanQuyen_TaiKhoan">
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+      <End Role="PhanQuyen" EntitySet="PhanQuyen" />
+    </AssociationSet>
     <AssociationSet Name="FK_SanPham_ChuDe" Association="Self.FK_SanPham_ChuDe">
       <End Role="ChuDe" EntitySet="ChuDe" />
       <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_KhachHang" Association="Self.FK_TaiKhoan_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_NhanVien" Association="Self.FK_TaiKhoan_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanVien" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

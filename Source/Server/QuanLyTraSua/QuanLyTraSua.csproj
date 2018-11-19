@@ -49,12 +49,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -71,17 +83,11 @@
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -233,6 +239,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Attribute\AuthorizeAttribute.cs" />
+    <Compile Include="Attribute\AuthorizeRolesAttribute.cs" />
     <Compile Include="ChuDe.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
@@ -246,10 +254,27 @@
     <Compile Include="Controllers\KhuyenMaisController.cs" />
     <Compile Include="Controllers\LuaChonsController.cs" />
     <Compile Include="Controllers\NhanViensController.cs" />
+    <Compile Include="Controllers\QuyensController.cs" />
     <Compile Include="Controllers\SanPhamsController.cs" />
+    <Compile Include="Controllers\TaiKhoansController.cs" />
     <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\ToppingsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="GetAllGiamGiaByTenKhuyenMai_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllGiamGia_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllPhanQuyen_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetGiamGiaByMaHoaDon_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPhanQuyenByMaTaiKhoan_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -271,6 +296,8 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChuDeViewModel.cs" />
+    <Compile Include="Models\GiamGia.cs" />
+    <Compile Include="Models\GiamGiaViewModel.cs" />
     <Compile Include="Models\HoaDonChiTietViewModel.cs" />
     <Compile Include="Models\HoaDonViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -278,18 +305,28 @@
     <Compile Include="Models\KhuyenMaiViewModel.cs" />
     <Compile Include="Models\LuaChonViewModel.cs" />
     <Compile Include="Models\NhanViewViewModel.cs" />
+    <Compile Include="Models\PhanQuyenViewModel.cs" />
+    <Compile Include="Models\QuyenViewModel.cs" />
     <Compile Include="Models\SanPhamViewModel.cs" />
+    <Compile Include="Models\TaiKhoanViewModel.cs" />
     <Compile Include="Models\ToppingViewModel.cs" />
     <Compile Include="NhanVien.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Providers\MyAuthorizationServerProvider.cs" />
+    <Compile Include="Quyen.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="SanPham.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="TaiKhoan.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="ThongKeHoaDonTheoCacThang_Result.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>

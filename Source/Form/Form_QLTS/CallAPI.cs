@@ -1,8 +1,11 @@
 ﻿using Form_QLTS.ViewModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +13,44 @@ namespace Form_QLTS
 {
     class CallAPI
     {
+        public string GetToken(string tenTaiKhoan, string matKhau)
+        {
+            using (var client = new HttpClient())
+            {
+                //TaiKhoan taiKhoan = new TaiKhoan();
+                //taiKhoan.username = tenTaiKhoan.Trim();
+                //taiKhoan.password = matKhau.Trim();
+                //taiKhoan.grant_type = "password";
+                string _toKen;
+
+              //  var jsonStr = JsonConvert.SerializeObject(taiKhoan);
+                //client.BaseAddress = new Uri("http://localhost:49365/");
+
+                var dict = new Dictionary<string, string>();
+                dict.Add("username", tenTaiKhoan.Trim());
+                dict.Add("password", matKhau.Trim());
+                dict.Add("grant_type", "password");
+
+                var req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:49365/token") { Content = new FormUrlEncodedContent(dict) };
+                var res =  client.SendAsync(req);
+                res.Wait();
+                var result = res.Result;
+                
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JObject joResponse = JObject.Parse(readTask.Result);
+                    _toKen = joResponse["access_token"].ToString();
+                }
+                else
+                {
+                    _toKen = "";
+                }
+
+                return _toKen;
+            }
+        }
+
         public int GetTongHoaDonTheoNgay()
         {
             int sumHoaDon;
@@ -94,8 +135,8 @@ namespace Form_QLTS
             }
         }
 
-        
-         public int GetTongKhuyenMaiDangApDung()
+
+        public int GetTongKhuyenMaiDangApDung()
         {
             int sumKhuyenMai;
             using (var client = new HttpClient())
@@ -159,7 +200,7 @@ namespace Form_QLTS
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:49365/api/");
-                
+
                 //HTTP GET
                 var responseTask = client.GetAsync("SanPhams");
                 responseTask.Wait();
