@@ -13,17 +13,20 @@ namespace Form_QLTS
 {
     class CallAPI
     {
-        public string GetToken(string tenTaiKhoan, string matKhau)
+        /// <summary>
+        /// lay chuoi token 
+        /// </summary>
+        /// <param name="tenTaiKhoan"></param>
+        /// <param name="matKhau"></param>
+        /// <returns></returns>
+        public TaiKhoan GetToken(string tenTaiKhoan, string matKhau)
         {
             using (var client = new HttpClient())
             {
-                //TaiKhoan taiKhoan = new TaiKhoan();
-                //taiKhoan.username = tenTaiKhoan.Trim();
-                //taiKhoan.password = matKhau.Trim();
-                //taiKhoan.grant_type = "password";
-                string _toKen;
+                var taiKhoan = new TaiKhoan();
+                //string _toKen;
 
-              //  var jsonStr = JsonConvert.SerializeObject(taiKhoan);
+                //  var jsonStr = JsonConvert.SerializeObject(taiKhoan);
                 //client.BaseAddress = new Uri("http://localhost:49365/");
 
                 var dict = new Dictionary<string, string>();
@@ -32,22 +35,58 @@ namespace Form_QLTS
                 dict.Add("grant_type", "password");
 
                 var req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:49365/token") { Content = new FormUrlEncodedContent(dict) };
-                var res =  client.SendAsync(req);
+                var res = client.SendAsync(req);
                 res.Wait();
                 var result = res.Result;
-                
+
                 if (result.IsSuccessStatusCode)
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JObject joResponse = JObject.Parse(readTask.Result);
-                    _toKen = joResponse["access_token"].ToString();
+                    taiKhoan.Token = joResponse["access_token"].ToString();
+                    taiKhoan.UserName = joResponse["username"].ToString();
+                    taiKhoan.Identity = joResponse["identity"].ToString();
+                    taiKhoan.Id = Convert.ToInt32(joResponse["id"].ToString());
                 }
                 else
                 {
-                    _toKen = "";
+                    taiKhoan = null;
                 }
 
-                return _toKen;
+                return taiKhoan;
+            }
+        }
+
+        /// <summary>
+        /// lay thong tin cac tai khoan?
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public List<TaiKhoanViewModel> GetListTaiKhoan(string token)
+        {
+            IEnumerable<TaiKhoanViewModel> taiKhoanList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.Trim());
+                //HTTP GET
+                var responseTask = client.GetAsync("TaiKhoans");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<TaiKhoanViewModel>>();
+                    readTask.Wait();
+
+                    taiKhoanList = readTask.Result;
+                }
+                else
+                {
+                    taiKhoanList = Enumerable.Empty<TaiKhoanViewModel>();
+                }
+                return taiKhoanList.ToList();
             }
         }
 
@@ -135,6 +174,35 @@ namespace Form_QLTS
             }
         }
 
+        /// <summary>
+        /// get tong? so lua. chon. dang co trong csdl
+        /// </summary>
+        /// <returns></returns>
+        public int GetTongLuaChon()
+        {
+            int sumLuaChon;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
+                //HTTP GET
+                var responseTask = client.GetAsync("GetSumLuaChon");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<int>();
+                    readTask.Wait();
+
+                    sumLuaChon = readTask.Result;
+                }
+                else
+                {
+                    sumLuaChon = 0;
+                }
+                return sumLuaChon;
+            }
+        }
 
         public int GetTongKhuyenMaiDangApDung()
         {
@@ -161,6 +229,32 @@ namespace Form_QLTS
                 }
 
                 return sumKhuyenMai;
+            }
+        }
+
+        public NhanVienViewModel GetNhanVienByMaNhanVien(string maNhanVien)
+        {
+            NhanVienViewModel nhanVien = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/NhanViens");
+                //HTTP GET
+                var responseTask = client.GetAsync("?id=" + maNhanVien);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<NhanVienViewModel>();
+                    readTask.Wait();
+
+                    nhanVien = readTask.Result;
+                }
+                else
+                {
+                    nhanVien = null;
+                }
+                return nhanVien;
             }
         }
 
@@ -310,6 +404,151 @@ namespace Form_QLTS
                     sanPhamList = Enumerable.Empty<SanPhamViewModel>();
                 }
                 return sanPhamList.ToList();
+            }
+        }
+
+
+        /// <summary>
+        /// liet ke danh sach san? pham? loc. theo ma~ chu? de`
+        /// </summary>
+        /// <param name="maChuDe"></param>
+        /// <returns></returns>
+        public List<LuaChonViewModel> GetListLuaChon()
+        {
+            IEnumerable<LuaChonViewModel> luaChonList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+                //HTTP GET
+                var responseTask = client.GetAsync("LuaChons");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<LuaChonViewModel>>();
+                    readTask.Wait();
+
+                    luaChonList = readTask.Result;
+                }
+                else
+                {
+                    luaChonList = Enumerable.Empty<LuaChonViewModel>();
+                }
+                return luaChonList.ToList();
+            }
+        }
+
+
+        public List<HoaDonViewModel> GetListHoaDonTrongNgayByMaNhanVien(int maNhanVien)
+        {
+            IEnumerable<HoaDonViewModel> hoaDonList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
+
+                var responseTask = client.GetAsync("GetListHoaDonTrongNgayByMaNhanVien?maNhanVien=" + maNhanVien);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<HoaDonViewModel>>();
+                    readTask.Wait();
+
+                    hoaDonList = readTask.Result;
+                }
+                else
+                {
+                    hoaDonList = Enumerable.Empty<HoaDonViewModel>();
+                }
+                return hoaDonList.ToList();
+            }
+        }
+
+
+        //POST HOA DON
+        /// <summary>
+        /// post thong tin san? phan vs topping vao 2 bang? ma~ lua. chon vs lua. chon.
+        /// </summary>
+        /// <param name="luaChonList"></param>
+        /// <returns></returns>
+        public List<int> PostLuaChon(List<LuaChonViewModel> luaChonList)
+        {
+            List<int> maLuaChon = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+
+                var responseTask = client.PostAsJsonAsync("LuaChons", luaChonList);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<List<int>>();
+                    readTask.Wait();
+
+                    maLuaChon = readTask.Result;
+                }
+                else
+                {
+                    maLuaChon = null;
+                }
+                return maLuaChon;
+            }
+        }
+
+        /// <summary>
+        /// post thong tin len bang hoa don va hoa don chi tiet'
+        /// </summary>
+        /// <param name="thongTinHoaDon"></param>
+        /// <returns></returns>
+        public bool PostHoaDon(ThongTinHoaDon thongTinHoaDon)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+                //HTTP POST
+                var responseTask = client.PostAsJsonAsync("HoaDons", thongTinHoaDon);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        //Put NHAN VIEN
+        /// <summary>
+        /// sua thong tin nhan vien
+        /// </summary>
+        /// <param name="nhanVien"></param>
+        /// <returns></returns>
+        public bool PutNhanVien(NhanVienViewModel nhanVien)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+                //HTTP POST
+                var responseTask = client.PutAsJsonAsync("NhanViens", nhanVien);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }

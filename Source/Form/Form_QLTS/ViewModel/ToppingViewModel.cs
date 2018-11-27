@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Form_QLTS.ViewModel
 {
-    class ToppingViewModel
+    public class ToppingViewModel
     {
         public int MaTopping { get; set; }
         public string TenTopping { get; set; }

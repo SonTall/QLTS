@@ -43,22 +43,14 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/SanPhams/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSanPham(int id, SanPham sanPham)
+        public IHttpActionResult PutSanPham(SanPham sanPham)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            //if (id != sanPham.MaSanPham)
-            //{
-            //    return BadRequest();
-            //}
             var sanPhamCurrent = db.SanPhams.SingleOrDefault(v => v.MaSanPham == sanPham.MaSanPham);
 
             if (sanPhamCurrent != null)
             {
 
+                db.Entry(sanPhamCurrent).State = EntityState.Detached;
                 db.Entry(sanPham).State = EntityState.Modified;
 
                 try
@@ -67,14 +59,7 @@ namespace QuanLyTraSua.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    //if (!SanPhamExists(id))
-                    //{
-                    //    return NotFound();
-                    //}
-                    //else
-                    //{
                     throw;
-                    // }
                 }
             }
             else

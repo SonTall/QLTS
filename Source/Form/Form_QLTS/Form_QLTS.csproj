@@ -81,6 +81,12 @@
     <Compile Include="GUI\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SanPham.Designer.cs">
+      <DependentUpon>SanPham.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ThemHoaDon.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,10 +110,14 @@
     <Compile Include="CallAPI.cs" />
     <Compile Include="ViewModel\ChuDeViewModel.cs" />
     <Compile Include="ViewModel\GioHang.cs" />
+    <Compile Include="ViewModel\HoaDonViewModel.cs" />
     <Compile Include="ViewModel\KhuyenMaiViewModel.cs" />
+    <Compile Include="ViewModel\LuaChonViewModel.cs" />
+    <Compile Include="ViewModel\NhanVienViewModel.cs" />
     <Compile Include="ViewModel\SanPhamViewModel.cs" />
     <Compile Include="ViewModel\TaiKhoan.cs" />
     <Compile Include="ViewModel\TaiKhoanViewModel.cs" />
+    <Compile Include="ViewModel\ThongTinHoaDon.cs" />
     <Compile Include="ViewModel\ToppingViewModel.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -120,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SanPham.resx">
+      <DependentUpon>SanPham.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ThemHoaDon.resx">
       <DependentUpon>ThemHoaDon.cs</DependentUpon>

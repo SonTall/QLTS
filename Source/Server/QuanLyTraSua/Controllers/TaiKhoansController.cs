@@ -74,11 +74,12 @@ namespace QuanLyTraSua.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTaiKhoan(TaiKhoan taiKhoan)
         {
-            var taiKhoanCurrent = db.TaiKhoans.Where(v => v.MaTaiKhoan == taiKhoan.MaTaiKhoan).Select(v => new TaiKhoanViewModel { MaTaiKhoan = v.MaTaiKhoan, TenTaiKhoan = v.TenTaiKhoan, MatKhau = v.MatKhau, MaNhanVien = v.MaNhanVien, MaKhachHang = v.MaKhachHang });
+            var taiKhoanCurrent = db.TaiKhoans.SingleOrDefault(v => v.MaTaiKhoan == taiKhoan.MaTaiKhoan);
 
             if (taiKhoanCurrent != null)
             {
 
+                db.Entry(taiKhoanCurrent).State = EntityState.Detached;
                 db.Entry(taiKhoan).State = EntityState.Modified;
 
 

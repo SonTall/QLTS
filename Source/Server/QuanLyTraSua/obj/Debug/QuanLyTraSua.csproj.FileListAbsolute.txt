@@ -253,7 +253,7 @@ C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua
 C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\obj\Debug\QuanLyTraSua.csproj.CopyComplete
 C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\obj\Debug\QuanLyTraSua.dll
 C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\obj\Debug\QuanLyTraSua.pdb
-C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\obj\Debug\QuanLyTraSua.csprojAssemblyReference.cache
 C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\bin\System.Web.Cors.dll
 C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\bin\System.Web.Http.Cors.dll
 C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\bin\System.Web.Http.Cors.xml
+C:\Users\Tin hoc truyen hinh\Desktop\GIT_QuanLyTraSua\Source\Server\QuanLyTraSua\obj\Debug\QuanLyTraSua.csprojAssemblyReference.cache

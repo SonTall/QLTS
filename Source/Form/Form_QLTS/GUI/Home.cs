@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Form_QLTS.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,22 +14,25 @@ namespace Form_QLTS.GUI
     public partial class Home : Form
     {
         CallAPI requestData = new CallAPI();
-        public Home()
+        TaiKhoan taiKhoan = new TaiKhoan();
+
+        List<KhuyenMaiViewModel> listKhuyenMai = new List<KhuyenMaiViewModel>();
+        public Home(TaiKhoan _taiKhoan)
         {
             InitializeComponent();
+            taiKhoan = _taiKhoan;
+        }
+
+        public void ThongKeThread()
+        {
+
         }
 
         private void btnThemHoaDon_Click(object sender, EventArgs e)
         {
-            using (ThemHoaDon form2 = new ThemHoaDon())
+            double khuyenMai = Convert.ToDouble(listKhuyenMai.Sum(v => v.GiaTri));
+            using (ThemHoaDon form2 = new ThemHoaDon(taiKhoan, khuyenMai))
             {
-
-                //if (form2.ShowDialog() == DialogResult.OK)
-                //{
-                //    someControlOnForm1.Text = form2.TheValue;
-                //}
-                //this.Container.Add(form2);
-                MessageBox.Show("haha");
                 form2.ShowDialog();
             }
 
@@ -49,12 +53,15 @@ namespace Form_QLTS.GUI
             lbSoHoaDon.Text = requestData.GetTongHoaDonTheoNgay().ToString();
             lbSoSanPham.Text = requestData.GetTongSanPham().ToString();
             lbSoTopping.Text = requestData.GetTongTopping().ToString();
-            lbSoKhuyenMai.Text = requestData.GetTongKhuyenMaiDangApDung().ToString();
+            lbLuaChon.Text = requestData.GetTongLuaChon().ToString();
 
             // bang khuyen mai dang duoc ap dung
-            //dgvKhuyenMai.DataSource = requestData.GetListKhuyenMaiDangDuocApDung();
-            var temp = requestData.GetListKhuyenMaiDangDuocApDung();
-            dgvKhuyenMai.DataSource = temp;
+            var _listKhuyenMai = requestData.GetListKhuyenMaiDangDuocApDung();
+            dgvKhuyenMai.DataSource = _listKhuyenMai;
+            listKhuyenMai.AddRange(_listKhuyenMai);
+
+            // bang hoa' don theo ngay`
+            dgvHoaDon.DataSource = requestData.GetListHoaDonTrongNgayByMaNhanVien(taiKhoan.Id);
             
             #endregion
         }

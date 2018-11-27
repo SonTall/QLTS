@@ -68,34 +68,27 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/KhuyenMais/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKhuyenMai(int id, KhuyenMai khuyenMai)
+        public IHttpActionResult PutKhuyenMai(KhuyenMai khuyenMai)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var khuyenMaiCurrent = db.KhuyenMais.SingleOrDefault(v => v.MaKhuyenMai == khuyenMai.MaKhuyenMai);
 
-            if (id != khuyenMai.MaKhuyenMai)
+            if (khuyenMaiCurrent != null)
             {
-                return BadRequest();
-            }
+                db.Entry(khuyenMaiCurrent).State = EntityState.Detached;
+                db.Entry(khuyenMai).State = EntityState.Modified;
 
-            db.Entry(khuyenMai).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!KhuyenMaiExists(id))
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
+            }
+            else
+            {
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);

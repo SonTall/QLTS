@@ -19,6 +19,6 @@ namespace QuanLyTraSua
         public Nullable<int> SoLuong { get; set; }
     
         public virtual HoaDon HoaDon { get; set; }
-        public virtual LuaChon LuaChon { get; set; }
+        public virtual MaLuaChon MaLuaChon1 { get; set; }
     }
 }

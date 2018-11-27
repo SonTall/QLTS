@@ -90,6 +90,8 @@ namespace QuanLyTraSua
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = myProvider
             };
+            
+        
             app.UseOAuthAuthorizationServer(options);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 

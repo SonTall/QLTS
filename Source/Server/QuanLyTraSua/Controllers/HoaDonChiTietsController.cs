@@ -66,6 +66,7 @@ namespace QuanLyTraSua.Controllers
             {
 
 
+                db.Entry(hoaDonCurrent).State = EntityState.Detached;
                 db.Entry(hoaDonChiTiet).State = EntityState.Modified;
 
                 try
@@ -74,13 +75,13 @@ namespace QuanLyTraSua.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                //    if (!HoaDonChiTietExists(id))
-                //    {
-                //        return NotFound();
-                //    }
-                //    else
-                //    {
-                        throw;
+                    //    if (!HoaDonChiTietExists(id))
+                    //    {
+                    //        return NotFound();
+                    //    }
+                    //    else
+                    //    {
+                    throw;
                     //}
                 }
             }

@@ -11,10 +11,9 @@ namespace QuanLyTraSua
 {
     using System;
     
-    public partial class ThongKeSanPhamTheoCacThang_Result
+    public partial class GetAllHoaDonChiTietByMaLuaChon_Result
     {
-        public Nullable<int> nam { get; set; }
-        public Nullable<int> thang { get; set; }
-        public Nullable<int> soluong { get; set; }
+        public Nullable<int> MaHoaDon { get; set; }
+        public Nullable<int> MaLuaChon { get; set; }
     }
 }

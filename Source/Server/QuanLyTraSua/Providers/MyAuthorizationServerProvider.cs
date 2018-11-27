@@ -10,16 +10,42 @@ namespace QuanLyTraSua.Providers
 {
     public class MyAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private TaiKhoan taiKhoan = new TaiKhoan();
+      //  private delegate TokenEndpointdelegate
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated(); // 
         }
 
+        public override Task TokenEndpointResponse(OAuthTokenEndpointResponseContext context)
+        {
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            context.AdditionalResponseParameters.Add("username", taiKhoan.TenTaiKhoan);
+            context.AdditionalResponseParameters.Add("identity", context.Identity.Name);
+            if(taiKhoan.MaNhanVien != null)
+            {
+                context.AdditionalResponseParameters.Add("id", taiKhoan.MaNhanVien);
+            }
+            else
+            {
+                context.AdditionalResponseParameters.Add("id", taiKhoan.MaKhachHang);
+            }
+
+            return base.TokenEndpointResponse(context);
+        }
+
+        //public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        //{
+        //    context.AdditionalResponseParameters.Add("username", context.Identity.Name);
+        //  //  context.AdditionalResponseParameters.Add("aa", context.);
+        //    return base.TokenEndpoint(context);
+        //}
+
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
             {
-                var taiKhoan = db.TaiKhoans.SingleOrDefault(v => v.TenTaiKhoan == context.UserName && v.MatKhau == context.Password);
+                taiKhoan = db.TaiKhoans.SingleOrDefault(v => v.TenTaiKhoan == context.UserName && v.MatKhau == context.Password);
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                 if (taiKhoan != null)
                 {

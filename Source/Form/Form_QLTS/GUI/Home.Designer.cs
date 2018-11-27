@@ -40,7 +40,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.lbSoKhuyenMai = new System.Windows.Forms.Label();
+            this.lbLuaChon = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -56,6 +56,11 @@
             this.lbNgay = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.dgvHoaDon = new System.Windows.Forms.DataGridView();
             this.btnThemHoaDon = new System.Windows.Forms.Button();
+            this.MaHoaDon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaKhachHang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaNhanVien = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NgayTao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MoTaHoaDon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -121,7 +126,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(111, 14);
+            this.pictureBox2.Location = new System.Drawing.Point(112, 14);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(66, 67);
             this.pictureBox2.TabIndex = 2;
@@ -151,7 +156,7 @@
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.panel2.Controls.Add(this.pictureBox3);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.lbSoKhuyenMai);
+            this.panel2.Controls.Add(this.lbLuaChon);
             this.panel2.Location = new System.Drawing.Point(808, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(185, 123);
@@ -171,19 +176,19 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(19, 81);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(103, 26);
+            this.label7.Size = new System.Drawing.Size(90, 26);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Tổng số khuyến mãi\r\nđang được áp dụng\r\n";
+            this.label7.Text = "Tổng số lựa chọn\r\nđang có";
             // 
-            // lbSoKhuyenMai
+            // lbLuaChon
             // 
-            this.lbSoKhuyenMai.AutoSize = true;
-            this.lbSoKhuyenMai.Font = new System.Drawing.Font("Century Gothic", 33F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbSoKhuyenMai.Location = new System.Drawing.Point(13, 12);
-            this.lbSoKhuyenMai.Name = "lbSoKhuyenMai";
-            this.lbSoKhuyenMai.Size = new System.Drawing.Size(48, 55);
-            this.lbSoKhuyenMai.TabIndex = 2;
-            this.lbSoKhuyenMai.Text = "0";
+            this.lbLuaChon.AutoSize = true;
+            this.lbLuaChon.Font = new System.Drawing.Font("Century Gothic", 33F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbLuaChon.Location = new System.Drawing.Point(13, 12);
+            this.lbLuaChon.Name = "lbLuaChon";
+            this.lbLuaChon.Size = new System.Drawing.Size(48, 55);
+            this.lbLuaChon.TabIndex = 2;
+            this.lbLuaChon.Text = "0";
             // 
             // panel3
             // 
@@ -302,7 +307,7 @@
             this.lbNgay.BackColor = System.Drawing.Color.Transparent;
             this.lbNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNgay.ForeColor = System.Drawing.Color.Black;
-            this.lbNgay.Location = new System.Drawing.Point(540, 238);
+            this.lbNgay.Location = new System.Drawing.Point(535, 238);
             this.lbNgay.Name = "lbNgay";
             this.lbNgay.Size = new System.Drawing.Size(193, 18);
             this.lbNgay.TabIndex = 20;
@@ -313,6 +318,12 @@
             // 
             this.dgvHoaDon.BackgroundColor = System.Drawing.Color.White;
             this.dgvHoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHoaDon.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MaHoaDon,
+            this.MaKhachHang,
+            this.MaNhanVien,
+            this.NgayTao,
+            this.MoTaHoaDon});
             this.dgvHoaDon.Location = new System.Drawing.Point(538, 261);
             this.dgvHoaDon.Name = "dgvHoaDon";
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -334,6 +345,42 @@
             this.btnThemHoaDon.Text = "Tạo hóa đơn +";
             this.btnThemHoaDon.UseVisualStyleBackColor = true;
             this.btnThemHoaDon.Click += new System.EventHandler(this.btnThemHoaDon_Click);
+            // 
+            // MaHoaDon
+            // 
+            this.MaHoaDon.DataPropertyName = "MaHoaDon";
+            this.MaHoaDon.HeaderText = "Mã hóa đơn";
+            this.MaHoaDon.Name = "MaHoaDon";
+            this.MaHoaDon.Width = 68;
+            // 
+            // MaKhachHang
+            // 
+            this.MaKhachHang.DataPropertyName = "MaKhachHang";
+            this.MaKhachHang.HeaderText = "MaKhachHang";
+            this.MaKhachHang.Name = "MaKhachHang";
+            this.MaKhachHang.Visible = false;
+            this.MaKhachHang.Width = 5;
+            // 
+            // MaNhanVien
+            // 
+            this.MaNhanVien.DataPropertyName = "MaNhanVien";
+            this.MaNhanVien.HeaderText = "Mã nhân viên";
+            this.MaNhanVien.Name = "MaNhanVien";
+            this.MaNhanVien.Width = 73;
+            // 
+            // NgayTao
+            // 
+            this.NgayTao.DataPropertyName = "NgayTao";
+            this.NgayTao.HeaderText = "Ngày tạo hóa đơn";
+            this.NgayTao.Name = "NgayTao";
+            this.NgayTao.Width = 105;
+            // 
+            // MoTaHoaDon
+            // 
+            this.MoTaHoaDon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.MoTaHoaDon.DataPropertyName = "MoTa";
+            this.MoTaHoaDon.HeaderText = "Mô tả";
+            this.MoTaHoaDon.Name = "MoTaHoaDon";
             // 
             // Home
             // 
@@ -385,7 +432,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lbSoTopping;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label lbSoKhuyenMai;
+        private System.Windows.Forms.Label lbLuaChon;
         private System.Windows.Forms.DataGridView dgvKhuyenMai;
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel2;
         private Bunifu.Framework.UI.BunifuCustomLabel lbNgay;
@@ -401,5 +448,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NgayBatDau;
         private System.Windows.Forms.DataGridViewTextBoxColumn NgayKetThuc;
         private System.Windows.Forms.Button btnThemHoaDon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaHoaDon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaKhachHang;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaNhanVien;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NgayTao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MoTaHoaDon;
     }
 }

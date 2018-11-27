@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Form_QLTS.ViewModel
 {
-    class SanPhamViewModel
+    public class SanPhamViewModel
     {
         public int MaSanPham { get; set; }
         public string TenSanPham { get; set; }

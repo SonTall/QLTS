@@ -14,6 +14,23 @@ namespace QuanLyTraSua.Controllers
 
         #region ThongKe
         /// <summary>
+        /// Tong? so luong lua. chon dang co trong csdl
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetSumLuaChon")]
+        public IHttpActionResult GetSumLuaChon()
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                var result = db.MaLuaChons.Count();
+
+                return Ok(result);
+            }
+        }
+
+
+        /// <summary>
         /// Dem so luong san pham trong bang san pham
         /// </summary>
         /// <returns></returns>
@@ -95,98 +112,98 @@ namespace QuanLyTraSua.Controllers
             }
         }
 
-        /// <summary>
-        /// thong ke tong san pham ban duoc theo thang yeu cau`
-        /// </summary>
-        /// <param name="thang"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ThongKe/TongHoaDonTheoThang")]
-        public IHttpActionResult GetTongSanPhamBanTheoThang(int thang)
-        {
-            using (var db = new QuanLyTraSuaEntities())
-            {
-                var hoaDonList = db.ThongKeSanPhamTheoCacThang().SingleOrDefault(v => v.thang == thang);
+        ///// <summary>
+        ///// thong ke tong san pham ban duoc theo thang yeu cau`
+        ///// </summary>
+        ///// <param name="thang"></param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[Route("api/ThongKe/TongHoaDonTheoThang")]
+        //public IHttpActionResult GetTongSanPhamBanTheoThang(int thang)
+        //{
+        //    using (var db = new QuanLyTraSuaEntities())
+        //    {
+        //        var hoaDonList = db.ThongKeSanPhamTheoCacThang().SingleOrDefault(v => v.thang == thang);
 
-                if (hoaDonList == null)
-                {
-                    return Content(HttpStatusCode.NotFound, "Thang nhap vao khong co san pham duoc ban");
-                }
-                else
-                {
-                    var result = (int)hoaDonList.soluong;
-                    return Ok(result);
-                }
-            };
-        }
+        //        if (hoaDonList == null)
+        //        {
+        //            return Content(HttpStatusCode.NotFound, "Thang nhap vao khong co san pham duoc ban");
+        //        }
+        //        else
+        //        {
+        //            var result = (int)hoaDonList.soluong;
+        //            return Ok(result);
+        //        }
+        //    };
+        //}
 
-        /// <summary>
-        /// thong ke san pham da ban duoc theo cac' thang'
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ThongKe/TongHoaDonTheoThang")]
-        public IHttpActionResult GetTongSanPhamBanTheoThang()
-        {
-            using (var db = new QuanLyTraSuaEntities())
-            {
-                var hoaDonList = db.ThongKeSanPhamTheoCacThang();
-                if (hoaDonList == null)
-                {
-                    return BadRequest();
-                }
-                else
-                {
-                    return Ok(hoaDonList.ToList());
-                }
-            }
-        }
+        ///// <summary>
+        ///// thong ke san pham da ban duoc theo cac' thang'
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[Route("api/ThongKe/TongHoaDonTheoThang")]
+        //public IHttpActionResult GetTongSanPhamBanTheoThang()
+        //{
+        //    using (var db = new QuanLyTraSuaEntities())
+        //    {
+        //        var hoaDonList = db.ThongKeSanPhamTheoCacThang();
+        //        if (hoaDonList == null)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        else
+        //        {
+        //            return Ok(hoaDonList.ToList());
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// thong ke tong tien da ban duoc theo thang yeu cau`
-        /// </summary>
-        /// <param name="thang"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ThongKe/TongHoaDonTheoThang")]
-        public IHttpActionResult GetTongTienBanDuocTheoThang(int nam, int thang)
-        {
-            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
-            {
-                var tongTien = db.ThongKeTienBanDuocTheoThang().SingleOrDefault(v => v.thang == thang && v.nam == nam);
-                if (tongTien == null)
-                {
-                    return BadRequest();
-                }
-                else
-                {
-                    return Ok(tongTien);
-                }
-            };
-        }
+        ///// <summary>
+        ///// thong ke tong tien da ban duoc theo thang yeu cau`
+        ///// </summary>
+        ///// <param name="thang"></param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[Route("api/ThongKe/TongHoaDonTheoThang")]
+        //public IHttpActionResult GetTongTienBanDuocTheoThang(int nam, int thang)
+        //{
+        //    using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+        //    {
+        //        var tongTien = db.ThongKeTienBanDuocTheoThang().SingleOrDefault(v => v.thang == thang && v.nam == nam);
+        //        if (tongTien == null)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        else
+        //        {
+        //            return Ok(tongTien);
+        //        }
+        //    };
+        //}
 
-        /// <summary>
-        /// thong ke tong tien da ban duoc theo cac thang
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ThongKe/TongTienBanDuocTheoThang")]
-        public IHttpActionResult GetTongTienBanDuocTheoThang()
-        {
-            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
-            {
-                var tongTien = db.ThongKeTienBanDuocTheoThang().ToList();
+        ///// <summary>
+        ///// thong ke tong tien da ban duoc theo cac thang
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[Route("api/ThongKe/TongTienBanDuocTheoThang")]
+        //public IHttpActionResult GetTongTienBanDuocTheoThang()
+        //{
+        //    using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+        //    {
+        //        var tongTien = db.ThongKeTienBanDuocTheoThang().ToList();
 
-                if (tongTien == null)
-                {
-                    return BadRequest();
-                }
-                else
-                {
-                    return Ok(tongTien);
-                }
-            }
-        }
+        //        if (tongTien == null)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        else
+        //        {
+        //            return Ok(tongTien);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// tong so hoa don ban duoc theo ngay
@@ -362,7 +379,38 @@ namespace QuanLyTraSua.Controllers
             }
         }
 
-        #endregion
-    }
+
+        /// <summary>
+        /// liet ke danh sach hoa don ban duoc theo ngay theo ma nhan vien
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListHoaDonTrongNgayByMaNhanVien")]
+        public IHttpActionResult GetListHoaDonTrongNgayByMaNhanVien(int maNhanVien)
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                DateTime dateTime = DateTime.Now;
+                var result = db.HoaDons.Where(v => v.MaNhanVien == maNhanVien && (v.NgayTao.Value.Year == dateTime.Year && v.NgayTao.Value.Month == dateTime.Month && v.NgayTao.Value.Day == dateTime.Day)).Select(v => new HoaDonViewModel
+                {
+                    MaHoaDon = v.MaHoaDon, 
+                    MaKhachHang = v.MaKhachHang,
+                    MaNhanVien = v.MaNhanVien,
+                    NgayTao = v.NgayTao,
+                    MoTa = v.MoTa
+                });
+
+                if(result != null)
+                {
+                    return Ok(result.ToList());
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+            #endregion
+        }
 }
 
