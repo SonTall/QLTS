@@ -112,20 +112,23 @@ namespace Form_QLTS.GUI
                     ThemHoaDon parent = (ThemHoaDon)this.Owner;
 
                     // list topping
-                    Dictionary<int, string> pairs = null;
+                   // Dictionary<int, string> pairs = null;
 
                     if (gioHang.MaTopping != null)
                     {
-                        pairs = new Dictionary<int, string>();
+                        List<ToppingViewModel> listTopping = new List<ToppingViewModel>();
+                       // pairs = new Dictionary<int, string>();
                         //add ten va ma topping vao Dictionary
                         gioHang.MaTopping.ForEach(v =>
                         {
-                            pairs.Add(v, toppingList.Find(n => n.MaTopping == v).TenTopping);
+                            var _tmp = toppingList.Find(n => n.MaTopping == v);
+                            listTopping.Add(_tmp);
+                            //pairs.Add(v, toppingList.Find(n => n.MaTopping == v).TenTopping);
                         });
 
                         //gui du~ lieu.
-                        parent.GetDataFromChild(gioHang, pairs);
-                        parent.GetListTopping(pairs);
+                        parent.GetDataFromChild(gioHang, listTopping);
+                        //parent.GetListTopping(listTopping);
 
                     }
                     this.Close();

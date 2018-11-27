@@ -58,14 +58,11 @@ namespace QuanLyTraSua.Controllers
                 return BadRequest(ModelState);
             }
 
-            //if (id != chuDe.MaChuDe)
-            //{
-            //    return BadRequest();
-            //}
 
             if (chuDeCurrent != null)
             {
 
+                db.Entry(chuDeCurrent).State = EntityState.Detached;
                 db.Entry(chuDe).State = EntityState.Modified;
 
                 try

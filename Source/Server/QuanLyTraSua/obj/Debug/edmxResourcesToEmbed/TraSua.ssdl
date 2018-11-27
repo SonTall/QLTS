@@ -62,10 +62,18 @@
   <EntityType Name="LuaChon">
     <Key>
       <PropertyRef Name="MaLuaChon" />
+      <PropertyRef Name="MaSanPham" />
+      <PropertyRef Name="MaTopping" />
     </Key>
-    <Property Name="MaLuaChon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MaSanPham" Type="int" />
-    <Property Name="MaTopping" Type="int" />
+    <Property Name="MaLuaChon" Type="int" Nullable="false" />
+    <Property Name="MaSanPham" Type="int" Nullable="false" />
+    <Property Name="MaTopping" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MaLuaChon">
+    <Key>
+      <PropertyRef Name="MaLuaChon" />
+    </Key>
+    <Property Name="MaLuaChon" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="NhanVien">
     <Key>
@@ -197,13 +205,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_HoaDonChiTiet_LuaChon">
-    <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="1">
+  <Association Name="FK_HoaDonChiTiet_MaLuaChon">
+    <End Role="MaLuaChon" Type="Self.MaLuaChon" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="HoaDonChiTiet" Type="Self.HoaDonChiTiet" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="LuaChon">
+      <Principal Role="MaLuaChon">
         <PropertyRef Name="MaLuaChon" />
       </Principal>
       <Dependent Role="HoaDonChiTiet">
@@ -211,8 +219,22 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_LuaChon_MaLuaChon">
+    <End Role="MaLuaChon" Type="Self.MaLuaChon" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaLuaChon">
+        <PropertyRef Name="MaLuaChon" />
+      </Principal>
+      <Dependent Role="LuaChon">
+        <PropertyRef Name="MaLuaChon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_LuaChon_SanPham">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
@@ -226,7 +248,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_LuaChon_Topping">
-    <End Role="Topping" Type="Self.Topping" Multiplicity="0..1">
+    <End Role="Topping" Type="Self.Topping" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
@@ -319,7 +341,6 @@
   <Function Name="DeletePhanQuyenByMaTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
   </Function>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="GetAllGiamGia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <ReturnType>
       <CollectionType>
@@ -336,6 +357,38 @@
         <RowType>
           <Property Name="MaHoaDon" Type="int" />
           <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="200" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetAllHoaDonChiTiet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaHoaDon" Type="int" />
+          <Property Name="MaLuaChon" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetAllHoaDonChiTietByMaHoaDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maHoaDon" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaHoaDon" Type="int" />
+          <Property Name="MaLuaChon" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetAllHoaDonChiTietByMaLuaChon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maLuaChon" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="MaHoaDon" Type="int" />
+          <Property Name="MaLuaChon" Type="int" />
         </RowType>
       </CollectionType>
     </ReturnType>
@@ -376,6 +429,10 @@
     <Parameter Name="maKhuyenMai" Type="int" Mode="In" />
     <Parameter Name="maHoaDon" Type="int" Mode="In" />
   </Function>
+  <Function Name="PostHoaDonChiTiet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maHoaDon" Type="int" Mode="In" />
+    <Parameter Name="maLuaChon" Type="int" Mode="In" />
+  </Function>
   <Function Name="PostPhanQuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
     <Parameter Name="maQuyen" Type="int" Mode="In" />
@@ -391,28 +448,6 @@
       </CollectionType>
     </ReturnType>
   </Function>
-  <Function Name="ThongKeSanPhamTheoCacThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <ReturnType>
-      <CollectionType>
-        <RowType>
-          <Property Name="nam" Type="int" />
-          <Property Name="thang" Type="int" />
-          <Property Name="soluong" Type="int" />
-        </RowType>
-      </CollectionType>
-    </ReturnType>
-  </Function>
-  <Function Name="ThongKeTienBanDuocTheoThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <ReturnType>
-      <CollectionType>
-        <RowType>
-          <Property Name="nam" Type="int" />
-          <Property Name="thang" Type="int" />
-          <Property Name="tongtien" Type="int" />
-        </RowType>
-      </CollectionType>
-    </ReturnType>
-  </Function>
   <EntityContainer Name="QuanLyTraSuaModelStoreContainer">
     <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiamGia" EntityType="Self.GiamGia" Schema="dbo" store:Type="Tables" />
@@ -421,6 +456,7 @@
     <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LuaChon" EntityType="Self.LuaChon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MaLuaChon" EntityType="Self.MaLuaChon" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
@@ -447,9 +483,13 @@
       <End Role="HoaDon" EntitySet="HoaDon" />
       <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiet" />
     </AssociationSet>
-    <AssociationSet Name="FK_HoaDonChiTiet_LuaChon" Association="Self.FK_HoaDonChiTiet_LuaChon">
-      <End Role="LuaChon" EntitySet="LuaChon" />
+    <AssociationSet Name="FK_HoaDonChiTiet_MaLuaChon" Association="Self.FK_HoaDonChiTiet_MaLuaChon">
+      <End Role="MaLuaChon" EntitySet="MaLuaChon" />
       <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LuaChon_MaLuaChon" Association="Self.FK_LuaChon_MaLuaChon">
+      <End Role="MaLuaChon" EntitySet="MaLuaChon" />
+      <End Role="LuaChon" EntitySet="LuaChon" />
     </AssociationSet>
     <AssociationSet Name="FK_LuaChon_SanPham" Association="Self.FK_LuaChon_SanPham">
       <End Role="SanPham" EntitySet="SanPham" />

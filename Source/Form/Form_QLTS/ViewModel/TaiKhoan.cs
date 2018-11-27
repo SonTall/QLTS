@@ -8,10 +8,12 @@ namespace Form_QLTS.ViewModel
 {
     public class TaiKhoan
     {
-        public string username { get; set; }
+        public string UserName { get; set; }
 
-        public string password { get; set; }
+        public string Identity { get; set; }
         
-        public string grant_type { get; set; }
+        public int Id { get; set; }
+
+        public string Token { get; set; }
     }
 }

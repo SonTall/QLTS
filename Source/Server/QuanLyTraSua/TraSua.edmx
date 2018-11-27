@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLyTraSuaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyTraSuaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChuDe">
           <Key>
             <PropertyRef Name="MaChuDe" />
@@ -67,10 +67,18 @@
         <EntityType Name="LuaChon">
           <Key>
             <PropertyRef Name="MaLuaChon" />
+            <PropertyRef Name="MaSanPham" />
+            <PropertyRef Name="MaTopping" />
           </Key>
-          <Property Name="MaLuaChon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MaSanPham" Type="int" />
-          <Property Name="MaTopping" Type="int" />
+          <Property Name="MaLuaChon" Type="int" Nullable="false" />
+          <Property Name="MaSanPham" Type="int" Nullable="false" />
+          <Property Name="MaTopping" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaLuaChon">
+          <Key>
+            <PropertyRef Name="MaLuaChon" />
+          </Key>
+          <Property Name="MaLuaChon" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NhanVien">
           <Key>
@@ -202,13 +210,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDonChiTiet_LuaChon">
-          <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="1">
+        <Association Name="FK_HoaDonChiTiet_MaLuaChon">
+          <End Role="MaLuaChon" Type="Self.MaLuaChon" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="HoaDonChiTiet" Type="Self.HoaDonChiTiet" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="LuaChon">
+            <Principal Role="MaLuaChon">
               <PropertyRef Name="MaLuaChon" />
             </Principal>
             <Dependent Role="HoaDonChiTiet">
@@ -216,8 +224,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LuaChon_MaLuaChon">
+          <End Role="MaLuaChon" Type="Self.MaLuaChon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaLuaChon">
+              <PropertyRef Name="MaLuaChon" />
+            </Principal>
+            <Dependent Role="LuaChon">
+              <PropertyRef Name="MaLuaChon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LuaChon_SanPham">
-          <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1">
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
@@ -231,7 +253,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LuaChon_Topping">
-          <End Role="Topping" Type="Self.Topping" Multiplicity="0..1">
+          <End Role="Topping" Type="Self.Topping" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
@@ -324,7 +346,6 @@
         <Function Name="DeletePhanQuyenByMaTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
         </Function>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAllGiamGia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -341,6 +362,38 @@
               <RowType>
                 <Property Name="MaHoaDon" Type="int" />
                 <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetAllHoaDonChiTiet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MaHoaDon" Type="int" />
+                <Property Name="MaLuaChon" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetAllHoaDonChiTietByMaHoaDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maHoaDon" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MaHoaDon" Type="int" />
+                <Property Name="MaLuaChon" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetAllHoaDonChiTietByMaLuaChon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maLuaChon" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MaHoaDon" Type="int" />
+                <Property Name="MaLuaChon" Type="int" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -381,6 +434,10 @@
           <Parameter Name="maKhuyenMai" Type="int" Mode="In" />
           <Parameter Name="maHoaDon" Type="int" Mode="In" />
         </Function>
+        <Function Name="PostHoaDonChiTiet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maHoaDon" Type="int" Mode="In" />
+          <Parameter Name="maLuaChon" Type="int" Mode="In" />
+        </Function>
         <Function Name="PostPhanQuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="maTaiKhoan" Type="int" Mode="In" />
           <Parameter Name="maQuyen" Type="int" Mode="In" />
@@ -396,28 +453,6 @@
             </CollectionType>
           </ReturnType>
         </Function>
-        <Function Name="ThongKeSanPhamTheoCacThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="nam" Type="int" />
-                <Property Name="thang" Type="int" />
-                <Property Name="soluong" Type="int" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="ThongKeTienBanDuocTheoThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="nam" Type="int" />
-                <Property Name="thang" Type="int" />
-                <Property Name="tongtien" Type="int" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <EntityContainer Name="QuanLyTraSuaModelStoreContainer">
           <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GiamGia" EntityType="Self.GiamGia" Schema="dbo" store:Type="Tables" />
@@ -426,6 +461,7 @@
           <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LuaChon" EntityType="Self.LuaChon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaLuaChon" EntityType="Self.MaLuaChon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
@@ -452,9 +488,13 @@
             <End Role="HoaDon" EntitySet="HoaDon" />
             <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiet" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDonChiTiet_LuaChon" Association="Self.FK_HoaDonChiTiet_LuaChon">
-            <End Role="LuaChon" EntitySet="LuaChon" />
+          <AssociationSet Name="FK_HoaDonChiTiet_MaLuaChon" Association="Self.FK_HoaDonChiTiet_MaLuaChon">
+            <End Role="MaLuaChon" EntitySet="MaLuaChon" />
             <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LuaChon_MaLuaChon" Association="Self.FK_LuaChon_MaLuaChon">
+            <End Role="MaLuaChon" EntitySet="MaLuaChon" />
+            <End Role="LuaChon" EntitySet="LuaChon" />
           </AssociationSet>
           <AssociationSet Name="FK_LuaChon_SanPham" Association="Self.FK_LuaChon_SanPham">
             <End Role="SanPham" EntitySet="SanPham" />
@@ -485,10 +525,48 @@
             <End Role="TaiKhoan" EntitySet="TaiKhoan" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyTraSuaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="GetAllGiamGia_Result">
+          <Property Name="MaKhuyenMai" Type="Int32" />
+          <Property Name="MaHoaDon" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="GetAllGiamGiaByTenKhuyenMai_Result">
+          <Property Name="MaHoaDon" Type="Int32" />
+          <Property Name="TenKhuyenMai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllHoaDonChiTiet_Result">
+          <Property Name="MaHoaDon" Type="Int32" />
+          <Property Name="MaLuaChon" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="GetAllHoaDonChiTietByMaHoaDon_Result">
+          <Property Name="MaHoaDon" Type="Int32" />
+          <Property Name="MaLuaChon" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="GetAllHoaDonChiTietByMaLuaChon_Result">
+          <Property Name="MaHoaDon" Type="Int32" />
+          <Property Name="MaLuaChon" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="GetAllPhanQuyen_Result">
+          <Property Name="MaTaiKhoan" Type="Int32" />
+          <Property Name="MaQuyen" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="GetGiamGiaByMaHoaDon_Result">
+          <Property Name="MaHoaDon" Type="Int32" />
+          <Property Name="TenKhuyenMai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <ComplexType Name="GetPhanQuyenByMaTaiKhoan_Result">
+          <Property Name="MaTaiKhoan" Type="Int32" />
+          <Property Name="MaQuyen" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="ThongKeHoaDonTheoCacThang_Result">
+          <Property Name="nam" Type="Int32" />
+          <Property Name="thang" Type="Int32" />
+          <Property Name="soluonghoadon" Type="Int32" />
+        </ComplexType>
         <EntityType Name="ChuDe">
           <Key>
             <PropertyRef Name="MaChuDe" />
@@ -496,7 +574,7 @@
           <Property Name="MaChuDe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenChuDe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SanPhams" Relationship="QuanLyTraSuaModel.FK_SanPham_ChuDe" FromRole="ChuDe" ToRole="SanPham" />
+          <NavigationProperty Name="SanPhams" Relationship="Self.FK_SanPham_ChuDe" FromRole="ChuDe" ToRole="SanPham" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -510,7 +588,7 @@
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_HoaDon_KhachHang" FromRole="HoaDon" ToRole="KhachHang" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK_HoaDon_NhanVien" FromRole="HoaDon" ToRole="NhanVien" />
           <NavigationProperty Name="HoaDonChiTiets" Relationship="Self.FK_HoaDonChiTiet_HoaDon1" FromRole="HoaDon" ToRole="HoaDonChiTiet" />
-          <NavigationProperty Name="KhuyenMais" Relationship="QuanLyTraSuaModel.GiamGia" FromRole="HoaDon" ToRole="KhuyenMai" />
+          <NavigationProperty Name="KhuyenMais" Relationship="Self.GiamGia" FromRole="HoaDon" ToRole="KhuyenMai" />
         </EntityType>
         <EntityType Name="HoaDonChiTiet">
           <Key>
@@ -521,7 +599,7 @@
           <Property Name="MaLuaChon" Type="Int32" Nullable="false" />
           <Property Name="SoLuong" Type="Int32" />
           <NavigationProperty Name="HoaDon" Relationship="Self.FK_HoaDonChiTiet_HoaDon1" FromRole="HoaDonChiTiet" ToRole="HoaDon" />
-          <NavigationProperty Name="LuaChon" Relationship="Self.FK_HoaDonChiTiet_LuaChon" FromRole="HoaDonChiTiet" ToRole="LuaChon" />
+          <NavigationProperty Name="MaLuaChon1" Relationship="Self.FK_HoaDonChiTiet_MaLuaChon" FromRole="HoaDonChiTiet" ToRole="MaLuaChon" />
         </EntityType>
         <EntityType Name="KhachHang">
           <Key>
@@ -536,18 +614,40 @@
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="HoaDons" Relationship="Self.FK_HoaDon_KhachHang" FromRole="KhachHang" ToRole="HoaDon" />
-          <NavigationProperty Name="TaiKhoans" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_KhachHang" FromRole="KhachHang" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiKhoans" Relationship="Self.FK_TaiKhoan_KhachHang" FromRole="KhachHang" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="KhuyenMai">
+          <Key>
+            <PropertyRef Name="MaKhuyenMai" />
+          </Key>
+          <Property Name="MaKhuyenMai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenKhuyenMai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GiaTri" Type="Double" />
+          <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NgayBatDau" Type="DateTime" Precision="3" />
+          <Property Name="NgayKetThuc" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HoaDons" Relationship="Self.GiamGia" FromRole="KhuyenMai" ToRole="HoaDon" />
         </EntityType>
         <EntityType Name="LuaChon">
           <Key>
             <PropertyRef Name="MaLuaChon" />
+            <PropertyRef Name="MaSanPham" />
+            <PropertyRef Name="MaTopping" />
           </Key>
-          <Property Name="MaLuaChon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaSanPham" Type="Int32" />
-          <Property Name="MaTopping" Type="Int32" />
-          <NavigationProperty Name="HoaDonChiTiets" Relationship="Self.FK_HoaDonChiTiet_LuaChon" FromRole="LuaChon" ToRole="HoaDonChiTiet" />
+          <Property Name="MaLuaChon" Type="Int32" Nullable="false" />
+          <Property Name="MaSanPham" Type="Int32" Nullable="false" />
+          <Property Name="MaTopping" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaLuaChon1" Relationship="Self.FK_LuaChon_MaLuaChon" FromRole="LuaChon" ToRole="MaLuaChon" />
+          <NavigationProperty Name="SanPham" Relationship="Self.FK_LuaChon_SanPham" FromRole="LuaChon" ToRole="SanPham" />
           <NavigationProperty Name="Topping" Relationship="Self.FK_LuaChon_Topping" FromRole="LuaChon" ToRole="Topping" />
-          <NavigationProperty Name="SanPham" Relationship="QuanLyTraSuaModel.FK_LuaChon_SanPham" FromRole="LuaChon" ToRole="SanPham" />
+        </EntityType>
+        <EntityType Name="MaLuaChon">
+          <Key>
+            <PropertyRef Name="MaLuaChon1" />
+          </Key>
+          <Property Name="MaLuaChon1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="HoaDonChiTiets" Relationship="Self.FK_HoaDonChiTiet_MaLuaChon" FromRole="MaLuaChon" ToRole="HoaDonChiTiet" />
+          <NavigationProperty Name="LuaChons" Relationship="Self.FK_LuaChon_MaLuaChon" FromRole="MaLuaChon" ToRole="LuaChon" />
         </EntityType>
         <EntityType Name="NhanVien">
           <Key>
@@ -563,7 +663,42 @@
           <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
           <NavigationProperty Name="HoaDons" Relationship="Self.FK_HoaDon_NhanVien" FromRole="NhanVien" ToRole="HoaDon" />
-          <NavigationProperty Name="TaiKhoans" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_NhanVien" FromRole="NhanVien" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiKhoans" Relationship="Self.FK_TaiKhoan_NhanVien" FromRole="NhanVien" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="Quyen">
+          <Key>
+            <PropertyRef Name="MaQuyen" />
+          </Key>
+          <Property Name="MaQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenQuyen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TaiKhoans" Relationship="Self.PhanQuyen" FromRole="Quyen" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="SanPham">
+          <Key>
+            <PropertyRef Name="MaSanPham" />
+          </Key>
+          <Property Name="MaSanPham" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenSanPham" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="KichCo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MaChuDe" Type="Int32" />
+          <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="ChuDe" Relationship="Self.FK_SanPham_ChuDe" FromRole="SanPham" ToRole="ChuDe" />
+          <NavigationProperty Name="LuaChons" Relationship="Self.FK_LuaChon_SanPham" FromRole="SanPham" ToRole="LuaChon" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="MaTaiKhoan" />
+          </Key>
+          <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenTaiKhoan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MatKhau" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaNhanVien" Type="Int32" />
+          <Property Name="MaKhachHang" Type="Int32" />
+          <NavigationProperty Name="KhachHang" Relationship="Self.FK_TaiKhoan_KhachHang" FromRole="TaiKhoan" ToRole="KhachHang" />
+          <NavigationProperty Name="NhanVien" Relationship="Self.FK_TaiKhoan_NhanVien" FromRole="TaiKhoan" ToRole="NhanVien" />
+          <NavigationProperty Name="Quyens" Relationship="Self.PhanQuyen" FromRole="TaiKhoan" ToRole="Quyen" />
         </EntityType>
         <EntityType Name="Topping">
           <Key>
@@ -575,6 +710,20 @@
           <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="LuaChons" Relationship="Self.FK_LuaChon_Topping" FromRole="Topping" ToRole="LuaChon" />
         </EntityType>
+        <Association Name="FK_SanPham_ChuDe">
+          <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuDe">
+              <PropertyRef Name="MaChuDe" />
+            </Principal>
+            <Dependent Role="SanPham">
+              <PropertyRef Name="MaChuDe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HoaDon_KhachHang">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -617,22 +766,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDonChiTiet_LuaChon">
-          <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="1">
+        <Association Name="FK_HoaDonChiTiet_MaLuaChon">
+          <End Role="MaLuaChon" Type="Self.MaLuaChon" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="HoaDonChiTiet" Type="Self.HoaDonChiTiet" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="LuaChon">
-              <PropertyRef Name="MaLuaChon" />
+            <Principal Role="MaLuaChon">
+              <PropertyRef Name="MaLuaChon1" />
             </Principal>
             <Dependent Role="HoaDonChiTiet">
               <PropertyRef Name="MaLuaChon" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaiKhoan_KhachHang">
+          <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhachHang">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="MaKhachHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LuaChon_MaLuaChon">
+          <End Role="MaLuaChon" Type="Self.MaLuaChon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaLuaChon">
+              <PropertyRef Name="MaLuaChon1" />
+            </Principal>
+            <Dependent Role="LuaChon">
+              <PropertyRef Name="MaLuaChon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LuaChon_SanPham">
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSanPham" />
+            </Principal>
+            <Dependent Role="LuaChon">
+              <PropertyRef Name="MaSanPham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LuaChon_Topping">
-          <End Role="Topping" Type="Self.Topping" Multiplicity="0..1">
+          <End Role="Topping" Type="Self.Topping" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="LuaChon" Type="Self.LuaChon" Multiplicity="*" />
@@ -645,14 +836,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaiKhoan_NhanVien">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GiamGia">
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <End Role="KhuyenMai" Type="Self.KhuyenMai" Multiplicity="*" />
+        </Association>
+        <Association Name="PhanQuyen">
+          <End Role="Quyen" Type="Self.Quyen" Multiplicity="*" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="QuanLyTraSuaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ChuDes" EntityType="Self.ChuDe" />
           <EntitySet Name="HoaDons" EntityType="Self.HoaDon" />
           <EntitySet Name="HoaDonChiTiets" EntityType="Self.HoaDonChiTiet" />
           <EntitySet Name="KhachHangs" EntityType="Self.KhachHang" />
+          <EntitySet Name="KhuyenMais" EntityType="Self.KhuyenMai" />
           <EntitySet Name="LuaChons" EntityType="Self.LuaChon" />
+          <EntitySet Name="MaLuaChons" EntityType="Self.MaLuaChon" />
           <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="Quyens" EntityType="Self.Quyen" />
+          <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
+          <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
           <EntitySet Name="Toppings" EntityType="Self.Topping" />
+          <AssociationSet Name="FK_SanPham_ChuDe" Association="Self.FK_SanPham_ChuDe">
+            <End Role="ChuDe" EntitySet="ChuDes" />
+            <End Role="SanPham" EntitySet="SanPhams" />
+          </AssociationSet>
           <AssociationSet Name="FK_HoaDon_KhachHang" Association="Self.FK_HoaDon_KhachHang">
             <End Role="KhachHang" EntitySet="KhachHangs" />
             <End Role="HoaDon" EntitySet="HoaDons" />
@@ -665,219 +887,78 @@
             <End Role="HoaDon" EntitySet="HoaDons" />
             <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiets" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDonChiTiet_LuaChon" Association="Self.FK_HoaDonChiTiet_LuaChon">
-            <End Role="LuaChon" EntitySet="LuaChons" />
+          <AssociationSet Name="FK_HoaDonChiTiet_MaLuaChon" Association="Self.FK_HoaDonChiTiet_MaLuaChon">
+            <End Role="MaLuaChon" EntitySet="MaLuaChons" />
             <End Role="HoaDonChiTiet" EntitySet="HoaDonChiTiets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoan_KhachHang" Association="Self.FK_TaiKhoan_KhachHang">
+            <End Role="KhachHang" EntitySet="KhachHangs" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LuaChon_MaLuaChon" Association="Self.FK_LuaChon_MaLuaChon">
+            <End Role="MaLuaChon" EntitySet="MaLuaChons" />
+            <End Role="LuaChon" EntitySet="LuaChons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LuaChon_SanPham" Association="Self.FK_LuaChon_SanPham">
+            <End Role="SanPham" EntitySet="SanPhams" />
+            <End Role="LuaChon" EntitySet="LuaChons" />
           </AssociationSet>
           <AssociationSet Name="FK_LuaChon_Topping" Association="Self.FK_LuaChon_Topping">
             <End Role="Topping" EntitySet="Toppings" />
             <End Role="LuaChon" EntitySet="LuaChons" />
           </AssociationSet>
-          <EntitySet Name="SanPhams" EntityType="QuanLyTraSuaModel.SanPham" />
-          <AssociationSet Name="FK_SanPham_ChuDe" Association="QuanLyTraSuaModel.FK_SanPham_ChuDe">
-            <End Role="ChuDe" EntitySet="ChuDes" />
-            <End Role="SanPham" EntitySet="SanPhams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LuaChon_SanPham" Association="QuanLyTraSuaModel.FK_LuaChon_SanPham">
-            <End Role="SanPham" EntitySet="SanPhams" />
-            <End Role="LuaChon" EntitySet="LuaChons" />
-          </AssociationSet>
-          <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
-          <FunctionImport Name="ThongKeSanPhamTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result)" />
-          <FunctionImport Name="ThongKeTienBanDuocTheoThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result)" />
-          <EntitySet Name="KhuyenMais" EntityType="QuanLyTraSuaModel.KhuyenMai" />
-          <AssociationSet Name="GiamGia" Association="QuanLyTraSuaModel.GiamGia">
-            <End Role="HoaDon" EntitySet="HoaDons" />
-            <End Role="KhuyenMai" EntitySet="KhuyenMais" />
-          </AssociationSet>
-          <EntitySet Name="Quyens" EntityType="QuanLyTraSuaModel.Quyen" />
-          <EntitySet Name="TaiKhoans" EntityType="QuanLyTraSuaModel.TaiKhoan" />
-          <AssociationSet Name="FK_TaiKhoan_KhachHang" Association="QuanLyTraSuaModel.FK_TaiKhoan_KhachHang">
-            <End Role="KhachHang" EntitySet="KhachHangs" />
-            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaiKhoan_NhanVien" Association="QuanLyTraSuaModel.FK_TaiKhoan_NhanVien">
+          <AssociationSet Name="FK_TaiKhoan_NhanVien" Association="Self.FK_TaiKhoan_NhanVien">
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="TaiKhoan" EntitySet="TaiKhoans" />
           </AssociationSet>
-          <AssociationSet Name="PhanQuyen" Association="QuanLyTraSuaModel.PhanQuyen">
+          <AssociationSet Name="GiamGia" Association="Self.GiamGia">
+            <End Role="HoaDon" EntitySet="HoaDons" />
+            <End Role="KhuyenMai" EntitySet="KhuyenMais" />
+          </AssociationSet>
+          <AssociationSet Name="PhanQuyen" Association="Self.PhanQuyen">
             <End Role="Quyen" EntitySet="Quyens" />
             <End Role="TaiKhoan" EntitySet="TaiKhoans" />
           </AssociationSet>
+          <FunctionImport Name="GetAllGiamGia" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGia_Result)" />
+          <FunctionImport Name="GetAllGiamGiaByTenKhuyenMai" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result)" />
+          <FunctionImport Name="GetAllHoaDonChiTiet" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllHoaDonChiTiet_Result)" />
+          <FunctionImport Name="GetAllHoaDonChiTietByMaHoaDon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllHoaDonChiTietByMaHoaDon_Result)">
+            <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllHoaDonChiTietByMaLuaChon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllHoaDonChiTietByMaLuaChon_Result)">
+            <Parameter Name="maLuaChon" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllPhanQuyen" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllPhanQuyen_Result)" />
+          <FunctionImport Name="GetGiamGiaByMaHoaDon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result)">
+            <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPhanQuyenByMaTaiKhoan" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result)">
+            <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
           <FunctionImport Name="DeletePhanQuyen">
             <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
             <Parameter Name="maQuyen" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhanQuyenByMaQuyen">
-          <Parameter Name="maQuyen" Mode="In" Type="Int32" />
+            <Parameter Name="maQuyen" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhanQuyenByMaTaiKhoan">
-          <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllGiamGia" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGia_Result)" />
-          <FunctionImport Name="GetAllGiamGiaByTenKhuyenMai" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result)" />
-          <FunctionImport Name="GetAllPhanQuyen" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllPhanQuyen_Result)" />
-          <FunctionImport Name="GetGiamGiaByMaHoaDon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result)">
-          <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+            <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PostGiamGia">
             <Parameter Name="maKhuyenMai" Mode="In" Type="Int32" />
             <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="PostHoaDonChiTiet">
+            <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+            <Parameter Name="maLuaChon" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="PostPhanQuyen">
             <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
             <Parameter Name="maQuyen" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetPhanQuyenByMaTaiKhoan" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result)">
-            <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="SanPham">
-          <Key>
-            <PropertyRef Name="MaSanPham" />
-          </Key>
-          <Property Name="MaSanPham" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenSanPham" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="KichCo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MaChuDe" Type="Int32" />
-          <Property Name="HinhAnh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="ChuDe" Relationship="QuanLyTraSuaModel.FK_SanPham_ChuDe" FromRole="SanPham" ToRole="ChuDe" />
-          <NavigationProperty Name="LuaChons" Relationship="QuanLyTraSuaModel.FK_LuaChon_SanPham" FromRole="SanPham" ToRole="LuaChon" />
-        </EntityType>
-        <Association Name="FK_SanPham_ChuDe">
-          <End Type="QuanLyTraSuaModel.ChuDe" Role="ChuDe" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLyTraSuaModel.SanPham" Role="SanPham" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChuDe">
-              <PropertyRef Name="MaChuDe" />
-            </Principal>
-            <Dependent Role="SanPham">
-              <PropertyRef Name="MaChuDe" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LuaChon_SanPham">
-          <End Type="QuanLyTraSuaModel.SanPham" Role="SanPham" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLyTraSuaModel.LuaChon" Role="LuaChon" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SanPham">
-              <PropertyRef Name="MaSanPham" />
-            </Principal>
-            <Dependent Role="LuaChon">
-              <PropertyRef Name="MaSanPham" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="ThongKeHoaDonTheoCacThang_Result">
-          <Property Type="Int32" Name="nam" Nullable="true" />
-          <Property Type="Int32" Name="thang" Nullable="true" />
-          <Property Type="Int32" Name="soluonghoadon" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ThongKeSanPhamTheoCacThang_Result">
-          <Property Type="Int32" Name="nam" Nullable="true" />
-          <Property Type="Int32" Name="thang" Nullable="true" />
-          <Property Type="Int32" Name="soluong" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ThongKeTienBanDuocTheoThang_Result">
-          <Property Type="Int32" Name="nam" Nullable="true" />
-          <Property Type="Int32" Name="thang" Nullable="true" />
-          <Property Type="Int32" Name="tongtien" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="KhuyenMai">
-          <Key>
-            <PropertyRef Name="MaKhuyenMai" />
-          </Key>
-          <Property Name="MaKhuyenMai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenKhuyenMai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="GiaTri" Type="Double" />
-          <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="NgayBatDau" Type="DateTime" Precision="3" />
-          <Property Name="NgayKetThuc" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="HoaDons" Relationship="QuanLyTraSuaModel.GiamGia" FromRole="KhuyenMai" ToRole="HoaDon" />
-        </EntityType>
-        <Association Name="GiamGia">
-          <End Type="QuanLyTraSuaModel.HoaDon" Role="HoaDon" Multiplicity="*" />
-          <End Type="QuanLyTraSuaModel.KhuyenMai" Role="KhuyenMai" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Quyen">
-          <Key>
-            <PropertyRef Name="MaQuyen" />
-          </Key>
-          <Property Name="MaQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenQuyen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TaiKhoans" Relationship="QuanLyTraSuaModel.PhanQuyen" FromRole="Quyen" ToRole="TaiKhoan" />
-        </EntityType>
-        <EntityType Name="TaiKhoan">
-          <Key>
-            <PropertyRef Name="MaTaiKhoan" />
-          </Key>
-          <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenTaiKhoan" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="MaNhanVien" Type="Int32" />
-          <Property Name="MaKhachHang" Type="Int32" />
-          <NavigationProperty Name="KhachHang" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_KhachHang" FromRole="TaiKhoan" ToRole="KhachHang" />
-          <NavigationProperty Name="NhanVien" Relationship="QuanLyTraSuaModel.FK_TaiKhoan_NhanVien" FromRole="TaiKhoan" ToRole="NhanVien" />
-          <NavigationProperty Name="Quyens" Relationship="QuanLyTraSuaModel.PhanQuyen" FromRole="TaiKhoan" ToRole="Quyen" />
-        </EntityType>
-        <Association Name="FK_TaiKhoan_KhachHang">
-          <End Type="QuanLyTraSuaModel.KhachHang" Role="KhachHang" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLyTraSuaModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KhachHang">
-              <PropertyRef Name="MaKhachHang" />
-            </Principal>
-            <Dependent Role="TaiKhoan">
-              <PropertyRef Name="MaKhachHang" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TaiKhoan_NhanVien">
-          <End Type="QuanLyTraSuaModel.NhanVien" Role="NhanVien" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLyTraSuaModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NhanVien">
-              <PropertyRef Name="MaNhanVien" />
-            </Principal>
-            <Dependent Role="TaiKhoan">
-              <PropertyRef Name="MaNhanVien" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PhanQuyen">
-          <End Type="QuanLyTraSuaModel.Quyen" Role="Quyen" Multiplicity="*" />
-          <End Type="QuanLyTraSuaModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
-        </Association>
-        <ComplexType Name="GetAllGiamGia_Result">
-          <Property Type="Int32" Name="MaKhuyenMai" Nullable="true" />
-          <Property Type="Int32" Name="MaHoaDon" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetAllGiamGiaByTenKhuyenMai_Result">
-          <Property Type="Int32" Name="MaHoaDon" Nullable="true" />
-          <Property Type="String" Name="TenKhuyenMai" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="GetAllPhanQuyen_Result">
-          <Property Type="Int32" Name="MaTaiKhoan" Nullable="true" />
-          <Property Type="Int32" Name="MaQuyen" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetGiamGiaByMaHoaDon_Result">
-          <Property Type="Int32" Name="MaHoaDon" Nullable="true" />
-          <Property Type="String" Name="TenKhuyenMai" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="GetPhanQuyenByMaTaiKhoan_Result">
-          <Property Type="Int32" Name="MaTaiKhoan" Nullable="true" />
-          <Property Type="Int32" Name="MaQuyen" Nullable="true" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -927,12 +1008,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="KhuyenMais">
+            <EntityTypeMapping TypeName="QuanLyTraSuaModel.KhuyenMai">
+              <MappingFragment StoreEntitySet="KhuyenMai">
+                <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+                <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
+                <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LuaChons">
             <EntityTypeMapping TypeName="QuanLyTraSuaModel.LuaChon">
               <MappingFragment StoreEntitySet="LuaChon">
                 <ScalarProperty Name="MaLuaChon" ColumnName="MaLuaChon" />
                 <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
                 <ScalarProperty Name="MaTopping" ColumnName="MaTopping" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaLuaChons">
+            <EntityTypeMapping TypeName="QuanLyTraSuaModel.MaLuaChon">
+              <MappingFragment StoreEntitySet="MaLuaChon">
+                <ScalarProperty Name="MaLuaChon1" ColumnName="MaLuaChon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -951,6 +1051,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Quyens">
+            <EntityTypeMapping TypeName="QuanLyTraSuaModel.Quyen">
+              <MappingFragment StoreEntitySet="Quyen">
+                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+                <ScalarProperty Name="TenQuyen" ColumnName="TenQuyen" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SanPhams">
+            <EntityTypeMapping TypeName="QuanLyTraSuaModel.SanPham">
+              <MappingFragment StoreEntitySet="SanPham">
+                <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
+                <ScalarProperty Name="TenSanPham" ColumnName="TenSanPham" />
+                <ScalarProperty Name="KichCo" ColumnName="KichCo" />
+                <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
+                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoans">
+            <EntityTypeMapping TypeName="QuanLyTraSuaModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+                <ScalarProperty Name="TenTaiKhoan" ColumnName="TenTaiKhoan" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Toppings">
             <EntityTypeMapping TypeName="QuanLyTraSuaModel.Topping">
               <MappingFragment StoreEntitySet="Topping">
@@ -961,19 +1093,87 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SanPhams">
-            <EntityTypeMapping TypeName="QuanLyTraSuaModel.SanPham">
-              <MappingFragment StoreEntitySet="SanPham">
-                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
-                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
-                <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
-                <ScalarProperty Name="KichCo" ColumnName="KichCo" />
-                <ScalarProperty Name="TenSanPham" ColumnName="TenSanPham" />
-                <ScalarProperty Name="MaSanPham" ColumnName="MaSanPham" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ThongKeHoaDonTheoCacThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeHoaDonTheoCacThang">
+          <AssociationSetMapping Name="GiamGia" TypeName="QuanLyTraSuaModel.GiamGia" StoreEntitySet="GiamGia">
+            <EndProperty Name="HoaDon">
+              <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+            </EndProperty>
+            <EndProperty Name="KhuyenMai">
+              <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PhanQuyen" TypeName="QuanLyTraSuaModel.PhanQuyen" StoreEntitySet="PhanQuyen">
+            <EndProperty Name="Quyen">
+              <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+            </EndProperty>
+            <EndProperty Name="TaiKhoan">
+              <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetAllGiamGia" FunctionImportName="GetAllGiamGia">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllGiamGia_Result">
+                <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetAllGiamGiaByTenKhuyenMai" FunctionImportName="GetAllGiamGiaByTenKhuyenMai">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result">
+                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetAllHoaDonChiTiet" FunctionImportName="GetAllHoaDonChiTiet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllHoaDonChiTiet_Result">
+                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+                <ScalarProperty Name="MaLuaChon" ColumnName="MaLuaChon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetAllHoaDonChiTietByMaHoaDon" FunctionImportName="GetAllHoaDonChiTietByMaHoaDon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllHoaDonChiTietByMaHoaDon_Result">
+                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+                <ScalarProperty Name="MaLuaChon" ColumnName="MaLuaChon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetAllHoaDonChiTietByMaLuaChon" FunctionImportName="GetAllHoaDonChiTietByMaLuaChon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllHoaDonChiTietByMaLuaChon_Result">
+                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+                <ScalarProperty Name="MaLuaChon" ColumnName="MaLuaChon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetAllPhanQuyen" FunctionImportName="GetAllPhanQuyen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllPhanQuyen_Result">
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetGiamGiaByMaHoaDon" FunctionImportName="GetGiamGiaByMaHoaDon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result">
+                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.GetPhanQuyenByMaTaiKhoan" FunctionImportName="GetPhanQuyenByMaTaiKhoan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result">
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="QuanLyTraSuaModel.Store.ThongKeHoaDonTheoCacThang" FunctionImportName="ThongKeHoaDonTheoCacThang">
             <ResultMapping>
               <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result">
                 <ScalarProperty Name="nam" ColumnName="nam" />
@@ -982,117 +1182,12 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ThongKeSanPhamTheoCacThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeSanPhamTheoCacThang">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeSanPhamTheoCacThang_Result">
-                <ScalarProperty Name="nam" ColumnName="nam" />
-                <ScalarProperty Name="thang" ColumnName="thang" />
-                <ScalarProperty Name="soluong" ColumnName="soluong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ThongKeTienBanDuocTheoThang" FunctionName="QuanLyTraSuaModel.Store.ThongKeTienBanDuocTheoThang">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeTienBanDuocTheoThang_Result">
-                <ScalarProperty Name="nam" ColumnName="nam" />
-                <ScalarProperty Name="thang" ColumnName="thang" />
-                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="KhuyenMais">
-            <EntityTypeMapping TypeName="QuanLyTraSuaModel.KhuyenMai">
-              <MappingFragment StoreEntitySet="KhuyenMai">
-                <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
-                <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
-                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
-                <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
-                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
-                <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="GiamGia" TypeName="QuanLyTraSuaModel.GiamGia" StoreEntitySet="GiamGia">
-            <EndProperty Name="KhuyenMai">
-              <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
-            </EndProperty>
-            <EndProperty Name="HoaDon">
-              <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="Quyens">
-            <EntityTypeMapping TypeName="QuanLyTraSuaModel.Quyen">
-              <MappingFragment StoreEntitySet="Quyen">
-                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
-                <ScalarProperty Name="TenQuyen" ColumnName="TenQuyen" />
-                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TaiKhoans">
-            <EntityTypeMapping TypeName="QuanLyTraSuaModel.TaiKhoan">
-              <MappingFragment StoreEntitySet="TaiKhoan">
-                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
-                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
-                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
-                <ScalarProperty Name="TenTaiKhoan" ColumnName="TenTaiKhoan" />
-                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="PhanQuyen" TypeName="QuanLyTraSuaModel.PhanQuyen" StoreEntitySet="PhanQuyen">
-            <EndProperty Name="TaiKhoan">
-              <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-            </EndProperty>
-            <EndProperty Name="Quyen">
-              <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
-            </EndProperty>
-          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="DeletePhanQuyen" FunctionName="QuanLyTraSuaModel.Store.DeletePhanQuyen" />
           <FunctionImportMapping FunctionImportName="DeletePhanQuyenByMaQuyen" FunctionName="QuanLyTraSuaModel.Store.DeletePhanQuyenByMaQuyen" />
           <FunctionImportMapping FunctionImportName="DeletePhanQuyenByMaTaiKhoan" FunctionName="QuanLyTraSuaModel.Store.DeletePhanQuyenByMaTaiKhoan" />
-          <FunctionImportMapping FunctionImportName="GetAllGiamGia" FunctionName="QuanLyTraSuaModel.Store.GetAllGiamGia">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllGiamGia_Result">
-                <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
-                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllGiamGiaByTenKhuyenMai" FunctionName="QuanLyTraSuaModel.Store.GetAllGiamGiaByTenKhuyenMai">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result">
-                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
-                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllPhanQuyen" FunctionName="QuanLyTraSuaModel.Store.GetAllPhanQuyen">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetAllPhanQuyen_Result">
-                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetGiamGiaByMaHoaDon" FunctionName="QuanLyTraSuaModel.Store.GetGiamGiaByMaHoaDon">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result">
-                <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
-                <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PostGiamGia" FunctionName="QuanLyTraSuaModel.Store.PostGiamGia" />
+          <FunctionImportMapping FunctionImportName="PostHoaDonChiTiet" FunctionName="QuanLyTraSuaModel.Store.PostHoaDonChiTiet" />
           <FunctionImportMapping FunctionImportName="PostPhanQuyen" FunctionName="QuanLyTraSuaModel.Store.PostPhanQuyen" />
-          <FunctionImportMapping FunctionImportName="GetPhanQuyenByMaTaiKhoan" FunctionName="QuanLyTraSuaModel.Store.GetPhanQuyenByMaTaiKhoan">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result">
-                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-                <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

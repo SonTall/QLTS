@@ -42,15 +42,11 @@ namespace QuanLyTraSua.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutHoaDon(HoaDon hoaDon)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //if (id != hoaDon.MaHoaDon)
-            //{
-            //    return BadRequest();
-            //}
             var hoaDonCurrent = db.HoaDons.SingleOrDefault(v => v.MaHoaDon == hoaDon.MaHoaDon);
 
             if (hoaDonCurrent != null)
@@ -64,14 +60,7 @@ namespace QuanLyTraSua.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    //if (!HoaDonExists(id))
-                    //{
-                    //    return NotFound();
-                    //}
-                    //else
-                    //{
                     throw;
-                    //}
                 }
             }
             else
@@ -84,17 +73,53 @@ namespace QuanLyTraSua.Controllers
 
         // POST: api/HoaDons
         [ResponseType(typeof(HoaDon))]
-        public IHttpActionResult PostHoaDon(HoaDon hoaDon)
+        public IHttpActionResult PostHoaDon(ThongTinHoaDon thongTinHoaDon)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            //them vao bang? hoa don
+            HoaDon hoaDon = new HoaDon()
+            {
+                //MaHoaDon = thongTinHoaDon.MaHoaDon,
+                MaKhachHang = thongTinHoaDon.MaKhachHang,
+                MaNhanVien = thongTinHoaDon.MaNhanVien,
+                NgayTao = thongTinHoaDon.NgayTao,
+                MoTa = thongTinHoaDon.MoTa,
+            };
+
+            //them bang? hoa don chi tiet'
+            List<HoaDonChiTiet> hoaDonChiTiet = new List<HoaDonChiTiet>();
+            thongTinHoaDon.LuaChon.ToList().ForEach(v =>
+            {
+                HoaDonChiTiet tmp = new HoaDonChiTiet()
+                {
+                    //MaHoaDon = thongTinHoaDon.MaHoaDon,
+                    MaHoaDon = hoaDon.MaHoaDon,
+                   MaLuaChon = v.Key,
+                   SoLuong = v.Value
+                };
+                hoaDonChiTiet.Add(tmp);
+            });
+
             db.HoaDons.Add(hoaDon);
+            db.HoaDonChiTiets.AddRange(hoaDonChiTiet);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = hoaDon.MaHoaDon }, hoaDon);
+            // them bang? giam? gia'
+            // lay ra list khuyen mai dang duoc ap dung.
+            var khuyenMaiApDung = db.KhuyenMais.Where(v => v.NgayBatDau.Value <= DateTime.Now && v.NgayKetThuc >= DateTime.Now).ToList();
+            if (khuyenMaiApDung != null)
+            {
+                //GiamGiaViewModel giamGia
+                khuyenMaiApDung.ForEach(v =>
+                {
+                    db.PostGiamGia(v.MaKhuyenMai, hoaDon.MaHoaDon);
+                });
+            }
+            return Ok();
         }
 
         // DELETE: api/HoaDons/5

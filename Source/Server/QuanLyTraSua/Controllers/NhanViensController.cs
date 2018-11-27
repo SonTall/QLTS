@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using QuanLyTraSua;
@@ -20,45 +21,84 @@ namespace QuanLyTraSua.Controllers
         // GET: api/NhanViens
         public IHttpActionResult GetNhanViens()
         {
-            var nhanVienList = db.NhanViens.Select(v => new NhanViewViewModel { MaNhanVien = v.MaNhanVien, TenNhanVien = v.TenNhanVien, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, NgayBatDau = v.NgayBatDau, HinhAnh = v.HinhAnh });
-            if (nhanVienList != null)
-                return Ok(nhanVienList.ToList());
-            else
-                return BadRequest();
+            var nhanVienList = db.NhanViens;
+            var nhanVienEntity = new List<NhanVienViewModel>();
+            nhanVienList.ToList().ForEach(v =>
+            {
+                string tmp = "";
+                if (v.HinhAnh != "")
+                {
+                    tmp = ImageTask.GetImage(v.HinhAnh);
+                    v.HinhAnh = tmp;
+                }
+                nhanVienEntity.Add(new NhanVienViewModel
+                {
+                    MaNhanVien = v.MaNhanVien,
+                    TenNhanVien = v.TenNhanVien,
+                    GioiTinh = v.GioiTinh,
+                    NgaySinh = v.NgaySinh,
+                    DiaChi = v.DiaChi,
+                    SDT = v.SDT,
+                    Email = v.Email,
+                    NgayBatDau = v.NgayBatDau,
+                    HinhAnh = tmp
+                });
+
+            });
+
+            return Ok(nhanVienEntity.ToList());
+
         }
 
         // GET: api/NhanViens/5
         [ResponseType(typeof(NhanVien))]
         public IHttpActionResult GetNhanVien(int id)
         {
-            var nhanVienList = db.NhanViens.Where(v => v.MaNhanVien == id).Select(v => new NhanViewViewModel { MaNhanVien = v.MaNhanVien, TenNhanVien = v.TenNhanVien, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, NgayBatDau = v.NgayBatDau, HinhAnh = v.HinhAnh });
+            var nhanVienList = db.NhanViens.SingleOrDefault(v => v.MaNhanVien == id);
 
             if (nhanVienList == null)
             {
                 return NotFound();
             }
 
-            return Ok(nhanVienList.ToList());
+            string tmp = "";
+            if (nhanVienList.HinhAnh != "")
+            {
+                tmp = ImageTask.GetImage(nhanVienList.HinhAnh);
+                nhanVienList.HinhAnh = tmp;
+            }
+            var nhanVienEntity = new NhanVienViewModel()
+            {
+                MaNhanVien = nhanVienList.MaNhanVien,
+                TenNhanVien = nhanVienList.TenNhanVien,
+                GioiTinh = nhanVienList.GioiTinh,
+                NgaySinh = nhanVienList.NgaySinh,
+                DiaChi = nhanVienList.DiaChi,
+                SDT = nhanVienList.SDT,
+                Email = nhanVienList.Email,
+                NgayBatDau = nhanVienList.NgayBatDau,
+                HinhAnh = tmp
+            };
+
+            return Ok(nhanVienEntity);
         }
 
         // PUT: api/NhanViens/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutNhanVien(NhanVien nhanVien)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            //if (id != nhanVien.MaNhanVien)
-            //{
-            //    return BadRequest();
-            //}
             var nhanVienCurrent = db.NhanViens.SingleOrDefault(v => v.MaNhanVien == nhanVien.MaNhanVien);
             if (nhanVienCurrent != null)
             {
 
-
+                if (nhanVien.HinhAnh != null)
+                {
+                    byte[] bytes = Encoding.Default.GetBytes(nhanVien.HinhAnh);
+                    var str = ImageTask.Write(bytes);
+                    nhanVien.HinhAnh = str;
+                }
+                
+                db.Entry(nhanVienCurrent).State = EntityState.Detached;
                 db.Entry(nhanVien).State = EntityState.Modified;
 
                 try
@@ -67,14 +107,7 @@ namespace QuanLyTraSua.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    //if (!NhanVienExists(id))
-                    //{
-                    //    return NotFound();
-                    //}
-                    //else
-                    //{
-                        throw;
-                    //}
+                    throw;
                 }
             }
             else
@@ -93,10 +126,18 @@ namespace QuanLyTraSua.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (nhanVien.HinhAnh != null)
+            {
+                byte[] bytes = Encoding.ASCII.GetBytes(nhanVien.HinhAnh);
+                var str = ImageTask.Write(bytes);
+                nhanVien.HinhAnh = str;
+            }
+
             db.NhanViens.Add(nhanVien);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = nhanVien.MaNhanVien }, nhanVien);
+            //return CreatedAtRoute("DefaultApi", new { id = nhanVien.MaNhanVien }, nhanVien);
+            return Ok();
         }
 
         // DELETE: api/NhanViens/5

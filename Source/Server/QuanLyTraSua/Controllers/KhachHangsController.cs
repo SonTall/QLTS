@@ -52,6 +52,7 @@ namespace QuanLyTraSua.Controllers
 
             if (khachHangCurrent != null)
             {
+                db.Entry(khachHangCurrent).State = EntityState.Detached;
                 db.Entry(khachHang).State = EntityState.Modified;
 
                 try

@@ -37,34 +37,27 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/Quyens/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutQuyen(int id, Quyen quyen)
+        public IHttpActionResult PutQuyen(Quyen quyen)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var quyenCurrent = db.Quyens.SingleOrDefault(v => v.MaQuyen == quyen.MaQuyen);
 
-            if (id != quyen.MaQuyen)
+            if (quyenCurrent != null)
             {
-                return BadRequest();
-            }
+                db.Entry(quyenCurrent).State = EntityState.Detached;
+                db.Entry(quyen).State = EntityState.Modified;
 
-            db.Entry(quyen).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!QuyenExists(id))
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
+            }
+            else
+            {
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);

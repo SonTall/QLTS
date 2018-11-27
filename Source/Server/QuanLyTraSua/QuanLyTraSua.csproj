@@ -266,6 +266,15 @@
     <Compile Include="GetAllGiamGia_Result.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllHoaDonChiTietByMaHoaDon_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllHoaDonChiTietByMaLuaChon_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllHoaDonChiTiet_Result.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllPhanQuyen_Result.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
@@ -293,6 +302,9 @@
     <Compile Include="LuaChon.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaLuaChon.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChuDeViewModel.cs" />
@@ -304,11 +316,12 @@
     <Compile Include="Models\KhachHangViewModel.cs" />
     <Compile Include="Models\KhuyenMaiViewModel.cs" />
     <Compile Include="Models\LuaChonViewModel.cs" />
-    <Compile Include="Models\NhanViewViewModel.cs" />
+    <Compile Include="Models\NhanVienViewModel.cs" />
     <Compile Include="Models\PhanQuyenViewModel.cs" />
     <Compile Include="Models\QuyenViewModel.cs" />
     <Compile Include="Models\SanPhamViewModel.cs" />
     <Compile Include="Models\TaiKhoanViewModel.cs" />
+    <Compile Include="Models\ThongTinHoaDon.cs" />
     <Compile Include="Models\ToppingViewModel.cs" />
     <Compile Include="NhanVien.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
@@ -330,12 +343,6 @@
     <Compile Include="ThongKeHoaDonTheoCacThang_Result.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
-    <Compile Include="ThongKeSanPhamTheoCacThang_Result.cs">
-      <DependentUpon>TraSua.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ThongKeTienBanDuocTheoThang_Result.cs">
-      <DependentUpon>TraSua.tt</DependentUpon>
-    </Compile>
     <Compile Include="Topping.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
@@ -354,6 +361,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TraSua.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ImageTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -433,6 +441,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

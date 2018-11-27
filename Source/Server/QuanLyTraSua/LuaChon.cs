@@ -14,19 +14,12 @@ namespace QuanLyTraSua
     
     public partial class LuaChon
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LuaChon()
-        {
-            this.HoaDonChiTiets = new HashSet<HoaDonChiTiet>();
-        }
-    
         public int MaLuaChon { get; set; }
-        public Nullable<int> MaSanPham { get; set; }
-        public Nullable<int> MaTopping { get; set; }
+        public int MaSanPham { get; set; }
+        public int MaTopping { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
-        public virtual Topping Topping { get; set; }
+        public virtual MaLuaChon MaLuaChon1 { get; set; }
         public virtual SanPham SanPham { get; set; }
+        public virtual Topping Topping { get; set; }
     }
 }

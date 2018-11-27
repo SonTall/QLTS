@@ -42,34 +42,29 @@ namespace QuanLyTraSua.Controllers
 
         // PUT: api/Toppings/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTopping(int id, Topping topping)
+        public IHttpActionResult PutTopping(Topping topping)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var toppingCurrent = db.Toppings.SingleOrDefault(v => v.MaTopping == topping.MaTopping);
 
-            if (id != topping.MaTopping)
+            if (toppingCurrent != null)
             {
-                return BadRequest();
-            }
 
-            db.Entry(topping).State = EntityState.Modified;
+                db.Entry(toppingCurrent).State = EntityState.Detached;
+                db.Entry(topping).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ToppingExists(id))
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
+            }
+            else
+            {
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);

@@ -20,11 +20,11 @@ namespace Form_QLTS.GUI
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            var token = requestData.GetToken(txtUserName.Text, txtPassWord.Text);
-            if(token != "")
+            var taiKhoan = requestData.GetToken(txtUserName.Text, txtPassWord.Text);
+            if(taiKhoan != null)
             {
-                MessageBox.Show(token);
-                using (Form1 form2 = new Form1(token))
+               // MessageBox.Show(taiKhoan);
+                using (Form1 form2 = new Form1(taiKhoan))
                 {
                     form2.ShowDialog();
                 }

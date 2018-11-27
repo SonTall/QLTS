@@ -258,3 +258,61 @@ Begin
 end
 
 execute DeletePhanQuyen 2, 1
+
+
+-----------------------------------------------------------------------------------------------------------
+-- BANG HOA DON CHI TIET
+-- get tat ca? du lieu bang hoa don chi tiet
+CREATE FUNCTION GetAllHoaDonChiTiet()
+RETURNS @table TABLE (
+	MaHoaDon int,
+    MaLuaChon int)
+BEGIN
+	insert @table
+	select MaHoaDon, MaLuaChon from HoaDonChiTiet order by MaHoaDon, MaLuaChon
+	Return
+RETURN
+END
+
+select * from GetAllHoaDonChiTiet()
+
+---get tat ca? du lieu bang hoa don chi tiet theo ma hoa don 
+CREATE FUNCTION GetAllHoaDonChiTietByMaHoaDon(@maHoaDon int)
+RETURNS @table TABLE (
+	MaHoaDon int,
+    MaLuaChon int)
+BEGIN
+	insert @table
+	select MaHoaDon, MaLuaChon from HoaDonChiTiet where MaHoaDon = @maHoaDon order by MaHoaDon, MaLuaChon
+	Return
+RETURN
+END
+
+select * from GetAllHoaDonChiTietByMaHoaDon(1)
+
+
+---get tat ca? du lieu bang hoa don chi tiet theo ma lua chon
+CREATE FUNCTION GetAllHoaDonChiTietByMaLuaChon(@maLuaChon int)
+RETURNS @table TABLE (
+	MaHoaDon int,
+    MaLuaChon int)
+BEGIN
+	insert @table
+	select MaHoaDon, MaLuaChon from HoaDonChiTiet where MaLuaChon = @maLuaChon order by MaHoaDon, MaLuaChon
+	Return
+RETURN
+END
+
+select * from GetAllHoaDonChiTietByMaHoaDon(1)
+
+-- post du lieu vao bang hoa don chi tiet
+CREATE PROCEDURE PostHoaDonChiTiet( @maHoaDon int, @maLuaChon int)
+AS
+Begin
+	if(Not exists(select * from HoaDonChiTiet a where a.MaHoaDon = @maHoaDon and a.MaLuaChon = @maLuaChon))
+		begin
+			INSERT INTO HoaDonChiTiet( MaHoaDon, MaLuaChon)
+			VALUES (@maHoaDon, @maLuaChon)
+		end
+end
+
