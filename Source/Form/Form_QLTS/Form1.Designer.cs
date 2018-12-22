@@ -28,31 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pnlLeft = new System.Windows.Forms.Panel();
+            this.btnThongTin = new System.Windows.Forms.Button();
+            this.btnSanPham = new System.Windows.Forms.Button();
+            this.btnHoaDon = new System.Windows.Forms.Button();
+            this.btnTrangChu = new System.Windows.Forms.Button();
             this.lbUserName = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.bunifuImageButton3 = new Bunifu.Framework.UI.BunifuImageButton();
-            this.bunifuImageButton2 = new Bunifu.Framework.UI.BunifuImageButton();
-            this.bunifuImageButton1 = new Bunifu.Framework.UI.BunifuImageButton();
-            this.btn = new Bunifu.Framework.UI.BunifuImageButton();
-            this.btnExit = new Bunifu.Framework.UI.BunifuImageButton();
             this.pnlBody = new System.Windows.Forms.Panel();
-            this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.bunifuDragControl2 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.btnTrangChu = new System.Windows.Forms.Button();
-            this.btnHoaDon = new System.Windows.Forms.Button();
-            this.btnSanPham = new System.Windows.Forms.Button();
-            this.btnThongTin = new System.Windows.Forms.Button();
-            this.doubleBitmapControl1 = new BunifuAnimatorNS.DoubleBitmapControl();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.pnlLeft.SuspendLayout();
             this.pnlTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnExit)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlLeft
@@ -68,173 +59,6 @@
             this.pnlLeft.Name = "pnlLeft";
             this.pnlLeft.Size = new System.Drawing.Size(119, 650);
             this.pnlLeft.TabIndex = 0;
-            // 
-            // lbUserName
-            // 
-            this.lbUserName.AutoSize = true;
-            this.lbUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbUserName.ForeColor = System.Drawing.SystemColors.Control;
-            this.lbUserName.Location = new System.Drawing.Point(7, 7);
-            this.lbUserName.Name = "lbUserName";
-            this.lbUserName.Size = new System.Drawing.Size(46, 18);
-            this.lbUserName.TabIndex = 3;
-            this.lbUserName.Text = "label1";
-            // 
-            // pnlTop
-            // 
-            this.pnlTop.BackColor = System.Drawing.Color.Silver;
-            this.pnlTop.Controls.Add(this.bunifuImageButton3);
-            this.pnlTop.Controls.Add(this.bunifuImageButton2);
-            this.pnlTop.Controls.Add(this.bunifuImageButton1);
-            this.pnlTop.Controls.Add(this.btn);
-            this.pnlTop.Controls.Add(this.btnExit);
-            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTop.Location = new System.Drawing.Point(119, 0);
-            this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1031, 72);
-            this.pnlTop.TabIndex = 1;
-            // 
-            // bunifuImageButton3
-            // 
-            this.bunifuImageButton3.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuImageButton3.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton3.Image")));
-            this.bunifuImageButton3.ImageActive = null;
-            this.bunifuImageButton3.Location = new System.Drawing.Point(776, 27);
-            this.bunifuImageButton3.Name = "bunifuImageButton3";
-            this.bunifuImageButton3.Size = new System.Drawing.Size(26, 27);
-            this.bunifuImageButton3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.bunifuImageButton3.TabIndex = 3;
-            this.bunifuImageButton3.TabStop = false;
-            this.bunifuImageButton3.Zoom = 10;
-            // 
-            // bunifuImageButton2
-            // 
-            this.bunifuImageButton2.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuImageButton2.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton2.Image")));
-            this.bunifuImageButton2.ImageActive = null;
-            this.bunifuImageButton2.Location = new System.Drawing.Point(833, 27);
-            this.bunifuImageButton2.Name = "bunifuImageButton2";
-            this.bunifuImageButton2.Size = new System.Drawing.Size(26, 27);
-            this.bunifuImageButton2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.bunifuImageButton2.TabIndex = 3;
-            this.bunifuImageButton2.TabStop = false;
-            this.bunifuImageButton2.Zoom = 10;
-            // 
-            // bunifuImageButton1
-            // 
-            this.bunifuImageButton1.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuImageButton1.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton1.Image")));
-            this.bunifuImageButton1.ImageActive = null;
-            this.bunifuImageButton1.Location = new System.Drawing.Point(876, 27);
-            this.bunifuImageButton1.Name = "bunifuImageButton1";
-            this.bunifuImageButton1.Size = new System.Drawing.Size(26, 27);
-            this.bunifuImageButton1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.bunifuImageButton1.TabIndex = 3;
-            this.bunifuImageButton1.TabStop = false;
-            this.bunifuImageButton1.Zoom = 10;
-            // 
-            // btn
-            // 
-            this.btn.BackColor = System.Drawing.Color.Transparent;
-            this.btn.Image = ((System.Drawing.Image)(resources.GetObject("btn.Image")));
-            this.btn.ImageActive = null;
-            this.btn.Location = new System.Drawing.Point(919, 27);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(26, 27);
-            this.btn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btn.TabIndex = 3;
-            this.btn.TabStop = false;
-            this.btn.Zoom = 10;
-            // 
-            // btnExit
-            // 
-            this.btnExit.BackColor = System.Drawing.Color.Transparent;
-            this.btnExit.Image = ((System.Drawing.Image)(resources.GetObject("btnExit.Image")));
-            this.btnExit.ImageActive = null;
-            this.btnExit.Location = new System.Drawing.Point(975, 12);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(44, 42);
-            this.btnExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnExit.TabIndex = 3;
-            this.btnExit.TabStop = false;
-            this.btnExit.Zoom = 10;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // pnlBody
-            // 
-            this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBody.Location = new System.Drawing.Point(119, 72);
-            this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Size = new System.Drawing.Size(1031, 578);
-            this.pnlBody.TabIndex = 2;
-            // 
-            // bunifuDragControl1
-            // 
-            this.bunifuDragControl1.Fixed = true;
-            this.bunifuDragControl1.Horizontal = true;
-            this.bunifuDragControl1.TargetControl = this.pnlTop;
-            this.bunifuDragControl1.Vertical = true;
-            // 
-            // bunifuDragControl2
-            // 
-            this.bunifuDragControl2.Fixed = true;
-            this.bunifuDragControl2.Horizontal = true;
-            this.bunifuDragControl2.TargetControl = this.pnlLeft;
-            this.bunifuDragControl2.Vertical = true;
-            // 
-            // btnTrangChu
-            // 
-            this.btnTrangChu.FlatAppearance.BorderSize = 0;
-            this.btnTrangChu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.btnTrangChu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.btnTrangChu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTrangChu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTrangChu.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnTrangChu.Image = ((System.Drawing.Image)(resources.GetObject("btnTrangChu.Image")));
-            this.btnTrangChu.Location = new System.Drawing.Point(10, 86);
-            this.btnTrangChu.Name = "btnTrangChu";
-            this.btnTrangChu.Size = new System.Drawing.Size(103, 96);
-            this.btnTrangChu.TabIndex = 4;
-            this.btnTrangChu.Text = "Trang chủ";
-            this.btnTrangChu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnTrangChu.UseVisualStyleBackColor = true;
-            this.btnTrangChu.Click += new System.EventHandler(this.btnTrangChu_Click);
-            // 
-            // btnHoaDon
-            // 
-            this.btnHoaDon.FlatAppearance.BorderSize = 0;
-            this.btnHoaDon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.btnHoaDon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.btnHoaDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHoaDon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHoaDon.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnHoaDon.Image = ((System.Drawing.Image)(resources.GetObject("btnHoaDon.Image")));
-            this.btnHoaDon.Location = new System.Drawing.Point(10, 204);
-            this.btnHoaDon.Name = "btnHoaDon";
-            this.btnHoaDon.Size = new System.Drawing.Size(103, 96);
-            this.btnHoaDon.TabIndex = 4;
-            this.btnHoaDon.Text = "Hóa đơn";
-            this.btnHoaDon.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnHoaDon.UseVisualStyleBackColor = true;
-            this.btnHoaDon.Click += new System.EventHandler(this.btnHoaDon_Click);
-            // 
-            // btnSanPham
-            // 
-            this.btnSanPham.FlatAppearance.BorderSize = 0;
-            this.btnSanPham.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.btnSanPham.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.btnSanPham.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSanPham.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSanPham.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnSanPham.Image = ((System.Drawing.Image)(resources.GetObject("btnSanPham.Image")));
-            this.btnSanPham.Location = new System.Drawing.Point(10, 322);
-            this.btnSanPham.Name = "btnSanPham";
-            this.btnSanPham.Size = new System.Drawing.Size(103, 96);
-            this.btnSanPham.TabIndex = 4;
-            this.btnSanPham.Text = "Thực đơn";
-            this.btnSanPham.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSanPham.UseVisualStyleBackColor = true;
-            this.btnSanPham.Click += new System.EventHandler(this.btnSanPham_Click);
             // 
             // btnThongTin
             // 
@@ -254,14 +78,163 @@
             this.btnThongTin.UseVisualStyleBackColor = true;
             this.btnThongTin.Click += new System.EventHandler(this.btnThongTin_Click);
             // 
-            // doubleBitmapControl1
+            // btnSanPham
             // 
-            this.doubleBitmapControl1.Location = new System.Drawing.Point(0, 0);
-            this.doubleBitmapControl1.Name = "doubleBitmapControl1";
-            this.doubleBitmapControl1.Size = new System.Drawing.Size(0, 0);
-            this.doubleBitmapControl1.TabIndex = 0;
-            this.doubleBitmapControl1.Text = "doubleBitmapControl1";
-            this.doubleBitmapControl1.Visible = false;
+            this.btnSanPham.FlatAppearance.BorderSize = 0;
+            this.btnSanPham.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.btnSanPham.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.btnSanPham.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSanPham.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSanPham.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnSanPham.Image = ((System.Drawing.Image)(resources.GetObject("btnSanPham.Image")));
+            this.btnSanPham.Location = new System.Drawing.Point(10, 322);
+            this.btnSanPham.Name = "btnSanPham";
+            this.btnSanPham.Size = new System.Drawing.Size(103, 96);
+            this.btnSanPham.TabIndex = 4;
+            this.btnSanPham.Text = "Thực đơn";
+            this.btnSanPham.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSanPham.UseVisualStyleBackColor = true;
+            this.btnSanPham.Click += new System.EventHandler(this.btnSanPham_Click);
+            // 
+            // btnHoaDon
+            // 
+            this.btnHoaDon.FlatAppearance.BorderSize = 0;
+            this.btnHoaDon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.btnHoaDon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.btnHoaDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHoaDon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHoaDon.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnHoaDon.Image = ((System.Drawing.Image)(resources.GetObject("btnHoaDon.Image")));
+            this.btnHoaDon.Location = new System.Drawing.Point(10, 204);
+            this.btnHoaDon.Name = "btnHoaDon";
+            this.btnHoaDon.Size = new System.Drawing.Size(103, 96);
+            this.btnHoaDon.TabIndex = 4;
+            this.btnHoaDon.Text = "Hóa đơn";
+            this.btnHoaDon.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnHoaDon.UseVisualStyleBackColor = true;
+            this.btnHoaDon.Click += new System.EventHandler(this.btnHoaDon_Click);
+            // 
+            // btnTrangChu
+            // 
+            this.btnTrangChu.FlatAppearance.BorderSize = 0;
+            this.btnTrangChu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.btnTrangChu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.btnTrangChu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTrangChu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTrangChu.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnTrangChu.Image = ((System.Drawing.Image)(resources.GetObject("btnTrangChu.Image")));
+            this.btnTrangChu.Location = new System.Drawing.Point(10, 86);
+            this.btnTrangChu.Name = "btnTrangChu";
+            this.btnTrangChu.Size = new System.Drawing.Size(103, 96);
+            this.btnTrangChu.TabIndex = 4;
+            this.btnTrangChu.Text = "Trang chủ";
+            this.btnTrangChu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnTrangChu.UseVisualStyleBackColor = true;
+            this.btnTrangChu.Click += new System.EventHandler(this.btnTrangChu_Click);
+            // 
+            // lbUserName
+            // 
+            this.lbUserName.AutoSize = true;
+            this.lbUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbUserName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbUserName.Location = new System.Drawing.Point(7, 7);
+            this.lbUserName.Name = "lbUserName";
+            this.lbUserName.Size = new System.Drawing.Size(46, 18);
+            this.lbUserName.TabIndex = 3;
+            this.lbUserName.Text = "label1";
+            // 
+            // pnlTop
+            // 
+            this.pnlTop.BackColor = System.Drawing.Color.Silver;
+            this.pnlTop.Controls.Add(this.button4);
+            this.pnlTop.Controls.Add(this.button3);
+            this.pnlTop.Controls.Add(this.button2);
+            this.pnlTop.Controls.Add(this.button1);
+            this.pnlTop.Controls.Add(this.btnExit);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTop.Location = new System.Drawing.Point(119, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(1031, 72);
+            this.pnlTop.TabIndex = 1;
+            // 
+            // pnlBody
+            // 
+            this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBody.Location = new System.Drawing.Point(119, 72);
+            this.pnlBody.Name = "pnlBody";
+            this.pnlBody.Size = new System.Drawing.Size(1031, 578);
+            this.pnlBody.TabIndex = 2;
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.Transparent;
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Image = ((System.Drawing.Image)(resources.GetObject("btnExit.Image")));
+            this.btnExit.Location = new System.Drawing.Point(990, 7);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(29, 24);
+            this.btnExit.TabIndex = 0;
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(933, 40);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(29, 24);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Transparent;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.Location = new System.Drawing.Point(898, 40);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(29, 24);
+            this.button2.TabIndex = 0;
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Transparent;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(824, 40);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(23, 24);
+            this.button3.TabIndex = 0;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.Transparent;
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.Location = new System.Drawing.Point(869, 40);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(23, 24);
+            this.button4.TabIndex = 0;
+            this.button4.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
@@ -278,11 +251,6 @@
             this.pnlLeft.ResumeLayout(false);
             this.pnlLeft.PerformLayout();
             this.pnlTop.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnExit)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -292,19 +260,22 @@
         private System.Windows.Forms.Panel pnlLeft;
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Panel pnlBody;
-        private Bunifu.Framework.UI.BunifuDragControl bunifuDragControl1;
-        private Bunifu.Framework.UI.BunifuDragControl bunifuDragControl2;
-        private Bunifu.Framework.UI.BunifuImageButton btnExit;
+        //private Bunifu.Framework.UI.BunifuImageButton btnExit;
         private System.Windows.Forms.Label lbUserName;
-        private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton3;
-        private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton2;
-        private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton1;
-        private Bunifu.Framework.UI.BunifuImageButton btn;
+       // private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton3;
+       // private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton2;
+       // private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton1;
+      //  private Bunifu.Framework.UI.BunifuImageButton btn;
         private System.Windows.Forms.Button btnTrangChu;
         private System.Windows.Forms.Button btnHoaDon;
         private System.Windows.Forms.Button btnSanPham;
         private System.Windows.Forms.Button btnThongTin;
-        private BunifuAnimatorNS.DoubleBitmapControl doubleBitmapControl1;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        //  private BunifuAnimatorNS.DoubleBitmapControl doubleBitmapControl1;
     }
 }
 
