@@ -55,11 +55,6 @@ namespace QuanLyTraSua.Controllers
                 return BadRequest(ModelState);
             }
 
-            //if (id != hoaDonChiTiet.MaHoaDon)
-            //{
-            //    return BadRequest();
-            //}
-
             var hoaDonCurrent = db.HoaDonChiTiets.SingleOrDefault(v => v.MaHoaDon == hoaDonChiTiet.MaHoaDon);
 
             if (hoaDonCurrent != null)

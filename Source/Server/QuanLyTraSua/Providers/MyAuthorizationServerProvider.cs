@@ -20,7 +20,9 @@ namespace QuanLyTraSua.Providers
         public override Task TokenEndpointResponse(OAuthTokenEndpointResponseContext context)
         {
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            context.AdditionalResponseParameters.Add("idtaikhoan", taiKhoan.MaTaiKhoan);
             context.AdditionalResponseParameters.Add("username", taiKhoan.TenTaiKhoan);
+            context.AdditionalResponseParameters.Add("password", taiKhoan.MatKhau);
             context.AdditionalResponseParameters.Add("identity", context.Identity.Name);
             if(taiKhoan.MaNhanVien != null)
             {
@@ -72,13 +74,6 @@ namespace QuanLyTraSua.Providers
                     }
                     context.Validated(identity);
                 }
-                //else if (context.UserName == "user" && context.Password == "user")
-                //{
-                //    identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
-                //    identity.AddClaim(new Claim("username", "user"));
-                //    identity.AddClaim(new Claim(ClaimTypes.Name, "Suresh Sha"));
-                //    context.Validated(identity);
-                //}
                 else
                 {
                     context.SetError("invalid_grant", "Provided username and password is incorrect");

@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using QuanLyTraSua;
@@ -20,11 +21,44 @@ namespace QuanLyTraSua.Controllers
         // GET: api/KhachHangs
         public IHttpActionResult GetKhachHangs()
         {
-            var khachHangList = db.KhachHangs.Select(v => new KhachHangViewModel { MaKhachHang = v.MaKhachHang, TenKhachHang = v.TenKhachHang, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, HinhAnh = v.HinhAnh });
+            var khachHangList = db.KhachHangs;
+            var khachHangEntity = new List<KhachHangViewModel>();
+            khachHangList.ToList().ForEach(v =>
+            {
+
+                string tmp = "";
+                if (v.HinhAnh != "")
+                {
+                    tmp = ImageTask.GetImage(v.HinhAnh);
+                    v.HinhAnh = tmp;
+                }
+                khachHangEntity.Add(new KhachHangViewModel
+                {
+                    MaKhachHang = v.MaKhachHang,
+                    TenKhachHang = v.TenKhachHang,
+                    GioiTinh = v.GioiTinh,
+                    NgaySinh = v.NgaySinh,
+                    DiaChi = v.DiaChi,
+                    SDT = v.SDT,
+                    Email = v.Email,
+                    HinhAnh = v.HinhAnh
+                });
+            });
             if (khachHangList != null)
                 return Ok(khachHangList);
             else
                 return BadRequest();
+
+
+
+            //MaKhachHang = v.MaKhachHang,
+            //        TenKhachHang = v.TenKhachHang,
+            //        GioiTinh = v.GioiTinh,
+            //        NgaySinh = v.NgaySinh,
+            //        DiaChi = v.DiaChi,
+            //        SDT = v.SDT,
+            //        Email = v.Email,
+            //        HinhAnh = v.HinhAnh
 
         }
 
@@ -32,14 +66,39 @@ namespace QuanLyTraSua.Controllers
         [ResponseType(typeof(KhachHang))]
         public IHttpActionResult GetKhachHang(int id)
         {
-            var khachHangList = db.KhachHangs.Where(v => v.MaKhachHang == id).Select(v => new KhachHangViewModel { MaKhachHang = v.MaKhachHang, TenKhachHang = v.TenKhachHang, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, HinhAnh = v.HinhAnh });
+            //var khachHangList = db.KhachHangs.Where(v => v.MaKhachHang == id).Select(v => new KhachHangViewModel { MaKhachHang = v.MaKhachHang, TenKhachHang = v.TenKhachHang, GioiTinh = v.GioiTinh, NgaySinh = v.NgaySinh, DiaChi = v.DiaChi, SDT = v.SDT, Email = v.Email, HinhAnh = v.HinhAnh });
+
+            //if (khachHangList == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var khachHangList = db.KhachHangs.SingleOrDefault(v => v.MaKhachHang == id);
 
             if (khachHangList == null)
             {
                 return NotFound();
             }
 
-            return Ok(khachHangList.ToList());
+            string tmp = "";
+            if (khachHangList.HinhAnh != "")
+            {
+                tmp = ImageTask.GetImage(khachHangList.HinhAnh);
+                khachHangList.HinhAnh = tmp;
+            }
+            var khachHangEntity = new KhachHangViewModel()
+            {
+                MaKhachHang = khachHangList.MaKhachHang,
+                TenKhachHang = khachHangList.TenKhachHang,
+                GioiTinh = khachHangList.GioiTinh,
+                NgaySinh = khachHangList.NgaySinh,
+                DiaChi = khachHangList.DiaChi,
+                SDT = khachHangList.SDT,
+                Email = khachHangList.Email,
+                HinhAnh = khachHangList.HinhAnh
+            };
+
+            return Ok(khachHangEntity);
         }
 
         // PUT: api/KhachHangs/5
@@ -48,10 +107,45 @@ namespace QuanLyTraSua.Controllers
         {
 
 
-            var khachHangCurrent = db.KhachHangs.SingleOrDefault(v => v.MaKhachHang == khachHang.MaKhachHang);
+            //var khachHangCurrent = db.KhachHangs.SingleOrDefault(v => v.MaKhachHang == khachHang.MaKhachHang);
 
+            //if (khachHangCurrent != null)
+            //{
+            //    db.Entry(khachHangCurrent).State = EntityState.Detached;
+            //    db.Entry(khachHang).State = EntityState.Modified;
+
+            //    try
+            //    {
+            //        db.SaveChanges();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        //if (!KhachHangExists(id))
+            //        //{
+            //        //    return NotFound();
+            //        //}
+            //        //else
+            //        //{
+            //        throw;
+            //        //}
+            //    }
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
+            //_________________________
+            var khachHangCurrent = db.KhachHangs.SingleOrDefault(v => v.MaKhachHang == khachHang.MaKhachHang);
             if (khachHangCurrent != null)
             {
+
+                if (khachHang.HinhAnh != null)
+                {
+                    byte[] bytes = Encoding.Default.GetBytes(khachHang.HinhAnh);
+                    var str = ImageTask.Write(bytes);
+                    khachHang.HinhAnh = str;
+                }
+
                 db.Entry(khachHangCurrent).State = EntityState.Detached;
                 db.Entry(khachHang).State = EntityState.Modified;
 
@@ -61,14 +155,7 @@ namespace QuanLyTraSua.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    //if (!KhachHangExists(id))
-                    //{
-                    //    return NotFound();
-                    //}
-                    //else
-                    //{
                     throw;
-                    //}
                 }
             }
             else
@@ -88,6 +175,12 @@ namespace QuanLyTraSua.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (khachHang.HinhAnh != null)
+            {
+                byte[] bytes = Encoding.Default.GetBytes(khachHang.HinhAnh);
+                var str = ImageTask.Write(bytes);
+                khachHang.HinhAnh = str;
+            }
             db.KhachHangs.Add(khachHang);
             db.SaveChanges();
 

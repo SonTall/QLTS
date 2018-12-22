@@ -35,15 +35,6 @@ namespace Form_QLTS.ViewModel
         public bool XoaTopping(int id)
         {
             bool check = false;
-            //MaTopping.ForEach(item =>
-            //{
-            //    if (item == id)
-            //    {
-            //        MaTopping.Remove(item);
-            //        check = true;
-            //    }
-            //});
-
             MaTopping.Remove(id);
             return check;
         }

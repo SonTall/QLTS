@@ -20,25 +20,57 @@ namespace QuanLyTraSua.Controllers
         // GET: api/SanPhams
         public IHttpActionResult GetSanPhams()
         {
-            var sanPhamList = db.SanPhams.Select(v => new SanPhamViewModel { MaSanPham = v.MaSanPham, TenSanPham = v.TenSanPham, KichCo = v.KichCo, DonGia = v.DonGia, HinhAnh = v.HinhAnh, MaChuDe = v.MaChuDe });
-            if (sanPhamList != null)
-                return Ok(sanPhamList);
+            var sanPham = db.SanPhams;
+            var sanPhamList = new List<SanPhamViewModel>();
+            if (sanPham != null)
+            {
+                sanPham.ToList().ForEach(v =>
+                {
+                    var tmp = new SanPhamViewModel()
+                    {
+                        MaSanPham = v.MaSanPham,
+                        TenSanPham = v.TenSanPham,
+                        KichCo = v.KichCo,
+                        DonGia = v.DonGia,
+                        HinhAnh = ImageTask.GetImage(v.HinhAnh),
+                        MaChuDe = v.MaChuDe
+                    };
+
+                    sanPhamList.Add(tmp);
+                });
+
+                return Ok(sanPhamList.ToList());
+            }
             else
+            {
                 return BadRequest();
+            }
         }
 
         // GET: api/SanPhams/5
         [ResponseType(typeof(SanPham))]
         public IHttpActionResult GetSanPhams(int id)
         {
-            var sanPham = db.SanPhams.Where(v => v.MaSanPham == id).Select(v => new SanPhamViewModel { MaSanPham = v.MaSanPham, TenSanPham = v.TenSanPham, KichCo = v.KichCo, DonGia = v.DonGia, HinhAnh = v.HinhAnh, MaChuDe = v.MaChuDe });
+
+            var sanPham = db.SanPhams.SingleOrDefault(v => v.MaSanPham == id);
 
             if (sanPham == null)
             {
                 return NotFound();
             }
-
-            return Ok(sanPham.ToList());
+            else
+            {
+                var sanPhamViewModel = new SanPhamViewModel()
+                {
+                    MaSanPham = sanPham.MaSanPham,
+                    TenSanPham = sanPham.TenSanPham,
+                    KichCo = sanPham.KichCo,
+                    DonGia = sanPham.DonGia,
+                    HinhAnh = ImageTask.GetImage(sanPham.HinhAnh),
+                    MaChuDe = sanPham.MaChuDe
+                };
+                return Ok(sanPhamViewModel);
+            }
         }
 
         // PUT: api/SanPhams/5
