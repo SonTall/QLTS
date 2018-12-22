@@ -322,6 +322,7 @@
     <Compile Include="Models\SanPhamViewModel.cs" />
     <Compile Include="Models\TaiKhoanViewModel.cs" />
     <Compile Include="Models\ThongTinHoaDon.cs" />
+    <Compile Include="Models\ThongTinTaiKhoan.cs" />
     <Compile Include="Models\ToppingViewModel.cs" />
     <Compile Include="NhanVien.cs">
       <DependentUpon>TraSua.tt</DependentUpon>

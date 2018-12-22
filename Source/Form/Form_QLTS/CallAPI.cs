@@ -44,7 +44,9 @@ namespace Form_QLTS
                     var readTask = result.Content.ReadAsStringAsync();
                     JObject joResponse = JObject.Parse(readTask.Result);
                     taiKhoan.Token = joResponse["access_token"].ToString();
+                    taiKhoan.MaTaiKhoan = Convert.ToInt32(joResponse["idtaikhoan"].ToString());
                     taiKhoan.UserName = joResponse["username"].ToString();
+                    taiKhoan.PassWord = joResponse["password"].ToString();
                     taiKhoan.Identity = joResponse["identity"].ToString();
                     taiKhoan.Id = Convert.ToInt32(joResponse["id"].ToString());
                 }
@@ -62,7 +64,7 @@ namespace Form_QLTS
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public List<TaiKhoanViewModel> GetListTaiKhoan(string token)
+        public List<TaiKhoanViewModel> GetTaiKhoan(string token, int maTaiKhoan)
         {
             IEnumerable<TaiKhoanViewModel> taiKhoanList = null;
             using (var client = new HttpClient())
@@ -71,7 +73,7 @@ namespace Form_QLTS
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.Trim());
                 //HTTP GET
-                var responseTask = client.GetAsync("TaiKhoans");
+                var responseTask = client.GetAsync("TaiKhoans?maTaiKhoan=" + maTaiKhoan);
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -525,6 +527,19 @@ namespace Form_QLTS
             }
         }
 
+        public void PostTaiKhoan(TaiKhoanKhachHang taiKhoan)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+                //HTTP POST
+                var responseTask = client.PostAsJsonAsync("TaiKhoans", taiKhoan);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+            }
+        }
+
         //Put NHAN VIEN
         /// <summary>
         /// sua thong tin nhan vien
@@ -538,6 +553,28 @@ namespace Form_QLTS
                 client.BaseAddress = new Uri("http://localhost:49365/api/");
                 //HTTP POST
                 var responseTask = client.PutAsJsonAsync("NhanViens", nhanVien);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool PutTaiKhoan(TaiKhoanViewModel taiKhoan, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.Trim());
+                //HTTP POST
+                var responseTask = client.PutAsJsonAsync("TaiKhoans", taiKhoan);
                 responseTask.Wait();
 
                 var result = responseTask.Result;

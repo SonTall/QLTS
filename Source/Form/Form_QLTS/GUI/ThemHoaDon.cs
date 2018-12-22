@@ -31,6 +31,7 @@ namespace Form_QLTS.GUI
 
         #endregion
 
+        #region Func
         /// <summary>
         /// lay data tra? nguoc. ve` from them san? pham?
         /// </summary>
@@ -38,6 +39,8 @@ namespace Form_QLTS.GUI
         /// <returns></returns>
         public void GetDataFromChild(GioHang gioHang, List<ToppingViewModel> _listTopping)
         {
+            pnlMoTa.Visible = true;
+
             AddDataDgvGioHang(dgvGioHang, gioHang, dgvGioHang.Rows.Count - 1);
 
             if (_listTopping != null)
@@ -71,6 +74,8 @@ namespace Form_QLTS.GUI
             lbTongTien.Text = TongTien(gioHangList, listSanPham, listTopping).ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("de")) + " VNĐ";
             lbThanhTien.Text = ThanhTien(TongTien(gioHangList, listSanPham, listTopping), khuyenMai).ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("de")) + " VNĐ";
 
+            if (listTopping.Count > 0)
+                lbTopping.Text = "Topping";
         }
 
         public double TongTien(List<GioHang> listGioHang, List<SanPhamViewModel> listSanPham, List<ToppingViewModel> listTopping)
@@ -148,6 +153,10 @@ namespace Form_QLTS.GUI
             }
 
         }
+
+        #endregion
+
+
         public ThemHoaDon(TaiKhoan _taiKhoan, double _khuyenMai)
         {
             InitializeComponent();
@@ -158,6 +167,9 @@ namespace Form_QLTS.GUI
 
         private void ThemHoaDon_Load(object sender, EventArgs e)
         {
+            //hide bang? mota 
+            pnlMoTa.Visible = false;
+
             listSanPham = requestData.GetListSanPham();
 
             //lbkhuyenmai
@@ -326,8 +338,8 @@ namespace Form_QLTS.GUI
 
                     });
 
-                    // tao bien thong tien hoa don de? thao tac ham` them vao hoa don 
-                    ThongTinHoaDon thongTinHoaDon = new ThongTinHoaDon(thongTinLuaChonList, taiKhoan.Id, DateTime.Now, "");
+                    // tao bien thong tin hoa don de? thao tac ham` them vao hoa don 
+                    ThongTinHoaDon thongTinHoaDon = new ThongTinHoaDon(thongTinLuaChonList, taiKhoan.Id, DateTime.Now, txtMoTa.Text);
                     bool check = requestData.PostHoaDon(thongTinHoaDon);
 
                     if (check == true)
@@ -385,7 +397,7 @@ namespace Form_QLTS.GUI
                 foreach (DataGridViewRow row in dgvGioHang.SelectedRows)
                 {
                     dgvGioHang.Rows.RemoveAt(row.Index);
-                }           
+                }
                 dgvGioHang.Refresh();
             }
             else

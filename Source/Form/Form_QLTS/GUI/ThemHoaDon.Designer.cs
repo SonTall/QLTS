@@ -30,13 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.pnlMoTa = new System.Windows.Forms.Panel();
+            this.txtMoTa = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnXoaTopping = new System.Windows.Forms.Button();
             this.btnThemSanPham = new System.Windows.Forms.Button();
             this.btnXoaSanPham = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.btnInHoaDon = new System.Windows.Forms.Button();
-            this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
             this.btnThemHoaDon = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.lbDate = new System.Windows.Forms.Label();
@@ -67,7 +69,10 @@
             this.HinhAnh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DonGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label7 = new System.Windows.Forms.Label();
             this.panel4.SuspendLayout();
+            this.pnlMoTa.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTopping)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGioHang)).BeginInit();
@@ -77,6 +82,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
+            this.panel4.Controls.Add(this.pnlMoTa);
             this.panel4.Controls.Add(this.txtSearch);
             this.panel4.Controls.Add(this.btnXoaTopping);
             this.panel4.Controls.Add(this.btnThemSanPham);
@@ -95,6 +101,33 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(838, 510);
             this.panel4.TabIndex = 19;
+            // 
+            // pnlMoTa
+            // 
+            this.pnlMoTa.Controls.Add(this.txtMoTa);
+            this.pnlMoTa.Controls.Add(this.label5);
+            this.pnlMoTa.Location = new System.Drawing.Point(643, 335);
+            this.pnlMoTa.Name = "pnlMoTa";
+            this.pnlMoTa.Size = new System.Drawing.Size(187, 120);
+            this.pnlMoTa.TabIndex = 18;
+            // 
+            // txtMoTa
+            // 
+            this.txtMoTa.Location = new System.Drawing.Point(6, 25);
+            this.txtMoTa.Multiline = true;
+            this.txtMoTa.Name = "txtMoTa";
+            this.txtMoTa.Size = new System.Drawing.Size(176, 92);
+            this.txtMoTa.TabIndex = 13;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(4, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 15);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Mô tả:";
             // 
             // txtSearch
             // 
@@ -157,8 +190,8 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Control;
+            this.panel6.Controls.Add(this.label7);
             this.panel6.Controls.Add(this.btnInHoaDon);
-            this.panel6.Controls.Add(this.bunifuSeparator1);
             this.panel6.Controls.Add(this.btnThemHoaDon);
             this.panel6.Controls.Add(this.label8);
             this.panel6.Controls.Add(this.lbDate);
@@ -188,18 +221,6 @@
             this.btnInHoaDon.TabIndex = 16;
             this.btnInHoaDon.Text = "In hóa đơn ";
             this.btnInHoaDon.UseVisualStyleBackColor = true;
-            // 
-            // bunifuSeparator1
-            // 
-            this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.bunifuSeparator1.LineThickness = 1;
-            this.bunifuSeparator1.Location = new System.Drawing.Point(7, 122);
-            this.bunifuSeparator1.Name = "bunifuSeparator1";
-            this.bunifuSeparator1.Size = new System.Drawing.Size(171, 17);
-            this.bunifuSeparator1.TabIndex = 16;
-            this.bunifuSeparator1.Transparency = 255;
-            this.bunifuSeparator1.Vertical = false;
             // 
             // btnThemHoaDon
             // 
@@ -233,9 +254,9 @@
             this.lbDate.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbDate.Location = new System.Drawing.Point(12, 294);
             this.lbDate.Name = "lbDate";
-            this.lbDate.Size = new System.Drawing.Size(74, 15);
+            this.lbDate.Size = new System.Drawing.Size(35, 15);
             this.lbDate.TabIndex = 12;
-            this.lbDate.Text = "Khuyến mãi:";
+            this.lbDate.Text = "Time:";
             // 
             // label6
             // 
@@ -489,6 +510,20 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 178);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(169, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "___________________________";
+            // 
             // ThemHoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -501,6 +536,8 @@
             this.Load += new System.EventHandler(this.ThemHoaDon_Load);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.pnlMoTa.ResumeLayout(false);
+            this.pnlMoTa.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTopping)).EndInit();
@@ -514,7 +551,6 @@
 
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel6;
-        private Bunifu.Framework.UI.BunifuSeparator bunifuSeparator1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
@@ -550,5 +586,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn _SoLuong;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaTopping;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenTopping;
+        private System.Windows.Forms.Panel pnlMoTa;
+        private System.Windows.Forms.TextBox txtMoTa;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label7;
     }
 }

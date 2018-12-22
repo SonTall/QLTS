@@ -52,15 +52,15 @@
             this.MoTa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NgayBatDau = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NgayKetThuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bunifuCustomLabel2 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.lbNgay = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.dgvHoaDon = new System.Windows.Forms.DataGridView();
-            this.btnThemHoaDon = new System.Windows.Forms.Button();
             this.MaHoaDon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MaKhachHang = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MaNhanVien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NgayTao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MoTaHoaDon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnThemHoaDon = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lbNgay = new System.Windows.Forms.Label();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -288,32 +288,6 @@
             this.NgayKetThuc.HeaderText = "Ngày kết thúc";
             this.NgayKetThuc.Name = "NgayKetThuc";
             // 
-            // bunifuCustomLabel2
-            // 
-            this.bunifuCustomLabel2.AutoSize = true;
-            this.bunifuCustomLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel2.ForeColor = System.Drawing.Color.Black;
-            this.bunifuCustomLabel2.Location = new System.Drawing.Point(34, 238);
-            this.bunifuCustomLabel2.Name = "bunifuCustomLabel2";
-            this.bunifuCustomLabel2.Size = new System.Drawing.Size(214, 18);
-            this.bunifuCustomLabel2.TabIndex = 20;
-            this.bunifuCustomLabel2.Text = "Khuyến mãi đang được áp dụng";
-            this.bunifuCustomLabel2.Click += new System.EventHandler(this.bunifuCustomLabel2_Click);
-            // 
-            // lbNgay
-            // 
-            this.lbNgay.AutoSize = true;
-            this.lbNgay.BackColor = System.Drawing.Color.Transparent;
-            this.lbNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNgay.ForeColor = System.Drawing.Color.Black;
-            this.lbNgay.Location = new System.Drawing.Point(535, 238);
-            this.lbNgay.Name = "lbNgay";
-            this.lbNgay.Size = new System.Drawing.Size(193, 18);
-            this.lbNgay.TabIndex = 20;
-            this.lbNgay.Text = "Hóa đơn đã bán được ngày: ";
-            this.lbNgay.Click += new System.EventHandler(this.bunifuCustomLabel2_Click);
-            // 
             // dgvHoaDon
             // 
             this.dgvHoaDon.BackgroundColor = System.Drawing.Color.White;
@@ -329,22 +303,6 @@
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHoaDon.Size = new System.Drawing.Size(455, 289);
             this.dgvHoaDon.TabIndex = 18;
-            // 
-            // btnThemHoaDon
-            // 
-            this.btnThemHoaDon.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
-            this.btnThemHoaDon.FlatAppearance.BorderSize = 3;
-            this.btnThemHoaDon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnThemHoaDon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.btnThemHoaDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemHoaDon.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThemHoaDon.Location = new System.Drawing.Point(37, 176);
-            this.btnThemHoaDon.Name = "btnThemHoaDon";
-            this.btnThemHoaDon.Size = new System.Drawing.Size(210, 43);
-            this.btnThemHoaDon.TabIndex = 21;
-            this.btnThemHoaDon.Text = "Tạo hóa đơn +";
-            this.btnThemHoaDon.UseVisualStyleBackColor = true;
-            this.btnThemHoaDon.Click += new System.EventHandler(this.btnThemHoaDon_Click);
             // 
             // MaHoaDon
             // 
@@ -382,14 +340,50 @@
             this.MoTaHoaDon.HeaderText = "Mô tả";
             this.MoTaHoaDon.Name = "MoTaHoaDon";
             // 
+            // btnThemHoaDon
+            // 
+            this.btnThemHoaDon.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.btnThemHoaDon.FlatAppearance.BorderSize = 3;
+            this.btnThemHoaDon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnThemHoaDon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
+            this.btnThemHoaDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemHoaDon.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThemHoaDon.Location = new System.Drawing.Point(37, 176);
+            this.btnThemHoaDon.Name = "btnThemHoaDon";
+            this.btnThemHoaDon.Size = new System.Drawing.Size(210, 43);
+            this.btnThemHoaDon.TabIndex = 21;
+            this.btnThemHoaDon.Text = "Tạo hóa đơn +";
+            this.btnThemHoaDon.UseVisualStyleBackColor = true;
+            this.btnThemHoaDon.Click += new System.EventHandler(this.btnThemHoaDon_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(34, 238);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(214, 18);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "Khuyến mãi đang được áp dụng";
+            // 
+            // lbNgay
+            // 
+            this.lbNgay.AutoSize = true;
+            this.lbNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNgay.Location = new System.Drawing.Point(535, 238);
+            this.lbNgay.Name = "lbNgay";
+            this.lbNgay.Size = new System.Drawing.Size(193, 18);
+            this.lbNgay.TabIndex = 33;
+            this.lbNgay.Text = "Hóa đơn đã bán được ngày: ";
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1031, 578);
-            this.Controls.Add(this.btnThemHoaDon);
             this.Controls.Add(this.lbNgay);
-            this.Controls.Add(this.bunifuCustomLabel2);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnThemHoaDon);
             this.Controls.Add(this.dgvHoaDon);
             this.Controls.Add(this.dgvKhuyenMai);
             this.Controls.Add(this.panel3);
@@ -434,8 +428,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lbLuaChon;
         private System.Windows.Forms.DataGridView dgvKhuyenMai;
-        private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel2;
-        private Bunifu.Framework.UI.BunifuCustomLabel lbNgay;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
@@ -453,5 +445,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MaNhanVien;
         private System.Windows.Forms.DataGridViewTextBoxColumn NgayTao;
         private System.Windows.Forms.DataGridViewTextBoxColumn MoTaHoaDon;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbNgay;
     }
 }
