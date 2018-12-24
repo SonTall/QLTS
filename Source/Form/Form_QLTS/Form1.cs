@@ -61,7 +61,7 @@ namespace Form_QLTS
         private void btnHoaDon_Click(object sender, EventArgs e)
         {
             ClearRenderbody();
-            HoaDon hoaDon = new HoaDon();
+            HoaDon hoaDon = new HoaDon(taiKhoan);
             hoaDon.TopLevel = false;
             hoaDon.Width = pnlBody.Width;
             hoaDon.Height = pnlBody.Height;

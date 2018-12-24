@@ -27,7 +27,7 @@ namespace QuanLyTraSua
                     filename += "jpg";
                     frmt = ImageFormat.Jpeg;
                 }
-                string path = HttpContext.Current.Server.MapPath("~/") + filename;
+                string path = HttpContext.Current.Server.MapPath("~/Images/") + filename;
                 im.Save(path, frmt);
             }
 
@@ -40,7 +40,7 @@ namespace QuanLyTraSua
             string sPic;
             try
             {
-                string path = HttpContext.Current.Server.MapPath("~/") + filename;
+                string path = HttpContext.Current.Server.MapPath("~/Images/") + filename;
                 System.Drawing.Image image = System.Drawing.Image.FromFile(path);
                 MemoryStream stream = new MemoryStream();
                 image.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);

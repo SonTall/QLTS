@@ -316,6 +316,7 @@
     <Compile Include="Models\KhachHangViewModel.cs" />
     <Compile Include="Models\KhuyenMaiViewModel.cs" />
     <Compile Include="Models\LuaChonViewModel.cs" />
+    <Compile Include="Models\NhanVienBanHang.cs" />
     <Compile Include="Models\NhanVienViewModel.cs" />
     <Compile Include="Models\PhanQuyenViewModel.cs" />
     <Compile Include="Models\QuyenViewModel.cs" />
@@ -339,6 +340,9 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TaiKhoan.cs">
+      <DependentUpon>TraSua.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKeHoaDonTheoCacThangByMaNhanVien_Result.cs">
       <DependentUpon>TraSua.tt</DependentUpon>
     </Compile>
     <Compile Include="ThongKeHoaDonTheoCacThang_Result.cs">

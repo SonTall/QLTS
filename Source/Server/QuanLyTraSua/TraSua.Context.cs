@@ -179,5 +179,15 @@ namespace QuanLyTraSua
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PostPhanQuyen", maTaiKhoanParameter, maQuyenParameter);
         }
+    
+        [DbFunction("QuanLyTraSuaEntities", "ThongKeHoaDonTheoCacThangByMaNhanVien")]
+        public virtual IQueryable<ThongKeHoaDonTheoCacThangByMaNhanVien_Result> ThongKeHoaDonTheoCacThangByMaNhanVien(Nullable<int> maNhanVien)
+        {
+            var maNhanVienParameter = maNhanVien.HasValue ?
+                new ObjectParameter("maNhanVien", maNhanVien) :
+                new ObjectParameter("maNhanVien", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ThongKeHoaDonTheoCacThangByMaNhanVien_Result>("[QuanLyTraSuaEntities].[ThongKeHoaDonTheoCacThangByMaNhanVien](@maNhanVien)", maNhanVienParameter);
+        }
     }
 }

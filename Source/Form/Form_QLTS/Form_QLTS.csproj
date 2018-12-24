@@ -116,6 +116,8 @@
     <Compile Include="ViewModel\HoaDonViewModel.cs" />
     <Compile Include="ViewModel\KhuyenMaiViewModel.cs" />
     <Compile Include="ViewModel\LuaChonViewModel.cs" />
+    <Compile Include="ViewModel\NhanVienBanHang.cs" />
+    <Compile Include="ViewModel\NhanVienHoaDonTheoThang.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
     <Compile Include="ViewModel\SanPhamViewModel.cs" />
     <Compile Include="ViewModel\TaiKhoan.cs" />

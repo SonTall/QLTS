@@ -428,5 +428,13 @@
       <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
       <Parameter Name="maQuyen" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="ThongKeHoaDonTheoCacThangByMaNhanVien" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThangByMaNhanVien_Result)">
+      <Parameter Name="maNhanVien" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="ThongKeHoaDonTheoCacThangByMaNhanVien_Result">
+    <Property Type="Int32" Name="nam" Nullable="true" />
+    <Property Type="Int32" Name="thang" Nullable="true" />
+    <Property Type="Int32" Name="soluonghoadon" Nullable="true" />
+  </ComplexType>
 </Schema>

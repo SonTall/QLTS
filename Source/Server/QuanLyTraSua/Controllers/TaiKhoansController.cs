@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using QuanLyTraSua;
@@ -115,6 +116,11 @@ namespace QuanLyTraSua.Controllers
             }
 
             // them thong tin vao bang? khach hang trc de? lay ma~ khach hang`
+
+            // convert anh? lay' ten 
+            byte[] bytes = Encoding.Default.GetBytes(taiKhoan.HinhAnh);
+            var str = ImageTask.Write(bytes);
+
             KhachHang khachHangNew = new KhachHang
             {
                 //MaKhachHang = -1,
@@ -130,29 +136,41 @@ namespace QuanLyTraSua.Controllers
                 TenKhachHang = taiKhoan.TenKhachHang,
                 GioiTinh = taiKhoan.GioiTinh,
                 NgaySinh = taiKhoan.NgaySinh,
-                DiaChi = "x",
-                Email = "x",
-                SDT = "x",
-                HinhAnh = "x",
+                DiaChi = taiKhoan.DiaChi,
+                Email = taiKhoan.Email,
+                SDT = taiKhoan.SDT,
+                HinhAnh = str
             };
             db.KhachHangs.Add(khachHangNew);
-            db.SaveChanges();
+          //  db.SaveChanges();
             // sau do them vao bang tai khoan? nhu bthg
-            //TaiKhoan taiKhoanNew = new TaiKhoan { TenTaiKhoan = taiKhoan.TenTaiKhoan, MatKhau = taiKhoan.MatKhau, MaNhanVien = null ,MaKhachHang = khachHangNew.MaKhachHang };
-            //db.TaiKhoans.Add(taiKhoanNew);
+            TaiKhoan taiKhoanNew = new TaiKhoan
+            {
+                //TenTaiKhoan = taiKhoan.TenTaiKhoan,
+                //MatKhau = taiKhoan.MatKhau,
+                //MaNhanVien = null,
+                //MaKhachHang = khachHangNew.MaKhachHang
 
+                TenTaiKhoan = taiKhoan.TenTaiKhoan,
+                MatKhau = taiKhoan.MatKhau,
+                MaNhanVien = null,
+                MaKhachHang = khachHangNew.MaKhachHang
+            };
+            db.TaiKhoans.Add(taiKhoanNew);
+
+            db.SaveChanges();
             //// cuoi cung them bang phan quyen`
-            ////taiKhoan.Quyen.ForEach(v =>
-            ////{
-            ////    var quyenKhachHang = db.Quyens.Where(n => n.TenQuyen == n.TenQuyen);
-            ////    quyenKhachHang.ToList().ForEach(n =>
-            ////    {
-            ////        db.PostPhanQuyen(taiKhoanNew.MaTaiKhoan, n.MaQuyen);
-            ////    });
+            taiKhoan.Quyen.ForEach(v =>
+            {
+                var quyenKhachHang = db.Quyens.Where(n => n.TenQuyen.Equals(n.TenQuyen));
+                quyenKhachHang.ToList().ForEach(n =>
+                {
+                    db.PostPhanQuyen(taiKhoanNew.MaTaiKhoan, n.MaQuyen);
+                    db.SaveChanges();
+                });
 
-            ////});
+            });
 
-            //db.SaveChanges();
             return Ok();
         }
 
