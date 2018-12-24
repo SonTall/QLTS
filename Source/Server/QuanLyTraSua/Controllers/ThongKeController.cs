@@ -205,28 +205,7 @@ namespace QuanLyTraSua.Controllers
         //    }
         //}
 
-        /// <summary>
-        /// tong so hoa don ban duoc theo ngay
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ThongKe/TongHoaDonTheoNgay")]
-        public IHttpActionResult GetTongHoaDonTheoNgay()
-        {
-            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
-            {
-                DateTime dateTime = DateTime.Now;
-                var tongHoaDon = db.HoaDons.Where(v => v.NgayTao.Value.Year == dateTime.Year && v.NgayTao.Value.Month == dateTime.Month && v.NgayTao.Value.Day == dateTime.Day);
-                if (tongHoaDon != null)
-                {
-                    return Ok(tongHoaDon.Count());
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-        }
+
 
 
         /// <summary>
@@ -253,10 +232,37 @@ namespace QuanLyTraSua.Controllers
             }
         }
 
-
+        /// <summary>
+        /// tong so hoa don ban duoc theo ngay
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/TongHoaDonTheoNgay")]
+        public IHttpActionResult GetTongHoaDonTheoNgay()
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                DateTime dateTime = DateTime.Now;
+                var tongHoaDon = db.HoaDons.Where(v => v.NgayTao.Value.Year == dateTime.Year && v.NgayTao.Value.Month == dateTime.Month && v.NgayTao.Value.Day == dateTime.Day);
+                if (tongHoaDon != null)
+                {
+                    return Ok(tongHoaDon.Count());
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
         #endregion
 
         #region LietKe
+        /// <summary>
+        /// liet ke danh sach hoa don theo thang
+        /// </summary>
+        /// <param name="nam"></param>
+        /// <param name="thang"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/ThongKe/GetListHoaDonByThang")]
         // [ActionName("GetListHoaDonByThang")]
@@ -284,6 +290,32 @@ namespace QuanLyTraSua.Controllers
                 }
                 else
                     return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// liet ke danh sach hoa don theo cac thang theo ma nhan viens
+        /// </summary>
+        /// <param name="nam"></param>
+        /// <param name="thang"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListHoaDonByThangByMaNhanVien")]
+        // [ActionName("GetListHoaDonByThang")]
+        public IHttpActionResult GetListHoaDonByThangByMaNhanVien(int maNhanVien)
+        {
+            using (QuanLyTraSuaEntities db = new QuanLyTraSuaEntities())
+            {
+                var result = db.ThongKeHoaDonTheoCacThangByMaNhanVien(maNhanVien);
+
+                if (result != null)
+                {
+                    return Ok(result.ToList());
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
         }
 
@@ -379,7 +411,7 @@ namespace QuanLyTraSua.Controllers
             }
         }
 
-
+        #region cac' loai. get list hoa don theo cac tieu chi
         /// <summary>
         /// liet ke danh sach hoa don ban duoc theo ngay theo ma nhan vien
         /// </summary>
@@ -393,14 +425,14 @@ namespace QuanLyTraSua.Controllers
                 DateTime dateTime = DateTime.Now;
                 var result = db.HoaDons.Where(v => v.MaNhanVien == maNhanVien && (v.NgayTao.Value.Year == dateTime.Year && v.NgayTao.Value.Month == dateTime.Month && v.NgayTao.Value.Day == dateTime.Day)).Select(v => new HoaDonViewModel
                 {
-                    MaHoaDon = v.MaHoaDon, 
+                    MaHoaDon = v.MaHoaDon,
                     MaKhachHang = v.MaKhachHang,
                     MaNhanVien = v.MaNhanVien,
                     NgayTao = v.NgayTao,
                     MoTa = v.MoTa
                 });
 
-                if(result != null)
+                if (result != null)
                 {
                     return Ok(result.ToList());
                 }
@@ -410,7 +442,223 @@ namespace QuanLyTraSua.Controllers
                 }
             }
         }
-            #endregion
+
+        /// <summary>
+        /// liet ke danh sach hoa don ban duoc trong khoang thoi gian theo ma nhan vien- phuc vu form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListHoaDonTrongKhoangThoiGianByMaNhanVien")]
+        public IHttpActionResult GetListHoaDonByPeriodOfTime(int maNhanVien, int date1, int month1, int year1, int date2, int month2, int year2)
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                //DateTime tuNgay = Convert.ToDateTime(nhanVienBanHang.TuNgay);
+                // DateTime denNgay = Convert.ToDateTime(nhanVienBanHang.DenNgay);
+                var result = db.HoaDons
+                    .Where(v => v.MaNhanVien == maNhanVien
+                    && (v.NgayTao.Value.Year >= year1
+                    && v.NgayTao.Value.Month >= month1
+                    && v.NgayTao.Value.Day >= date1)
+                    && (v.NgayTao.Value.Year <= year2
+                    && v.NgayTao.Value.Month <= month2
+                    && v.NgayTao.Value.Day <= date2))
+                    .Select(v => new HoaDonViewModel
+                    {
+                        MaHoaDon = v.MaHoaDon,
+                        MaKhachHang = v.MaKhachHang,
+                        MaNhanVien = v.MaNhanVien,
+                        NgayTao = v.NgayTao,
+                        MoTa = v.MoTa
+                    });
+
+                if (result != null)
+                {
+                    return Ok(result.ToList());
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
         }
+
+
+        /// <summary>
+        /// liet ke danh sach hoa don ban duoc theo thang chi? dinh. theo ma~ nhan vien.  - phuc vu form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListHoaDonTheoThangByMaNhanVien")]
+        public IHttpActionResult GetListHoaDonByMonth(int maNhanVien, int month)
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                DateTime now = DateTime.Now;
+                var result = db.HoaDons
+                    .Where(v => v.MaNhanVien == maNhanVien
+                    && v.NgayTao.Value.Year == now.Year
+                    && v.NgayTao.Value.Month == month)
+                    .Select(v => new HoaDonViewModel
+                    {
+                        MaHoaDon = v.MaHoaDon,
+                        MaKhachHang = v.MaKhachHang,
+                        MaNhanVien = v.MaNhanVien,
+                        NgayTao = v.NgayTao,
+                        MoTa = v.MoTa
+                    });
+
+                if (result != null)
+                {
+                    return Ok(result.ToList());
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        /// <summary>
+        /// liet ke danh sach hoa don ban duoc theo thang theo ma~ nhan vien.  - phuc vu form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListHoaDonByMaNhanVien")]
+        public IHttpActionResult GetListHoaDonByMaNhanVien(NhanVienBanHang nhanVienBanHang)
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                DateTime now = DateTime.Now;
+                var result = db.HoaDons
+                    .Where(v => v.MaNhanVien == nhanVienBanHang.MaNhanVien)
+                    .Select(v => new HoaDonViewModel
+                    {
+                        MaHoaDon = v.MaHoaDon,
+                        MaKhachHang = v.MaKhachHang,
+                        MaNhanVien = v.MaNhanVien,
+                        NgayTao = v.NgayTao,
+                        MoTa = v.MoTa
+                    });
+
+                if (result != null)
+                {
+                    return Ok(result.ToList());
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+        #endregion
+
+        #region bang? hoa' don form ma fail mat' roi` :(
+        /// <summary>
+        /// danh sach san pham? theo ma hoa don
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetListSanPhamByMaHoaDon")]
+        public IHttpActionResult GetListSanPhamByMaHoaDon(int maHoaDon)
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                var maLuaChon = db.HoaDonChiTiets.SingleOrDefault(v => v.MaHoaDon == maHoaDon).MaLuaChon;
+                var maSanPham = db.LuaChons.Where(v => v.MaLuaChon == maLuaChon).ToList();
+                var result = new List<SanPhamViewModel>();
+
+                maSanPham.ForEach(v =>
+                {
+                    var temp = db.SanPhams.Single(n => n.MaSanPham == v.MaSanPham);
+                    var resultItem = new SanPhamViewModel()
+                    {
+                        MaSanPham = temp.MaSanPham,
+                        TenSanPham = temp.TenSanPham,
+                        KichCo = temp.KichCo,
+                        DonGia = temp.DonGia,
+                        HinhAnh = temp.HinhAnh,
+                        MaChuDe = temp.MaChuDe
+                    };
+                    result.Add(resultItem);
+                });
+
+                return Ok(result.ToList());
+            }
+        }
+
+        ///// <summary>
+        ///// danh sach topping theo ma hoa don
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[Route("api/ThongKe/GetListToppingByMaHoaDon")]
+        //public IHttpActionResult GetListToppingByMaHoaDon(int maHoaDon)
+        //{
+        //    using (var db = new QuanLyTraSuaEntities())
+        //    {
+        //        var maLuaChon = db.HoaDonChiTiets.Where(v => v.MaHoaDon == maHoaDon);
+        //        var maTopping = new List<LuaChon>();
+        //        maLuaChon.ToList().ForEach(v =>
+        //        {
+        //            maTopping.AddRange(db.LuaChons.Where(n => n.MaLuaChon == v.MaHoaDon).Distinct(p => p.).ToList());
+
+        //        });
+
+        //        var maTopping = db.LuaChons.Where(v => v.MaLuaChon == maLuaChon).ToList();
+        //        var result = new List<ToppingViewModel>();
+
+        //        maTopping.ForEach(v =>
+        //        {
+        //            var temp = db.Toppings.Single(n => n.MaTopping == v.MaTopping);
+        //            var resultItem = new ToppingViewModel()
+        //            {
+        //                MaTopping = temp.MaTopping,
+        //                TenTopping = temp.TenTopping,
+        //                DonGia = temp.DonGia,
+        //                HinhAnh = temp.HinhAnh
+        //            };
+        //            result.Add(resultItem);
+        //        });
+
+        //        return Ok(result.ToList());
+        //    }
+        //}
+
+
+        /// <summary>
+        /// danh sach topping theo ma hoa don
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ThongKe/GetSumLuaChonByMaHoaDon")]
+        public IHttpActionResult GetSumLuaChonByMaHoaDon(int maHoaDon)
+        {
+            using (var db = new QuanLyTraSuaEntities())
+            {
+                var maLuaChon = db.HoaDonChiTiets.SingleOrDefault(v => v.MaHoaDon == maHoaDon).MaLuaChon;
+                var maTopping = db.LuaChons.Where(v => v.MaLuaChon == maLuaChon).ToList();
+                var result = new List<ToppingViewModel>();
+
+                maTopping.ForEach(v =>
+                {
+                    var temp = db.Toppings.Single(n => n.MaTopping == v.MaTopping);
+                    var resultItem = new ToppingViewModel()
+                    {
+                        MaTopping = temp.MaTopping,
+                        TenTopping = temp.TenTopping,
+                        DonGia = temp.DonGia,
+                        HinhAnh = temp.HinhAnh
+                    };
+                    result.Add(resultItem);
+                });
+
+                return Ok(result.ToList());
+            }
+        }
+        #endregion
+
+        #endregion
+    }
 }
 

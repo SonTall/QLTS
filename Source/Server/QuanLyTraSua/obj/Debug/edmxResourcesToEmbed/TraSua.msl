@@ -224,5 +224,14 @@
     <FunctionImportMapping FunctionImportName="PostGiamGia" FunctionName="QuanLyTraSuaModel.Store.PostGiamGia" />
     <FunctionImportMapping FunctionImportName="PostHoaDonChiTiet" FunctionName="QuanLyTraSuaModel.Store.PostHoaDonChiTiet" />
     <FunctionImportMapping FunctionImportName="PostPhanQuyen" FunctionName="QuanLyTraSuaModel.Store.PostPhanQuyen" />
+    <FunctionImportMapping FunctionImportName="ThongKeHoaDonTheoCacThangByMaNhanVien" FunctionName="QuanLyTraSuaModel.Store.ThongKeHoaDonTheoCacThangByMaNhanVien">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeHoaDonTheoCacThangByMaNhanVien_Result">
+          <ScalarProperty Name="nam" ColumnName="nam" />
+          <ScalarProperty Name="thang" ColumnName="thang" />
+          <ScalarProperty Name="soluonghoadon" ColumnName="soluonghoadon" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

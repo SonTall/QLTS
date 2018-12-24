@@ -164,7 +164,8 @@ namespace Form_QLTS.GUI
                 MaKhachHang = -1,
                 MaTaiKhoan = -1,
                 TenTaiKhoan = txtTenTaiKhoanKhachHang.Text.ToString(),
-                TenKhachHang = txtTenTaiKhoanKhachHang.Text.ToString().Trim(),
+                MatKhau = txtMatKhauKhachHang.Text.ToString(),
+                TenKhachHang = textBox1.Text.ToString().Trim(),
                 NgaySinh = dtNgaySinhKhachHang.Value,
                 DiaChi = txtDiaChiKhachHang.Text.ToString(),
                 Email = txtDiaChiEmail.Text.ToString(),
@@ -190,7 +191,6 @@ namespace Form_QLTS.GUI
                 _taiKhoan.HinhAnh = dataImgCustomer;
             }
             requestData.PostTaiKhoan(_taiKhoan);
-
         }
 
         private void btnCapNhatAnhKhachHang_Click(object sender, EventArgs e)

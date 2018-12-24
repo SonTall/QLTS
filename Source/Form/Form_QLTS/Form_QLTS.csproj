@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bunifu_UI_v1.5.3, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Bunifu_UI_v1.5.3.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -120,6 +116,8 @@
     <Compile Include="ViewModel\HoaDonViewModel.cs" />
     <Compile Include="ViewModel\KhuyenMaiViewModel.cs" />
     <Compile Include="ViewModel\LuaChonViewModel.cs" />
+    <Compile Include="ViewModel\NhanVienBanHang.cs" />
+    <Compile Include="ViewModel\NhanVienHoaDonTheoThang.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
     <Compile Include="ViewModel\SanPhamViewModel.cs" />
     <Compile Include="ViewModel\TaiKhoan.cs" />

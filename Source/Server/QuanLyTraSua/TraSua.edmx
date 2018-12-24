@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyTraSuaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyTraSuaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChuDe">
           <Key>
             <PropertyRef Name="MaChuDe" />
@@ -453,6 +453,18 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="ThongKeHoaDonTheoCacThangByMaNhanVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maNhanVien" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="nam" Type="int" />
+                <Property Name="thang" Type="int" />
+                <Property Name="soluonghoadon" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="QuanLyTraSuaModelStoreContainer">
           <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GiamGia" EntityType="Self.GiamGia" Schema="dbo" store:Type="Tables" />
@@ -525,8 +537,7 @@
             <End Role="TaiKhoan" EntitySet="TaiKhoan" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyTraSuaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -923,17 +934,17 @@
           <FunctionImport Name="GetAllGiamGiaByTenKhuyenMai" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllGiamGiaByTenKhuyenMai_Result)" />
           <FunctionImport Name="GetAllHoaDonChiTiet" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllHoaDonChiTiet_Result)" />
           <FunctionImport Name="GetAllHoaDonChiTietByMaHoaDon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllHoaDonChiTietByMaHoaDon_Result)">
-            <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+          <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllHoaDonChiTietByMaLuaChon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllHoaDonChiTietByMaLuaChon_Result)">
-            <Parameter Name="maLuaChon" Mode="In" Type="Int32" />
+          <Parameter Name="maLuaChon" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllPhanQuyen" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetAllPhanQuyen_Result)" />
           <FunctionImport Name="GetGiamGiaByMaHoaDon" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetGiamGiaByMaHoaDon_Result)">
-            <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
+          <Parameter Name="maHoaDon" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPhanQuyenByMaTaiKhoan" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.GetPhanQuyenByMaTaiKhoan_Result)">
-            <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+          <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ThongKeHoaDonTheoCacThang" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThang_Result)" />
           <FunctionImport Name="DeletePhanQuyen">
@@ -941,10 +952,10 @@
             <Parameter Name="maQuyen" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhanQuyenByMaQuyen">
-            <Parameter Name="maQuyen" Mode="In" Type="Int32" />
+          <Parameter Name="maQuyen" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhanQuyenByMaTaiKhoan">
-            <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
+          <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PostGiamGia">
             <Parameter Name="maKhuyenMai" Mode="In" Type="Int32" />
@@ -958,7 +969,15 @@
             <Parameter Name="maTaiKhoan" Mode="In" Type="Int32" />
             <Parameter Name="maQuyen" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="ThongKeHoaDonTheoCacThangByMaNhanVien" IsComposable="true" ReturnType="Collection(QuanLyTraSuaModel.ThongKeHoaDonTheoCacThangByMaNhanVien_Result)">
+            <Parameter Name="maNhanVien" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="ThongKeHoaDonTheoCacThangByMaNhanVien_Result">
+          <Property Type="Int32" Name="nam" Nullable="true" />
+          <Property Type="Int32" Name="thang" Nullable="true" />
+          <Property Type="Int32" Name="soluonghoadon" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1188,6 +1207,15 @@
           <FunctionImportMapping FunctionImportName="PostGiamGia" FunctionName="QuanLyTraSuaModel.Store.PostGiamGia" />
           <FunctionImportMapping FunctionImportName="PostHoaDonChiTiet" FunctionName="QuanLyTraSuaModel.Store.PostHoaDonChiTiet" />
           <FunctionImportMapping FunctionImportName="PostPhanQuyen" FunctionName="QuanLyTraSuaModel.Store.PostPhanQuyen" />
+          <FunctionImportMapping FunctionImportName="ThongKeHoaDonTheoCacThangByMaNhanVien" FunctionName="QuanLyTraSuaModel.Store.ThongKeHoaDonTheoCacThangByMaNhanVien">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyTraSuaModel.ThongKeHoaDonTheoCacThangByMaNhanVien_Result">
+                <ScalarProperty Name="nam" ColumnName="nam" />
+                <ScalarProperty Name="thang" ColumnName="thang" />
+                <ScalarProperty Name="soluonghoadon" ColumnName="soluonghoadon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

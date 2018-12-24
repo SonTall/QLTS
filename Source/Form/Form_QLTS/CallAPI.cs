@@ -92,6 +92,7 @@ namespace Form_QLTS
             }
         }
 
+        #region sum cac' loai.
         public int GetTongHoaDonTheoNgay()
         {
             int sumHoaDon;
@@ -233,6 +234,7 @@ namespace Form_QLTS
                 return sumKhuyenMai;
             }
         }
+        #endregion
 
         public NhanVienViewModel GetNhanVienByMaNhanVien(string maNhanVien)
         {
@@ -441,7 +443,11 @@ namespace Form_QLTS
             }
         }
 
-
+        /// <summary>
+        /// lay danh sah hoa don ban duoc trong ngay theo ma nhan vien
+        /// </summary>
+        /// <param name="maNhanVien"></param>
+        /// <returns></returns>
         public List<HoaDonViewModel> GetListHoaDonTrongNgayByMaNhanVien(int maNhanVien)
         {
             IEnumerable<HoaDonViewModel> hoaDonList = null;
@@ -468,8 +474,172 @@ namespace Form_QLTS
             }
         }
 
+        #region form hoa don
+        /// <summary>
+        /// liet ke danh sach hoa don nhan vien ban duoc theo thang duoc chon theo ma nhan vien
+        /// </summary>
+        /// <param name="nhanVienBanHang"></param>
+        /// <returns></returns>
+        public List<HoaDonViewModel> GetListHoaDonTrongThangByMaNhanVien(NhanVienBanHang nhanVienBanHang)
+        {
+            IEnumerable<HoaDonViewModel> hoaDonList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
 
-        //POST HOA DON
+                var responseTask = client.GetAsync("GetListHoaDonTheoThangByMaNhanVien?maNhanVien="+ nhanVienBanHang.MaNhanVien + "&month=" + nhanVienBanHang.TheoThang);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<HoaDonViewModel>>();
+                    readTask.Wait();
+
+                    hoaDonList = readTask.Result;
+                }
+                else
+                {
+                    hoaDonList = Enumerable.Empty<HoaDonViewModel>();
+                }
+                return hoaDonList.ToList();
+            }
+        }
+
+        /// <summary>
+        /// liet ke danh sach hoa don nhan vien ban duoc theo thang duoc chon theo ma nhan vien
+        /// </summary>
+        /// <param name="nhanVienBanHang"></param>
+        /// <returns></returns>
+        public List<HoaDonViewModel> GetListHoaDonTrongKhoangThoiGianByMaNhanVien(NhanVienBanHang nhanVienBanHang)
+        {
+            IEnumerable<HoaDonViewModel> hoaDonList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
+
+                var responseTask = client.GetAsync("GetListHoaDonTrongKhoangThoiGianByMaNhanVien?maNhanVien=" + nhanVienBanHang.MaNhanVien + "&date1=" + nhanVienBanHang.TuNgay.Value.Day +
+                    "&month1=" + nhanVienBanHang.TuNgay.Value.Month + "&year1=" + nhanVienBanHang.TuNgay.Value.Year + "&date2=" + nhanVienBanHang.DenNgay.Value.Day + "&month2=" +
+                    nhanVienBanHang.DenNgay.Value.Month + "&year2=" + nhanVienBanHang.DenNgay.Value.Year);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<HoaDonViewModel>>();
+                    readTask.Wait();
+
+                    hoaDonList = readTask.Result;
+                }
+                else
+                {
+                    hoaDonList = Enumerable.Empty<HoaDonViewModel>();
+                }
+                return hoaDonList.ToList();
+            }
+        }
+
+        /// <summary>
+        /// danh sach  hoa don theo cac thang by ma nhan vien
+        /// </summary>
+        /// <param name="nhanVienBanHang"></param>
+        /// <returns></returns>
+        public List<NhanVienHoaDonTheoThang> GetListHoaDonCacThangByMaNhanVien(NhanVienBanHang nhanVienBanHang)
+        {
+            IEnumerable<NhanVienHoaDonTheoThang> hoaDonList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
+
+                var responseTask = client.GetAsync("GetListHoaDonByThangByMaNhanVien?maNhanVien=" + nhanVienBanHang.MaNhanVien);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<NhanVienHoaDonTheoThang>>();
+                    readTask.Wait();
+
+                    hoaDonList = readTask.Result;
+                }
+                else
+                {
+                    hoaDonList = Enumerable.Empty<NhanVienHoaDonTheoThang>();
+                }
+                return hoaDonList.ToList();
+            }
+        }
+
+
+        /// <summary>
+        /// danh sach  san pham theo ma hoa don
+        /// </summary>
+        /// <param name="nhanVienBanHang"></param>
+        /// <returns></returns>
+        public List<SanPhamViewModel> GetListSanPhamByMaHoaDon(int maHoaDon)
+        {
+            IEnumerable<SanPhamViewModel> hoaDonList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
+
+                var responseTask = client.GetAsync("GetListSanPhamByMaHoaDon?maHoaDon=" + maHoaDon);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<SanPhamViewModel>>();
+                    readTask.Wait();
+
+                    hoaDonList = readTask.Result;
+                }
+                else
+                {
+                    hoaDonList = Enumerable.Empty<SanPhamViewModel>();
+                }
+                return hoaDonList.ToList();
+            }
+        }
+
+        /// <summary>
+        /// danh sach topping theo ma hoa don
+        /// </summary>
+        /// <param name="nhanVienBanHang"></param>
+        /// <returns></returns>
+        public List<ToppingViewModel> GetListToppingByMaHoaDon(int maHoaDon)
+        {
+            IEnumerable<ToppingViewModel> toppingList = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49365/api/ThongKe/");
+
+                var responseTask = client.GetAsync("GetListToppingByMaHoaDon?maHoaDon=" + maHoaDon);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ToppingViewModel>>();
+                    readTask.Wait();
+
+                    toppingList = readTask.Result;
+                }
+                else
+                {
+                    toppingList = Enumerable.Empty<ToppingViewModel>();
+                }
+                return toppingList.ToList();
+            }
+        }
+
+        //public int GetSoLuongSanPhamByMaHoaDon(int maHoaDon)
+        //{
+
+        //}
+        #endregion
+
+        #region put post cac bang?
         /// <summary>
         /// post thong tin san? phan vs topping vao 2 bang? ma~ lua. chon vs lua. chon.
         /// </summary>
@@ -588,5 +758,6 @@ namespace Form_QLTS
                 }
             }
         }
+        #endregion
     }
 }

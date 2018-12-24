@@ -448,6 +448,18 @@
       </CollectionType>
     </ReturnType>
   </Function>
+  <Function Name="ThongKeHoaDonTheoCacThangByMaNhanVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maNhanVien" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="nam" Type="int" />
+          <Property Name="thang" Type="int" />
+          <Property Name="soluonghoadon" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <EntityContainer Name="QuanLyTraSuaModelStoreContainer">
     <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiamGia" EntityType="Self.GiamGia" Schema="dbo" store:Type="Tables" />

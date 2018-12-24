@@ -63,16 +63,16 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.btnCapNhatAnhKhachHang = new System.Windows.Forms.Button();
+            this.pbKhachHang = new System.Windows.Forms.PictureBox();
             this.txtDiaChiEmail = new System.Windows.Forms.TextBox();
             this.txtDiaChiNhanVien = new System.Windows.Forms.TextBox();
             this.txtDiaChiKhachHang = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.btnCapNhatAnhKhachHang = new System.Windows.Forms.Button();
-            this.pbKhachHang = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.dtNgaySinh = new System.Windows.Forms.DateTimePicker();
             this.cbNu = new System.Windows.Forms.CheckBox();
             this.cbNam = new System.Windows.Forms.CheckBox();
@@ -422,6 +422,49 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Form test đăng ký khách hàng";
             // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(121, 65);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(197, 22);
+            this.textBox1.TabIndex = 20;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(20, 65);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(107, 16);
+            this.label17.TabIndex = 19;
+            this.label17.Text = "Tên khach hang:";
+            // 
+            // btnCapNhatAnhKhachHang
+            // 
+            this.btnCapNhatAnhKhachHang.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.btnCapNhatAnhKhachHang.FlatAppearance.BorderSize = 2;
+            this.btnCapNhatAnhKhachHang.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnCapNhatAnhKhachHang.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
+            this.btnCapNhatAnhKhachHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCapNhatAnhKhachHang.Location = new System.Drawing.Point(350, 155);
+            this.btnCapNhatAnhKhachHang.Name = "btnCapNhatAnhKhachHang";
+            this.btnCapNhatAnhKhachHang.Size = new System.Drawing.Size(137, 28);
+            this.btnCapNhatAnhKhachHang.TabIndex = 18;
+            this.btnCapNhatAnhKhachHang.Text = "Cập nhật ảnh đại diện ...";
+            this.btnCapNhatAnhKhachHang.UseVisualStyleBackColor = true;
+            this.btnCapNhatAnhKhachHang.Click += new System.EventHandler(this.btnCapNhatAnhKhachHang_Click);
+            // 
+            // pbKhachHang
+            // 
+            this.pbKhachHang.Image = ((System.Drawing.Image)(resources.GetObject("pbKhachHang.Image")));
+            this.pbKhachHang.Location = new System.Drawing.Point(350, 13);
+            this.pbKhachHang.Name = "pbKhachHang";
+            this.pbKhachHang.Size = new System.Drawing.Size(137, 136);
+            this.pbKhachHang.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbKhachHang.TabIndex = 17;
+            this.pbKhachHang.TabStop = false;
+            // 
             // txtDiaChiEmail
             // 
             this.txtDiaChiEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -475,49 +518,6 @@
             this.label16.Size = new System.Drawing.Size(51, 16);
             this.label16.TabIndex = 13;
             this.label16.Text = "Địa chỉ:";
-            // 
-            // btnCapNhatAnhKhachHang
-            // 
-            this.btnCapNhatAnhKhachHang.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
-            this.btnCapNhatAnhKhachHang.FlatAppearance.BorderSize = 2;
-            this.btnCapNhatAnhKhachHang.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnCapNhatAnhKhachHang.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.btnCapNhatAnhKhachHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCapNhatAnhKhachHang.Location = new System.Drawing.Point(350, 155);
-            this.btnCapNhatAnhKhachHang.Name = "btnCapNhatAnhKhachHang";
-            this.btnCapNhatAnhKhachHang.Size = new System.Drawing.Size(137, 28);
-            this.btnCapNhatAnhKhachHang.TabIndex = 18;
-            this.btnCapNhatAnhKhachHang.Text = "Cập nhật ảnh đại diện ...";
-            this.btnCapNhatAnhKhachHang.UseVisualStyleBackColor = true;
-            this.btnCapNhatAnhKhachHang.Click += new System.EventHandler(this.btnCapNhatAnhKhachHang_Click);
-            // 
-            // pbKhachHang
-            // 
-            this.pbKhachHang.Image = ((System.Drawing.Image)(resources.GetObject("pbKhachHang.Image")));
-            this.pbKhachHang.Location = new System.Drawing.Point(350, 13);
-            this.pbKhachHang.Name = "pbKhachHang";
-            this.pbKhachHang.Size = new System.Drawing.Size(137, 136);
-            this.pbKhachHang.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbKhachHang.TabIndex = 17;
-            this.pbKhachHang.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(121, 65);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(197, 22);
-            this.textBox1.TabIndex = 20;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(20, 65);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(95, 16);
-            this.label17.TabIndex = 19;
-            this.label17.Text = "Tên nhân viên:";
             // 
             // dtNgaySinh
             // 
